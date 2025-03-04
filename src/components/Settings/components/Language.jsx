@@ -37,7 +37,9 @@ export default function Language() {
               className="capitalize gap-1 pr-1.5 rounded-md h-7 bg-content1 dark:bg-default !shadow-custom-cursor"
               variant="solid"
               size="sm"
-              endContent={<ChevronsUpDown className="size-4 shrink-0" />}
+              endContent={
+                <ChevronsUpDown className="size-4 shrink-0 text-default-400" />
+              }
             >
               {languages.find((lang) => lang.id === i18n.language)?.name}
             </Button>

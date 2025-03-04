@@ -4,11 +4,11 @@ import Dexie from "dexie";
 const db = new Dexie("minifluxReader");
 
 // 创建表及索引
-db.version(9).stores({
+db.version(10).stores({
   articles:
     "id, feedId, status, starred, created_at, [status+feedId], [starred+feedId]",
   categories: "id, title",
-  feeds: "id, url, categoryName",
+  feeds: "id, url",
   feedIcons: "feedId",
 });
 
@@ -38,6 +38,16 @@ async function deleteAllFeeds() {
   return db.feeds.clear();
 }
 
+// 删除指定的订阅源
+async function deleteFeed(feedId) {
+  return db.feeds.delete(feedId);
+}
+
+// 删除指定的订阅源图标
+async function deleteFeedIcon(feedId) {
+  return db.feedIcons.delete(feedId);
+}
+
 // 添加分类
 async function addCategory(category) {
   return db.categories.put(category);
@@ -51,6 +61,16 @@ async function getCategories() {
 // 删除分类
 async function deleteAllCategory() {
   return db.categories.clear();
+}
+
+// 删除单个分类
+async function deleteCategory(categoryId) {
+  return db.categories.delete(categoryId);
+}
+
+// 更新分类
+async function updateCategory(categoryId, title) {
+  return db.categories.update(categoryId, { title });
 }
 
 // 存储上次同步时间
@@ -217,9 +237,13 @@ export {
   addFeeds,
   getFeeds,
   deleteAllFeeds,
+  deleteFeed,
+  deleteFeedIcon,
   addCategory,
   getCategories,
   deleteAllCategory,
+  deleteCategory,
+  updateCategory,
   setLastSyncTime,
   getLastSyncTime,
   addArticles,

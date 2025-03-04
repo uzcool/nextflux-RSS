@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")).render(
     <ToastProvider
       placement="bottom-center"
       toastOffset={20}
-      toastProps={{ timeout: 3000 }}
+      toastProps={{ timeout: 3000, hideCloseButton: true }}
     />
     <SplashScreen />
     <RouterProvider

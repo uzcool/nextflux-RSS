@@ -1,25 +1,29 @@
 import { Chip } from "@heroui/react";
 import { cn } from "@/lib/utils.js";
 import { Loader2, X } from "lucide-react";
-import { feeds } from "@/stores/feedsStore.js";
+import { feeds, categories } from "@/stores/feedsStore.js";
 import { useStore } from "@nanostores/react";
 import { useState } from "react";
 import minifluxAPI from "@/api/miniflux.js";
-import { forceSync } from "@/stores/syncStore.js";
 import { addToast } from "@heroui/react";
 import { useTranslation } from "react-i18next";
+import { deleteCategory } from "@/db/storage";
 
 export default function CategoryChip({ category }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const $feeds = useStore(feeds);
+  const $categories = useStore(categories);
   const hasFeeds = $feeds.some((feed) => feed.categoryId === category.id);
 
   const handleDeleteCategory = async (categoryId) => {
     try {
       setLoading(true);
       await minifluxAPI.deleteCategory(categoryId);
-      await forceSync();
+      // 更新本地数据库
+      await deleteCategory(categoryId);
+      // 更新内存中的 store
+      categories.set($categories.filter((c) => c.id !== categoryId));
       addToast({ title: t("common.success"), color: "success" });
     } catch (error) {
       console.error("删除分类失败:", error);

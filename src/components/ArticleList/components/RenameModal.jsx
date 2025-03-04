@@ -1,34 +1,44 @@
 import { Button, Form, Input } from "@heroui/react";
 import { useEffect, useState } from "react";
 import minifluxAPI from "@/api/miniflux";
-import { forceSync } from "@/stores/syncStore";
-import { renameModalOpen, currentCategory } from "@/stores/modalStore.js";
+import { renameModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
+import { useParams } from "react-router-dom";
+import { categories } from "@/stores/feedsStore";
 import { useTranslation } from "react-i18next";
 import CustomModal from "@/components/ui/CustomModal.jsx";
+import { updateCategory } from "@/db/storage";
 
 export default function RenameModal() {
   const { t } = useTranslation();
+  const $categories = useStore(categories);
+  const { categoryId } = useParams();
   const [newTitle, setNewTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const $renameModalOpen = useStore(renameModalOpen);
-  const $currentCategory = useStore(currentCategory);
 
   useEffect(() => {
-    setNewTitle($currentCategory?.title);
-  }, [$currentCategory]);
+    setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title);
+  }, [$categories, categoryId]);
 
   const onClose = () => {
     renameModalOpen.set(false);
-    setNewTitle($currentCategory?.title);
+    setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title);
   };
 
   const handleRename = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await minifluxAPI.updateCategory($currentCategory.id, newTitle);
-      await forceSync(); // 重新加载订阅源列表以更新UI
+      await minifluxAPI.updateCategory(categoryId, newTitle);
+      // 更新本地数据库
+      await updateCategory(parseInt(categoryId), newTitle);
+      // 更新内存中的 store
+      categories.set(
+        $categories.map((c) =>
+          c.id === parseInt(categoryId) ? { ...c, title: newTitle } : c,
+        ),
+      );
       onClose();
     } catch (error) {
       console.error("重命名分类失败:", error);

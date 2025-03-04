@@ -11,7 +11,6 @@ import {
   deleteAllFeeds,
   deleteAllCategory,
 } from "../db/storage";
-import { extractTextFromHtml } from "@/lib/utils.js";
 import { settingsState } from "./settingsStore";
 
 // 在线状态
@@ -79,7 +78,6 @@ async function syncFeeds() {
         crawler: feed.crawler,
         hide_globally: feed.hide_globally,
         categoryId: feed.category.id,
-        categoryName: feed.category.title,
         parsing_error_count: feed.parsing_error_count,
         keeplist_rules: feed.keeplist_rules,
         blocklist_rules: feed.blocklist_rules,
@@ -100,7 +98,6 @@ const mapEntryToArticle = (entry) => ({
   author: entry.author,
   url: entry.url,
   content: entry.content,
-  plainContent: extractTextFromHtml(entry.content.slice(0, 300)),
   status: entry.status,
   starred: entry.starred ? 1 : 0,
   published_at: entry.published_at,

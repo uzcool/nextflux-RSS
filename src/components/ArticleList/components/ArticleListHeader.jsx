@@ -1,19 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useStore } from "@nanostores/react";
 import { SidebarTrigger } from "@/components/ui/sidebar.jsx";
-import {
-  filter,
-} from "@/stores/articlesStore.js";
-import { feeds } from "@/stores/feedsStore.js";
+import { filter } from "@/stores/articlesStore.js";
+import { feeds, categories } from "@/stores/feedsStore.js";
 import MarkAllReadButton from "./MarkAllReadButton";
 import { isSyncing } from "@/stores/syncStore.js";
 import { useTranslation } from "react-i18next";
-import { totalStarredCount, totalUnreadCount, getCategoryCount, getFeedCount } from "@/stores/feedsStore.js";
-
+import {
+  totalStarredCount,
+  totalUnreadCount,
+  getCategoryCount,
+  getFeedCount,
+} from "@/stores/feedsStore.js";
+import MenuButton from "./MenuButton";
 export default function ArticleListHeader() {
   const { feedId, categoryId } = useParams();
   const $filter = useStore(filter);
   const $feeds = useStore(feeds);
+  const $categories = useStore(categories);
   const $isSyncing = useStore(isSyncing);
   const $totalStarredCount = useStore(totalStarredCount);
   const $totalUnreadCount = useStore(totalUnreadCount);
@@ -28,8 +32,8 @@ export default function ArticleListHeader() {
     }
 
     if (categoryId) {
-      const feed = $feeds.find((f) => f.categoryId === parseInt(categoryId));
-      return feed?.categoryName || "";
+      const category = $categories.find((c) => c.id === parseInt(categoryId));
+      return category?.title || "";
     }
 
     switch ($filter) {
@@ -83,8 +87,9 @@ export default function ArticleListHeader() {
               {$isSyncing ? t("common.syncing") : getFilteredCount()}
             </span>
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto flex gap-1">
             <MarkAllReadButton />
+            <MenuButton />
           </div>
         </div>
       </div>

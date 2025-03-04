@@ -124,7 +124,9 @@ export function SelItem({ label, icon, settingName, settingValue, options }) {
             className="capitalize gap-1 pr-1.5 h-7 rounded-md bg-content1 dark:bg-default !shadow-custom-cursor"
             variant="solid"
             size="sm"
-            endContent={<ChevronsUpDown className="size-4 shrink-0" />}
+            endContent={
+              <ChevronsUpDown className="size-4 shrink-0 text-default-400" />
+            }
           >
             {options.find((opt) => opt.value === settingValue.toString())
               ?.label || settingValue}

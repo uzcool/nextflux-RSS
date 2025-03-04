@@ -1,18 +1,20 @@
 import minifluxAPI from "@/api/miniflux";
-import { forceSync } from "@/stores/syncStore";
-import { unsubscribeModalOpen, currentFeed } from "@/stores/modalStore.js";
+import { unsubscribeModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { feeds } from "@/stores/feedsStore";
 import AlertDialog from "@/components/ui/AlertDialog.jsx";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"; 
+import { deleteArticlesByFeedId, deleteFeed, deleteFeedIcon } from "@/db/storage";
 
 export default function UnsubscribeModal() {
   const { t } = useTranslation();
-  const $currentFeed = useStore(currentFeed);
+  const $feeds = useStore(feeds);
+  const { feedId } = useParams();
   const $unsubscribeModalOpen = useStore(unsubscribeModalOpen);
   const navigate = useNavigate();
 
-  const feedTitle = $currentFeed?.title;
+  const feedTitle = $feeds.find((f) => f.id === parseInt(feedId))?.title;
 
   const onClose = () => {
     unsubscribeModalOpen.set(false);
@@ -20,8 +22,17 @@ export default function UnsubscribeModal() {
 
   const handleUnsubscribe = async () => {
     try {
-      await minifluxAPI.deleteFeed($currentFeed.id);
-      await forceSync(); // 重新加载订阅源列表以更新UI
+      const feedIdInt = parseInt(feedId);
+      // 从服务器删除订阅源
+      await minifluxAPI.deleteFeed(feedId);
+      // 从本地数据库删除相关数据
+      await Promise.all([
+        deleteArticlesByFeedId(feedIdInt),
+        deleteFeed(feedIdInt),
+        deleteFeedIcon(feedIdInt)
+      ]);
+      // 更新本地状态
+      feeds.set($feeds.filter(feed => feed.id !== feedIdInt));
       navigate("/"); // 取消订阅后返回首页
     } catch (error) {
       console.error("取消订阅失败:", error);

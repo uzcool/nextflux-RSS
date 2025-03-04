@@ -21,8 +21,6 @@ import { useSidebar } from "@/components/ui/sidebar.jsx";
 import FeedIcon from "@/components/ui/FeedIcon";
 import { settingsState } from "@/stores/settingsStore";
 import { useEffect, useState } from "react";
-import FeedContextMenu from "./FeedContextMenu";
-import CategoryContextMenu from "./CategoryContextMenu";
 
 const FeedsGroupContent = ({ category }) => {
   const $getCategoryCount = useStore(getCategoryCount);
@@ -71,7 +69,6 @@ const FeedsGroupContent = ({ category }) => {
   return (
     <Collapsible key={category.id} open={open} onOpenChange={updateExpandState}>
       <SidebarMenuItem key={`menu-${category.id}`}>
-        <CategoryContextMenu category={category}>
           <SidebarMenuButton
             className={cn(
               categoryId === category.id && "bg-default rounded-md",
@@ -95,12 +92,10 @@ const FeedsGroupContent = ({ category }) => {
             {$getCategoryCount(category.id) !== 0 &&
               $getCategoryCount(category.id)}
           </SidebarMenuBadge>
-        </CategoryContextMenu>
         <CollapsibleContent>
           <SidebarMenuSub className="m-0 px-0 border-none">
             {category.feeds.map((feed) => (
-              <FeedContextMenu key={feed.id} feed={feed}>
-                <SidebarMenuSubItem>
+                <SidebarMenuSubItem key={feed.id}>
                   <SidebarMenuSubButton
                     asChild
                     className={cn(
@@ -128,7 +123,6 @@ const FeedsGroupContent = ({ category }) => {
                     </Link>
                   </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
-              </FeedContextMenu>
             ))}
           </SidebarMenuSub>
         </CollapsibleContent>

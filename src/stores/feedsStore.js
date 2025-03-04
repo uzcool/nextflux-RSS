@@ -29,12 +29,14 @@ export const filteredFeeds = computed(
 );
 
 export const feedsByCategory = computed(
-  [filteredFeeds, unreadCounts, starredCounts],
-  ($filteredFeeds, $unreadCounts, $starredCounts) => {
+  [filteredFeeds, categories, unreadCounts, starredCounts],
+  ($filteredFeeds, $categories, $unreadCounts, $starredCounts) => {
     return Object.entries(
       $filteredFeeds.reduce((acc, feed) => {
-        const categoryName = feed.categoryName || "未分类";
         const categoryId = feed.categoryId || "uncategorized";
+        const category = $categories.find(c => c.id === feed.categoryId);
+        const categoryName = category ? category.title : "未分类";
+        
         if (!acc[categoryId]) {
           acc[categoryId] = {
             name: categoryName,

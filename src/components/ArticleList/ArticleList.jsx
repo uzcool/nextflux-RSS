@@ -8,6 +8,7 @@ import {
   currentPage,
   loading,
 } from "@/stores/articlesStore.js";
+import { lastSync } from "@/stores/syncStore.js";
 import { useParams } from "react-router-dom";
 import ArticleListHeader from "./components/ArticleListHeader";
 import ArticleListContent from "./components/ArticleListContent";
@@ -19,6 +20,7 @@ const ArticleList = () => {
   const { feedId, categoryId } = useParams();
   const $filteredArticles = useStore(filteredArticles);
   const $filter = useStore(filter);
+  const $lastSync = useStore(lastSync);
   const { showUnreadByDefault, sortDirection, showHiddenFeeds } =
     useStore(settingsState);
 
@@ -51,7 +53,7 @@ const ArticleList = () => {
     return () => {
       ignore = true;
     };
-  }, [feedId, categoryId, $filter, sortDirection, showHiddenFeeds]);
+  }, [feedId, categoryId, $filter, sortDirection, showHiddenFeeds, $lastSync]);
 
   // 组件挂载时设置默认过滤器
   useEffect(() => {

@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import "dayjs/locale/en";
 import "dayjs/locale/tr";
+import "dayjs/locale/fr";
 // 这里可以按需导入更多语言包
 import relativeTime from "dayjs/plugin/relativeTime";
 import calendar from "dayjs/plugin/calendar";

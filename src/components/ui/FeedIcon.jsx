@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Image } from "@heroui/react";
 import { Rss } from "lucide-react";
 import { settingsState } from "@/stores/settingsStore";
@@ -7,44 +7,65 @@ import { cn } from "@/lib/utils";
 import { getFeedIcon, setFeedIcon } from "@/db/storage";
 import minifluxAPI from "@/api/miniflux";
 
-const FeedIcon = ({ feedId }) => {
+const FeedIcon = ({ feedId, url = null }) => {
   const { feedIconShape, useGrayIcon } = useStore(settingsState);
   const [error, setError] = useState(false);
   const [isBlurry, setIsBlurry] = useState(false);
   const [iconData, setIconData] = useState(null);
 
+  // 添加 Google Favicon 相关逻辑
+  const getDomain = useMemo(() => {
+    if (!url) return "";
+    try {
+      return new URL(url).hostname;
+    } catch {
+      return "";
+    }
+  }, [url]);
+
+  const faviconUrl = useMemo(() => {
+    return `https://www.google.com/s2/favicons?sz=64&domain_url=${getDomain}`;
+  }, [getDomain]);
+
   useEffect(() => {
     const loadIcon = async () => {
       try {
-        let icon = await getFeedIcon(feedId);
+        if (feedId) {
+          let icon = await getFeedIcon(feedId);
 
-        if (!icon || Date.now() - icon.updatedAt > 7 * 24 * 60 * 60 * 1000) {
-          const newIcon = await minifluxAPI.getIconByFeedId(feedId);
-          if (newIcon) {
-            await setFeedIcon({
-              feedId,
-              mime_type: newIcon.mime_type,
-              data: newIcon.data,
-            });
-            icon = newIcon;
+          if (!icon || Date.now() - icon.updatedAt > 7 * 24 * 60 * 60 * 1000) {
+            const newIcon = await minifluxAPI.getIconByFeedId(feedId);
+            if (newIcon) {
+              await setFeedIcon({
+                feedId,
+                mime_type: newIcon.mime_type,
+                data: newIcon.data,
+              });
+              icon = newIcon;
+            }
+          }
+
+          if (icon) {
+            setIconData(`data:${icon.data}`);
+            return;
           }
         }
-
-        if (icon) {
-          setIconData(`data:${icon.data}`);
-        } else {
-          setError(true);
+        
+        // 如果没有 feedId 或获取失败，尝试使用 URL 方式
+        if (url) {
+          setIconData(faviconUrl);
+          return;
         }
+
+        setError(true);
       } catch (err) {
         console.error("加载订阅源图标失败:", err);
         setError(true);
       }
     };
 
-    if (feedId) {
-      loadIcon();
-    }
-  }, [feedId]);
+    loadIcon();
+  }, [feedId, url, faviconUrl]);
 
   // 处理图片加载错误
   const handleError = () => {

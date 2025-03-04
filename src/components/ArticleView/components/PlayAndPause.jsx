@@ -2,12 +2,12 @@ import { Button, Card, CardHeader, Image } from "@heroui/react";
 import { activeAudio, audioState } from "@/stores/audioStore.js";
 import { activeArticle } from "@/stores/articlesStore.js";
 import { useStore } from "@nanostores/react";
-import { cn, extractFirstImage } from "@/lib/utils.js";
+import { cn } from "@/lib/utils.js";
 import cover from "@/assets/cover.jpg";
 import { useEffect, useState } from "react";
 import { plyrLayoutIcons } from "@vidstack/react/player/layouts/plyr";
 
-export default function PlayAndPause({ source }) {
+export default function PlayAndPause({ source, poster }) {
   const { paused, loading } = useStore(audioState);
   const $activeArticle = useStore(activeArticle);
   const $activeAudio = useStore(activeAudio);
@@ -30,7 +30,7 @@ export default function PlayAndPause({ source }) {
           <Button
             className="bg-white text-black/60 shadow-custom"
             radius="full"
-            isLoading={loading}
+            isLoading={currentPlaying && loading}
             isIconOnly
             onPress={() => {
               activeAudio.set(source);
@@ -38,10 +38,7 @@ export default function PlayAndPause({ source }) {
               audioState.setKey("title", $activeArticle.title);
               audioState.setKey("artist", $activeArticle.feed.title || "");
               audioState.setKey("paused", false);
-              audioState.setKey(
-                "artwork",
-                extractFirstImage($activeArticle) || "",
-              );
+              audioState.setKey("artwork", poster || "");
             }}
           >
             <Play className="size-4 fill-current ml-0.5" />
@@ -64,7 +61,7 @@ export default function PlayAndPause({ source }) {
         removeWrapper
         alt="Card background"
         className="z-0 w-full h-full object-cover"
-        src={extractFirstImage($activeArticle) || cover}
+        src={poster || cover}
       />
     </Card>
   );

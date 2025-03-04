@@ -50,7 +50,7 @@ export async function searchFeeds(keyword) {
         return false;
       }
 
-      const searchText = [feed.title, feed.url, feed.categoryName]
+      const searchText = [feed.title, feed.url]
         .join(" ")
         .toLowerCase();
       return searchText.includes(keyword.toLowerCase());

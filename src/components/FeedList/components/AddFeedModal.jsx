@@ -10,6 +10,7 @@ import {
   SelectItem,
   Textarea,
   Divider,
+  addToast
 } from "@heroui/react";
 import { useState } from "react";
 import { useStore } from "@nanostores/react";
@@ -20,7 +21,11 @@ import { forceSync } from "@/stores/syncStore";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Minus, Plus, Search, Rss, Loader2 } from "lucide-react";
-import { SiYoutube, SiReddit, SiMastodon } from "@icons-pack/react-simple-icons";
+import {
+  SiYoutube,
+  SiReddit,
+  SiMastodon,
+} from "@icons-pack/react-simple-icons";
 import CustomModal from "@/components/ui/CustomModal.jsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { Podcast } from "lucide-react";
@@ -51,7 +56,7 @@ export default function AddFeedModal() {
       prefix: "",
       suffix: "",
       rewrite_rules: "",
-      icon: <Rss className="size-4 text-default-500" />,
+      icon: <Rss strokeWidth={3} className="size-4 text-[#FFA500]" />,
       placeholder: "https://www.example.com",
     },
     {
@@ -60,7 +65,7 @@ export default function AddFeedModal() {
       prefix: "https://www.youtube.com/@",
       suffix: "",
       rewrite_rules: "",
-      icon: <SiYoutube className="size-4 text-default-500" />,
+      icon: <SiYoutube className="size-4 text-[#FF0000]" />,
       placeholder: t("feed.youtubeChannelPlaceholder"),
     },
     {
@@ -69,7 +74,7 @@ export default function AddFeedModal() {
       prefix: "https://www.reddit.com/r/",
       suffix: "/top.rss",
       rewrite_rules: "remove_tables",
-      icon: <SiReddit className="size-4 text-default-500" />,
+      icon: <SiReddit className="size-4 text-[#FF4500]" />,
       placeholder: t("feed.redditPlaceholder"),
     },
     {
@@ -78,7 +83,7 @@ export default function AddFeedModal() {
       prefix: "",
       suffix: "",
       rewrite_rules: "",
-      icon: <Podcast className="size-4 text-default-500" />,
+      icon: <Podcast className="size-4 text-[#9933CC]" />,
       placeholder: t("feed.podcastPlaceholder"),
     },
     {
@@ -87,7 +92,7 @@ export default function AddFeedModal() {
       prefix: "",
       suffix: "",
       rewrite_rules: "",
-      icon: <SiMastodon className="size-4 text-default-500" />,
+      icon: <SiMastodon className="size-4 text-[#6364FF]" />,
       placeholder: t("feed.mastodonPlaceholder"),
     },
   ];
@@ -128,8 +133,11 @@ export default function AddFeedModal() {
           rewrite_rules: type.rewrite_rules,
         });
       }
-    } catch (error) {
-      console.error("搜索失败:", error);
+    } catch {
+      addToast({
+        title: t("search.searchResultsPlaceholder"),
+        color: "danger",
+      });
       setResults([]);
     } finally {
       setSearching(false);

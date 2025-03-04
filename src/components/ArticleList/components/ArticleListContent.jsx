@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef } from "react";
 import ArticleCard from "./ArticleCard";
 import { useParams } from "react-router-dom";
 import {
@@ -7,7 +7,6 @@ import {
   currentPage,
   loadingMore,
   loading,
-  filteredArticles,
 } from "@/stores/articlesStore.js";
 import { useStore } from "@nanostores/react";
 import { Virtuoso } from "react-virtuoso";
@@ -16,7 +15,7 @@ import { useIsMobile } from "@/hooks/use-mobile.jsx";
 import { Button, CircularProgress } from "@heroui/react";
 import { CheckCheck, Loader2 } from "lucide-react";
 import { handleMarkAllRead } from "@/handlers/articleHandlers";
-import { isSyncing, lastSync } from "@/stores/syncStore.js";
+import { isSyncing } from "@/stores/syncStore.js";
 import { useTranslation } from "react-i18next";
 import { settingsState } from "@/stores/settingsStore.js";
 import { loadArticles } from "@/stores/articlesStore";
@@ -45,35 +44,6 @@ export default function ArticleListContent({ articles }) {
   const $currentPage = useStore(currentPage);
   const $loading = useStore(loading);
   const $loadingMore = useStore(loadingMore);
-  const $lastSync = useStore(lastSync);
-
-  const [visibleRange, setVisibleRange] = useState({
-    startIndex: 0,
-    endIndex: 0,
-  });
-
-  useEffect(() => {
-    const handleFetchArticles = async () => {
-      filteredArticles.set([]);
-      loading.set(true);
-      try {
-        const res = await loadArticles(
-          feedId || categoryId,
-          feedId ? "feed" : categoryId ? "category" : null,
-        );
-        filteredArticles.set(res.articles);
-        hasMore.set(res.isMore);
-        currentPage.set(1);
-        loading.set(false);
-      } catch {
-        console.error("加载文章失败");
-        loading.set(false);
-      }
-    };
-    if (visibleRange.startIndex === 0) {
-      handleFetchArticles();
-    }
-  }, [$lastSync]);
 
   useEffect(() => {
     if (isMedium) {
@@ -132,8 +102,7 @@ export default function ArticleListContent({ articles }) {
             <Virtuoso
               ref={listRef}
               className="v-list h-full"
-              rangeChanged={setVisibleRange}
-              overscan={{ main: 5, reverse: 0 }}
+              overscan={{ main: 2, reverse: 0 }}
               data={articles}
               context={{
                 feedId,

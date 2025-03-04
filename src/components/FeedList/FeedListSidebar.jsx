@@ -41,7 +41,7 @@ const FeedListSidebar = () => {
       <SidebarHeader className="sidebar-header standalone:pt-safe-or-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <Image src={logo} alt="logo" className="size-8" radius="none" />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">Nextflux</span>

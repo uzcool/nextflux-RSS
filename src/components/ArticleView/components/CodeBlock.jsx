@@ -63,7 +63,12 @@ export default function CodeBlock({ code, language }) {
       >
         {language}
       </span>
-      <Tooltip size="sm" closeDelay="0" content={t("common.copy")}>
+      <Tooltip
+        size="sm"
+        closeDelay="0"
+        content={t("common.copy")}
+        classNames={{ content: "!shadow-custom" }}
+      >
         <Button
           className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity"
           size="sm"

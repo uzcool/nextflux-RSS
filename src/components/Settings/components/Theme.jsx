@@ -62,7 +62,9 @@ export default function Theme() {
               className="capitalize gap-1 pr-1.5 rounded-md h-7 bg-content1 dark:bg-default !shadow-custom-cursor"
               variant="solid"
               size="sm"
-              endContent={<ChevronsUpDown className="size-4 shrink-0" />}
+              endContent={
+                <ChevronsUpDown className="size-4 shrink-0 text-default-400" />
+              }
             >
               {mode.find((item) => item.id === themeMode)?.name}
             </Button>
@@ -101,7 +103,9 @@ export default function Theme() {
               className="capitalize gap-1 pr-1.5 rounded-md h-7 bg-content1 dark:bg-default !shadow-custom-cursor"
               variant="solid"
               size="sm"
-              endContent={<ChevronsUpDown className="size-4 shrink-0" />}
+              endContent={
+                <ChevronsUpDown className="size-4 shrink-0 text-default-400" />
+              }
             >
               {t(
                 `settings.appearance.themes.${themes.light.find((item) => item.id === lightTheme)?.id}`,
@@ -156,7 +160,9 @@ export default function Theme() {
               className="capitalize gap-1 pr-1.5 rounded-md h-7 bg-content1 dark:bg-default !shadow-custom-cursor"
               variant="solid"
               size="sm"
-              endContent={<ChevronsUpDown className="size-4 shrink-0" />}
+              endContent={
+                <ChevronsUpDown className="size-4 shrink-0 text-default-400" />
+              }
             >
               {t(
                 `settings.appearance.themes.${themes.dark.find((item) => item.id === darkTheme)?.id}`,

@@ -1,7 +1,7 @@
 import { Listbox, ListboxItem } from "@heroui/react";
 import { cn } from "@/lib/utils";
 import { Image } from "@heroui/react";
-
+import FeedIcon from "@/components/ui/FeedIcon";
 export default function ResultListbox({ results, searchType, handleSelect }) {
   const ListboxWrapper = ({ children }) => (
     <div
@@ -37,7 +37,7 @@ export default function ResultListbox({ results, searchType, handleSelect }) {
             textValue={item.url}
             description={item.url}
             startContent={
-              searchType === "podcast" && (
+              searchType === "podcast" ? (
                 <Image
                   src={item.icon_url}
                   alt={item.title}
@@ -47,6 +47,8 @@ export default function ResultListbox({ results, searchType, handleSelect }) {
                     img: "size-8 rounded-none",
                   }}
                 />
+              ) : (
+                <FeedIcon feedId={null} url={item.url} />
               )
             }
           >

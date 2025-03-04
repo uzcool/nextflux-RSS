@@ -4,8 +4,8 @@ import { Tab, Tabs } from "@heroui/react";
 import { useStore } from "@nanostores/react";
 import AudioPlayer from "@/components/ArticleView/components/AudioPlayer.jsx";
 import { activeAudio } from "@/stores/audioStore.js";
-import { AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { AnimatePresence } from "framer-motion";
 
 export default function ArticleListFooter() {
   const { t } = useTranslation();

@@ -118,7 +118,10 @@ export default function ActionButtons({ parentRef }) {
     >
       <NavbarContent className="flex items-center space-between">
         <div className="flex items-center gap-1">
-          <Tooltip content={t("common.close")}>
+          <Tooltip
+            content={t("common.close")}
+            classNames={{ content: "!shadow-custom" }}
+          >
             <Button
               onPress={handleClose}
               size="sm"
@@ -131,7 +134,10 @@ export default function ActionButtons({ parentRef }) {
             </Button>
           </Tooltip>
           <Divider orientation="vertical" className="h-6" />
-          <Tooltip content={t("common.previous")}>
+          <Tooltip
+            content={t("common.previous")}
+            classNames={{ content: "!shadow-custom" }}
+          >
             <Button
               onPress={handlePrevious}
               className="hidden md:flex"
@@ -145,7 +151,10 @@ export default function ActionButtons({ parentRef }) {
               <span className="sr-only">{t("common.previous")}</span>
             </Button>
           </Tooltip>
-          <Tooltip content={t("common.next")}>
+          <Tooltip
+            content={t("common.next")}
+            classNames={{ content: "!shadow-custom" }}
+          >
             <Button
               onPress={handleNext}
               className="hidden md:flex"
@@ -167,6 +176,7 @@ export default function ActionButtons({ parentRef }) {
                 ? t("common.unread")
                 : t("common.read")
             }
+            classNames={{ content: "!shadow-custom" }}
           >
             <Button
               onPress={() => handleMarkStatus($activeArticle)}
@@ -193,6 +203,7 @@ export default function ActionButtons({ parentRef }) {
                 ? t("common.unstar")
                 : t("common.star")
             }
+            classNames={{ content: "!shadow-custom" }}
           >
             <Button
               ref={buttonRef}
@@ -217,7 +228,10 @@ export default function ActionButtons({ parentRef }) {
             </Button>
           </Tooltip>
           {$hasIntegrations && (
-            <Tooltip content={t("articleView.saveToThirdParty")}>
+            <Tooltip
+              content={t("articleView.saveToThirdParty")}
+              classNames={{ content: "!shadow-custom" }}
+            >
               <Button
                 size="sm"
                 radius="full"
@@ -236,6 +250,7 @@ export default function ActionButtons({ parentRef }) {
                 ? t("articleView.showSummary")
                 : t("articleView.getFullText")
             }
+            classNames={{ content: "!shadow-custom" }}
           >
             <Button
               onPress={() => handleToggleContent($activeArticle)}
@@ -253,7 +268,10 @@ export default function ActionButtons({ parentRef }) {
               </span>
             </Button>
           </Tooltip>
-          <Tooltip content={t("common.share")}>
+          <Tooltip
+            content={t("common.share")}
+            classNames={{ content: "!shadow-custom" }}
+          >
             <Button
               size="sm"
               radius="full"

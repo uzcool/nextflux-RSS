@@ -3,12 +3,12 @@ import { useState } from "react";
 import { addCategoryModalOpen } from "@/stores/modalStore";
 import { useStore } from "@nanostores/react";
 import minifluxAPI from "@/api/miniflux";
-import { forceSync } from "@/stores/syncStore";
 import { categories } from "@/stores/feedsStore";
 import { addToast } from "@heroui/react";
 import CategoryChip from "./CategoryChip.jsx";
 import { useTranslation } from "react-i18next";
 import CustomModal from "@/components/ui/CustomModal.jsx";
+import { addCategory } from "@/db/storage";
 
 export default function AddCategoryModal() {
   const { t } = useTranslation();
@@ -26,8 +26,12 @@ export default function AddCategoryModal() {
     e.preventDefault();
     try {
       setLoading(true);
-      await minifluxAPI.createCategory(title);
-      await forceSync();
+      const newCategory = await minifluxAPI.createCategory(title);
+      await addCategory({ id: newCategory.id, title: newCategory.title });
+      categories.set([
+        ...$categories,
+        { id: newCategory.id, title: newCategory.title },
+      ]);
       onClose();
       addToast({ title: t("common.success"), color: "success" });
     } catch (error) {
