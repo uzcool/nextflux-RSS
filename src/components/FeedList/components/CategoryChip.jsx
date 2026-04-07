@@ -33,33 +33,27 @@ export default function CategoryChip({ category }) {
   };
 
   return (
-    <Chip
-      key={category.id}
-      variant="flat"
-      size="sm"
-      endContent={
-        !hasFeeds ? (
-          <span
-            className={cn(
-              "text-xs size-4 flex items-center justify-center rounded-full p-1 ml-1 text-content2-foreground",
-              loading
-                ? "cursor-not-allowed opacity-50"
-                : "cursor-pointer hover:bg-default-100",
-            )}
-            onClick={
-              loading ? undefined : () => handleDeleteCategory(category.id)
-            }
-          >
-            {loading ? (
-              <Loader2 className="h-3 w-3 animate-spin" />
-            ) : (
-              <X className="h-3 w-3" />
-            )}
-          </span>
-        ) : null
-      }
-    >
-      {category.title}
+    <Chip key={category.id}>
+      <Chip.Label>{category.title}</Chip.Label>
+      {!hasFeeds ? (
+        <span
+          className={cn(
+            "text-xs size-4 flex items-center justify-center rounded-full p-1 ml-1",
+            loading
+              ? "cursor-not-allowed opacity-50"
+              : "cursor-pointer hover:bg-background",
+          )}
+          onClick={
+            loading ? undefined : () => handleDeleteCategory(category.id)
+          }
+        >
+          {loading ? (
+            <Loader2 className="h-3 w-3 animate-spin" />
+          ) : (
+            <X className="h-3 w-3" />
+          )}
+        </span>
+      ) : null}
     </Chip>
   );
 }

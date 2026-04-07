@@ -16,7 +16,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "@nanostores/react";
 import { settingsState } from "@/stores/settingsStore";
 import { feeds } from "@/stores/feedsStore";
-import { Ripple, useRipple } from "@heroui/react";
 import FeedIcon from "@/components/ui/FeedIcon.jsx";
 import { useTranslation } from "react-i18next";
 import { ContextMenu, ContextMenuItem } from "@/components/ui/ContextMenu";
@@ -36,7 +35,6 @@ export default function ArticleCard({ article }) {
     titleLines,
   } = useStore(settingsState);
   const hasBeenVisible = useRef(false);
-  const { ripples, onClear, onPress } = useRipple();
   const [contextMenu, setContextMenu] = useState({
     isOpen: false,
     position: { x: 0, y: 0 },
@@ -106,20 +104,7 @@ export default function ArticleCard({ article }) {
     }
   };
 
-  const handleClick = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // 创建一个模拟的 PressEvent 对象
-    const pressEvent = {
-      type: "press",
-      target: e.currentTarget,
-      x,
-      y,
-    };
-
-    onPress(pressEvent);
+  const handleClick = () => {
     handleArticleClick(article);
   };
 
@@ -143,19 +128,13 @@ export default function ArticleCard({ article }) {
           "cursor-pointer select-none overflow-hidden p-2 rounded-xl",
           "relative transform-gpu transition-background duration-200",
           "bg-transparent contain-content",
-          "hover:bg-background/70",
-          parseInt(articleId) === article.id &&
-            "bg-background/70 shadow-custom",
+          "hover:bg-overlay/70",
+          parseInt(articleId) === article.id && "bg-overlay/70 shadow-custom",
         )}
         data-article-id={article.id}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
       >
-        <Ripple
-          ripples={ripples}
-          onClear={onClear}
-          color="hsl(var(--heroui-content4))"
-        />
         <div
           className={cn(
             "card-content flex flex-col gap-1 transition-opacity",
@@ -167,12 +146,12 @@ export default function ArticleCard({ article }) {
               <div className="card-source flex items-center flex-1 gap-1 min-w-0">
                 <div className="card-source-content flex gap-1 items-center min-w-0">
                   {showFavicon && <FeedIcon feedId={article.feedId} />}
-                  <span className="card-source-title text-default-500 font-bold text-xs line-clamp-1">
+                  <span className="card-source-title text-muted font-bold text-xs line-clamp-1">
                     {feedTitle}
                   </span>
                 </div>
               </div>
-              <div className="card-time-wrapper flex items-center gap-1 text-xs text-default-400">
+              <div className="card-time-wrapper flex items-center gap-1 text-xs text-muted">
                 <span className="card-star">
                   <Star
                     className="size-3 fill-current"
@@ -190,7 +169,7 @@ export default function ArticleCard({ article }) {
                   className={cn(
                     "card-title text-base font-semibold text-wrap break-words",
                     article.status === "read"
-                      ? "text-content2-foreground"
+                      ? "text-muted"
                       : "text-foreground",
                   )}
                   style={{
@@ -204,7 +183,7 @@ export default function ArticleCard({ article }) {
                   {cleanTitle(article.title)}
                 </h3>
                 {showReadingTime && (
-                  <div className="text-xs text-default-500 flex items-center gap-1">
+                  <div className="text-xs text-muted flex items-center gap-1">
                     <Clock className="size-3 shrink-0" />
                     <span className="line-clamp-1">
                       {article.reading_time === 0
@@ -216,7 +195,7 @@ export default function ArticleCard({ article }) {
                 {textPreviewLines !== 0 && (
                   <span
                     className={cn(
-                      "text-sm text-default-500 text-wrap break-words w-full max-w-full overflow-hidden",
+                      "text-sm text-muted text-wrap break-words w-full max-w-full overflow-hidden",
                     )}
                     style={{
                       wordBreak: "break-word",
@@ -251,7 +230,7 @@ export default function ArticleCard({ article }) {
             handleMarkAboveAsRead(article.id);
             closeContextMenu();
           }}
-          startContent={<ArrowUpFromLine className="size-4 text-default-500" />}
+          startContent={<ArrowUpFromLine className="size-4 text-muted" />}
         >
           {t("common.markAboveAsRead")}
         </ContextMenuItem>
@@ -262,9 +241,9 @@ export default function ArticleCard({ article }) {
           }}
           startContent={
             article.status === "read" ? (
-              <CircleDot className="size-4 text-default-500 p-0.5 fill-current" />
+              <CircleDot className="size-4 text-muted p-0.5 fill-current" />
             ) : (
-              <Circle className="size-4 text-default-500 p-0.5" />
+              <Circle className="size-4 text-muted p-0.5" />
             )
           }
         >

@@ -6,7 +6,6 @@ import {
   AlignStartVertical,
   CaseSensitive,
   ListOrdered,
-  PanelTopDashed,
   SquareCode,
   Type,
   UnfoldHorizontal,
@@ -20,7 +19,7 @@ import {
   SliderItem,
   SwitchItem,
 } from "@/components/ui/settingItem.jsx";
-import { Button, Divider } from "@heroui/react";
+import { Button, Separator } from "@heroui/react";
 import { resetSettings } from "@/stores/settingsStore.js";
 import { useTranslation } from "react-i18next";
 import SettingIcon from "@/components/ui/SettingIcon";
@@ -34,7 +33,6 @@ export default function Readability() {
     fontFamily,
     titleFontSize,
     titleAlignType,
-    autoHideToolbar,
     showLineNumbers,
     forceDarkCodeTheme,
   } = useStore(settingsState);
@@ -88,7 +86,7 @@ export default function Readability() {
             { value: "center", icon: <AlignCenter className="size-4" /> },
           ]}
         />
-        <Divider />
+        <Separator />
         <SliderItem
           label={t("settings.readability.titleFontSize")}
           icon={
@@ -104,17 +102,6 @@ export default function Readability() {
         />
       </ItemWrapper>
       <ItemWrapper title={t("settings.readability.text")}>
-        <SwitchItem
-          label={t("settings.readability.autoHideToolbar")}
-          icon={
-            <SettingIcon variant="amber">
-              <PanelTopDashed />
-            </SettingIcon>
-          }
-          settingName="autoHideToolbar"
-          settingValue={autoHideToolbar}
-        />
-        <Divider />
         <SelItem
           label={t("settings.readability.font")}
           icon={
@@ -126,7 +113,7 @@ export default function Readability() {
           settingValue={fontFamily}
           options={fontOptions}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.readability.textAlignJustify")}
           icon={
@@ -137,7 +124,7 @@ export default function Readability() {
           settingName="alignJustify"
           settingValue={alignJustify}
         />
-        <Divider />
+        <Separator />
         <SliderItem
           label={t("settings.readability.lineHeight")}
           icon={
@@ -151,7 +138,7 @@ export default function Readability() {
           min={1.2}
           step={0.1}
         />
-        <Divider />
+        <Separator />
         <SliderItem
           label={t("settings.readability.fontSize")}
           icon={
@@ -165,7 +152,7 @@ export default function Readability() {
           min={14}
           step={2}
         />
-        <Divider />
+        <Separator />
         <SliderItem
           label={t("settings.readability.maxWidth")}
           icon={
@@ -191,7 +178,7 @@ export default function Readability() {
           settingName="showLineNumbers"
           settingValue={showLineNumbers}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.appearance.forceDarkCodeTheme")}
           icon={
@@ -203,7 +190,7 @@ export default function Readability() {
           settingValue={forceDarkCodeTheme}
         />
       </ItemWrapper>
-      <Button color="danger" variant="flat" onPress={resetSettings}>
+      <Button fullWidth variant="danger" onPress={resetSettings}>
         {t("settings.readability.reset")}
       </Button>
     </>

@@ -11,10 +11,10 @@ export default function EmptyPlaceholder() {
     <div
       className={cn(
         "h-full w-full",
-        floatingSidebar ? "" : "shadow-custom rounded-2xl bg-background",
+        floatingSidebar ? "" : "shadow-custom rounded-2xl bg-overlay",
       )}
     >
-      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-default-400">
+      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-muted opacity-60">
         <Inbox className="size-16" />
         {t("articleList.emptyPlaceholder")}
       </div>

@@ -1,11 +1,5 @@
 import { useParams } from "react-router-dom";
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/react";
+import { Button, Dropdown, Label, Spinner } from "@heroui/react";
 import { handleMarkAllRead } from "@/handlers/articleHandlers";
 import { CircleCheck } from "lucide-react";
 import { isSyncing } from "@/stores/syncStore.js";
@@ -20,25 +14,26 @@ export default function MarkAllReadButton() {
   const $filter = useStore(filter);
   return (
     <Dropdown>
-      <DropdownTrigger>
-        <Button
-          size="sm"
-          radius="full"
-          variant="light"
-          isIconOnly
-          isDisabled={$filter === "starred"}
-          isLoading={$isSyncing}
-        >
-          <CircleCheck className="size-4 text-default-500" />
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label="markAllAsRead" variant="flat">
-        <DropdownItem
-          key="markAsRead"
-          className="text-danger"
-          color="danger"
-          startContent={<CircleCheck className="size-4" />}
-          onPress={() => {
+      <Button
+        size="sm"
+        radius="full"
+        variant="ghost"
+        isIconOnly
+        isDisabled={$filter === "starred"}
+        isPending={$isSyncing}
+      >
+        {$isSyncing ? (
+          <Spinner color="current" size="sm" />
+        ) : (
+          <CircleCheck className="size-4 text-muted" />
+        )}
+      </Button>
+
+      <Dropdown.Popover>
+        <Dropdown.Menu
+          aria-label="markAllAsRead"
+          onAction={(key) => {
+            if (key !== "markAsRead") return;
             if (feedId) {
               handleMarkAllRead("feed", feedId);
             } else if (categoryId) {
@@ -48,9 +43,18 @@ export default function MarkAllReadButton() {
             }
           }}
         >
-          {t("articleList.markAllRead")}
-        </DropdownItem>
-      </DropdownMenu>
+          <Dropdown.Item
+            id="markAsRead"
+            textValue={t("articleList.markAllRead")}
+            variant="danger"
+          >
+            <CircleCheck className="size-4 text-danger" />
+            <Label className="text-danger">
+              {t("articleList.markAllRead")}
+            </Label>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown.Popover>
     </Dropdown>
   );
 }

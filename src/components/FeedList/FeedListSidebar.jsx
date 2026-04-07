@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Image, ScrollShadow } from "@heroui/react";
+import { ScrollShadow } from "@heroui/react";
 import { formatLastSync } from "@/lib/format";
 import { settingsState } from "@/stores/settingsStore.js";
 import ArticlesGroup from "@/components/FeedList/components/ArticlesGroup.jsx";
@@ -26,6 +26,7 @@ import { useSwipeGesture } from "@/hooks/useSwipeGesture";
 import { useParams, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { isModalOpen } from "@/stores/modalStore";
+
 const FeedListSidebar = () => {
   const { t } = useTranslation();
   const $lastSync = useStore(lastSync);
@@ -64,10 +65,10 @@ const FeedListSidebar = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <div className="flex items-center gap-1">
-              <Image src={logo} alt="logo" className="size-8" radius="none" />
+              <img src={logo} alt="logo" className="size-8" />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">Nextflux</span>
-                <span className="truncate text-xs text-default-400">
+                <span className="truncate text-xs text-muted opacity-60">
                   {$isSyncing ? t("common.syncing") : formatLastSync($lastSync)}
                 </span>
               </div>

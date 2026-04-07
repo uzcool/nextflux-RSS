@@ -91,7 +91,7 @@ const FeedsGroupContent = ({ category }) => {
         </SidebarMenuButton>
 
         <CollapsibleTrigger asChild>
-          <SidebarMenuAction className="left-2 hover:bg-default/60 text-default-500 data-[state=open]:rotate-90">
+          <SidebarMenuAction className="left-2 hover:bg-default/60 text-muted data-[state=open]:rotate-90">
             <ChevronRight />
           </SidebarMenuAction>
         </CollapsibleTrigger>
@@ -112,7 +112,7 @@ const FeedsGroupContent = ({ category }) => {
           onClose={closeContextMenu}
           position={contextMenu.position}
         >
-          <div className="px-2 py-1.5 text-tiny font-medium text-default-400 line-clamp-1">
+          <div className="px-2 py-1.5 text-xs font-medium text-muted opacity-60 line-clamp-1">
             {category.title}
           </div>
           <ContextMenuItem
@@ -121,7 +121,7 @@ const FeedsGroupContent = ({ category }) => {
               renameModalOpen.set(true);
               closeContextMenu();
             }}
-            startContent={<FolderPen className="size-4 text-default-500" />}
+            startContent={<FolderPen className="size-4 text-muted" />}
           >
             {t("articleList.renameCategory.title")}
           </ContextMenuItem>

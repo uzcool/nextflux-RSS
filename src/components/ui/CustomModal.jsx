@@ -1,81 +1,45 @@
 import { useIsMobile } from "@/hooks/use-mobile.jsx";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  Modal,
-  ModalContent,
-  ModalHeader,
-} from "@heroui/react";
-import { MiniCloseButton } from "@/components/ui/MiniCloseButton.jsx";
-import { popUpVariants } from "@/lib/motion";
+import { Drawer, Modal, cn } from "@heroui/react";
 
-export default function CustomModal({ open, onOpenChange, title, children }) {
+export default function CustomModal({
+  open,
+  onOpenChange,
+  title,
+  fixedHeight = false,
+  children,
+}) {
   const { isMedium } = useIsMobile();
   if (isMedium) {
     return (
-      <Drawer
-        isOpen={open}
-        onOpenChange={onOpenChange}
-        placement="bottom"
-        hideCloseButton
-        radius="sm"
-        classNames={{
-          base: "flex flex-col items-center max-h-[90vh]",
-          header: "text-base font-medium p-4",
-          body: "px-0 pt-0 pb-safe",
-        }}
-      >
-        {/*<Drawer.Portal>*/}
-        {/*  <Drawer.Overlay className="fixed inset-0 bg-black/50 z-20" />*/}
-        {/*  <Drawer.Content className="bg-background flex flex-col fixed bottom-0 left-0 right-0 max-h-[82vh] rounded-t-lg z-20">*/}
-        {/*    <div className="w-full mx-auto overflow-auto px-4 pt-2 rounded-t-lg">*/}
-        {/*      <div className="max-w-sm mx-auto">*/}
-        {/*        <Drawer.Handle />*/}
-        {/*        <Drawer.Title className="font-medium text-foreground py-4 pl-4">*/}
-        {/*          {title}*/}
-        {/*        </Drawer.Title>*/}
-        {/*        {content}*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </Drawer.Content>*/}
-        {/*</Drawer.Portal>*/}
-        <DrawerContent>
-          {() => (
-            <div className="max-w-sm w-full">
-              <DrawerHeader>{title}</DrawerHeader>
-              <DrawerBody>{children}</DrawerBody>
-            </div>
-          )}
-        </DrawerContent>
+      <Drawer>
+        <Drawer.Backdrop isOpen={open} onOpenChange={onOpenChange}>
+          <Drawer.Content>
+            <Drawer.Dialog className={cn("px-0 pb-0", fixedHeight && "h-4/5")}>
+              <Drawer.Handle />
+              <Drawer.CloseTrigger />
+              <Drawer.Header className="p-3">
+                <Drawer.Heading>{title}</Drawer.Heading>
+              </Drawer.Header>
+              <Drawer.Body>{children}</Drawer.Body>
+            </Drawer.Dialog>
+          </Drawer.Content>
+        </Drawer.Backdrop>
       </Drawer>
     );
   }
   return (
-    <Modal
-      isOpen={open}
-      onClose={onOpenChange}
-      motionProps={{
-        variants: popUpVariants,
-      }}
-      placement="center"
-      scrollBehavior="inside"
-      radius="md"
-      size="sm"
-      hideCloseButton
-      classNames={{
-        header: "px-4 pt-3 pb-4 flex justify-between text-base font-medium",
-        base: "p-0 shadow-custom!",
-      }}
-    >
-      <ModalContent>
-        <ModalHeader>
-          <div>{title}</div>
-          <MiniCloseButton onClose={onOpenChange} />
-        </ModalHeader>
-        {children}
-      </ModalContent>
+    <Modal>
+      <Modal.Backdrop isOpen={open} onOpenChange={onOpenChange}>
+        <Modal.Container>
+          <Modal.Dialog className={cn("p-0", fixedHeight && "h-2/3")}>
+            <Modal.Header>
+              <Modal.Heading className="p-3">{title}</Modal.Heading>
+            </Modal.Header>
+            <Modal.Body className="mt-0">{children}</Modal.Body>
+            <Modal.CloseTrigger />
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   );
 }

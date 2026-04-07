@@ -3,18 +3,17 @@ import {
   Circle,
   CircleDot,
   FileText,
-  Forward,
-  Reply,
   Share,
   Star,
   CloudUpload,
+  ArrowRight,
 } from "lucide-react";
 import {
   handleMarkStatus,
   handleToggleStar,
   handleToggleContent,
 } from "@/handlers/articleHandlers.js";
-import { Button, Navbar, NavbarContent, Tooltip } from "@heroui/react";
+import { Button, CloseButton, cn, Spinner, Tooltip } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@nanostores/react";
 import {
@@ -23,19 +22,17 @@ import {
   loadingOriginContent,
 } from "@/stores/articlesStore";
 import Confetti from "@/components/ui/Confetti";
-import { settingsState } from "@/stores/settingsStore.js";
 import { useRef, useState } from "react";
 import minifluxAPI from "@/api/miniflux";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { hasIntegrations } from "@/stores/basicInfoStore.js";
 
-export default function ActionButtons({ parentRef }) {
+export default function ActionButtons() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const $articles = useStore(filteredArticles);
   const $activeArticle = useStore(activeArticle);
-  const { autoHideToolbar } = useStore(settingsState);
   const buttonRef = useRef(null);
   const fetchLoading = useStore(loadingOriginContent);
   const [saveLoading, setSaveLoading] = useState(false);
@@ -108,182 +105,131 @@ export default function ActionButtons({ parentRef }) {
   };
 
   return (
-    <Navbar
-      className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-gradient-to-b from-content2/70 to-background/0"
-      maxWidth="full"
-      isBlurred={false}
-      shouldHideOnScroll={autoHideToolbar}
-      parentRef={parentRef}
-      classNames={{ wrapper: "px-2 h-auto", content: "gap-0" }}
-    >
-      <NavbarContent className="flex items-center space-between">
-        <div className="flex items-center gap-1 bg-background/30 backdrop-blur-lg shadow-custom rounded-full p-0.5 mr-2">
-          <Tooltip
-            content={t("common.close")}
-            classNames={{ content: "shadow-custom!" }}
-          >
-            <Button
-              onPress={handleClose}
-              size="sm"
-              radius="full"
-              variant="light"
-              isIconOnly
-            >
-              <ArrowLeft className="h-4 w-4 text-default-500" />
-              <span className="sr-only">{t("common.close")}</span>
-            </Button>
-          </Tooltip>
-        </div>
-        <div className="hidden md:flex items-center gap-1 bg-background/30 backdrop-blur-lg shadow-custom rounded-full p-0.5">
-          <Tooltip
-            content={t("common.previous")}
-            classNames={{ content: "shadow-custom!" }}
-          >
+    <div className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-background/70 backdrop-blur-lg border-b border-foreground/10 px-2 sticky top-0 z-50">
+      <div className="flex items-center">
+        <Tooltip
+          content={t("common.close")}
+          classNames={{ content: "shadow-custom!" }}
+        >
+          <CloseButton onPress={handleClose} className="mx-2" />
+          <Tooltip.Content>{t("common.close")}</Tooltip.Content>
+        </Tooltip>
+        <div className="mr-auto flex gap-1">
+          <Tooltip delay={0}>
             <Button
               onPress={handlePrevious}
               isDisabled={currentIndex <= 0}
-              size="sm"
-              radius="full"
-              variant="light"
               isIconOnly
+              variant="ghost"
             >
-              <Reply className="h-4 w-4 text-default-500" />
-              <span className="sr-only">{t("common.previous")}</span>
+              <ArrowLeft className="h-4 w-4 text-muted" />
             </Button>
+            <Tooltip.Content>{t("common.previous")}</Tooltip.Content>
           </Tooltip>
-          <Tooltip
-            content={t("common.next")}
-            classNames={{ content: "shadow-custom!" }}
-          >
+          <Tooltip delay={0}>
             <Button
               onPress={handleNext}
               isDisabled={currentIndex >= $articles.length - 1}
-              size="sm"
-              radius="full"
-              variant="light"
               isIconOnly
+              variant="ghost"
             >
-              <Forward className="h-4 w-4 text-default-500" />
-              <span className="sr-only">{t("common.next")}</span>
+              <ArrowRight className="h-4 w-4 text-muted" />
             </Button>
+            <Tooltip.Content>{t("common.next")}</Tooltip.Content>
           </Tooltip>
         </div>
-        <div className="ml-auto flex items-center gap-1 bg-background/30 backdrop-blur-lg shadow-custom rounded-full p-0.5">
-          <Tooltip
-            content={
-              $activeArticle?.status === "read"
-                ? t("common.unread")
-                : t("common.read")
-            }
-            classNames={{ content: "shadow-custom!" }}
-          >
+        <div className="flex gap-1">
+          <Tooltip delay={0}>
             <Button
               onPress={() => handleMarkStatus($activeArticle)}
-              size="sm"
-              radius="full"
-              variant="light"
+              variant="ghost"
               isIconOnly
             >
               {$activeArticle?.status === "read" ? (
-                <Circle className="size-4 text-default-500 p-0.5" />
+                <Circle className="size-4 text-muted p-0.5" />
               ) : (
-                <CircleDot className="size-4 text-default-500 p-0.5 fill-current" />
+                <CircleDot className="size-4 text-muted p-0.5 fill-current" />
               )}
-              <span className="sr-only">
-                {$activeArticle?.status === "read"
-                  ? t("common.unread")
-                  : t("common.read")}
-              </span>
             </Button>
+            <Tooltip.Content>
+              {$activeArticle?.status === "read"
+                ? t("common.unread")
+                : t("common.read")}
+            </Tooltip.Content>
           </Tooltip>
-          <Tooltip
-            content={
-              $activeArticle?.starred === 1
-                ? t("common.unstar")
-                : t("common.star")
-            }
-            classNames={{ content: "shadow-custom!" }}
-          >
+          <Tooltip delay={0}>
             <Button
               ref={buttonRef}
-              size="sm"
-              radius="full"
-              variant="light"
+              variant="ghost"
               isIconOnly
               onPress={() => {
                 $activeArticle?.starred === 0 && Confetti(buttonRef);
                 handleToggleStar($activeArticle);
               }}
-              className="relative"
             >
               <Star
-                className={`size-4 text-default-500 ${$activeArticle?.starred === 1 ? "fill-current" : ""}`}
+                className={`size-4 text-muted ${$activeArticle?.starred === 1 ? "fill-current" : ""}`}
               />
-              <span className="sr-only">
-                {$activeArticle?.starred === 1
-                  ? t("common.unstar")
-                  : t("common.star")}
-              </span>
             </Button>
+            <Tooltip.Content>
+              {$activeArticle?.starred === 1
+                ? t("common.unstar")
+                : t("common.star")}
+            </Tooltip.Content>
           </Tooltip>
           {$hasIntegrations && (
-            <Tooltip
-              content={t("articleView.saveToThirdParty")}
-              classNames={{ content: "shadow-custom!" }}
-            >
+            <Tooltip delay={0}>
               <Button
-                size="sm"
-                radius="full"
-                variant="light"
+                variant="ghost"
                 isIconOnly
                 onPress={handleSaveToThirdParty}
-                isLoading={saveLoading}
+                isPending={saveLoading}
               >
-                <CloudUpload className="size-4 text-default-500" />
+                {saveLoading ? (
+                  <Spinner color="current" size="sm" />
+                ) : (
+                  <CloudUpload className="size-4 text-muted" />
+                )}
               </Button>
+              <Tooltip.Content>
+                {t("articleView.saveToThirdParty")}
+              </Tooltip.Content>
             </Tooltip>
           )}
-          <Tooltip
-            content={
-              $activeArticle?.shownOriginal
-                ? t("articleView.showSummary")
-                : t("articleView.getFullText")
-            }
-            classNames={{ content: "shadow-custom!" }}
-          >
+          <Tooltip delay={0}>
             <Button
               onPress={() => handleToggleContent($activeArticle)}
-              size="sm"
-              radius="full"
-              variant={$activeArticle?.shownOriginal ? "flat" : "light"}
+              variant="ghost"
               isIconOnly
-              isLoading={fetchLoading}
+              isPending={fetchLoading}
             >
-              <FileText className="size-4 text-default-500" />
-              <span className="sr-only">
-                {$activeArticle?.shownOriginal
-                  ? t("articleView.showSummary")
-                  : t("articleView.getFullText")}
-              </span>
+              {fetchLoading ? (
+                <Spinner color="current" size="sm" />
+              ) : (
+                <FileText
+                  className={cn(
+                    "size-4",
+                    $activeArticle?.shownOriginal
+                      ? "text-accent"
+                      : "text-muted",
+                  )}
+                />
+              )}
             </Button>
+            <Tooltip.Content>
+              {$activeArticle?.shownOriginal
+                ? t("articleView.showSummary")
+                : t("articleView.getFullText")}
+            </Tooltip.Content>
           </Tooltip>
-          <Tooltip
-            content={t("common.share")}
-            classNames={{ content: "shadow-custom!" }}
-          >
-            <Button
-              size="sm"
-              radius="full"
-              variant="light"
-              isIconOnly
-              onPress={handleShare}
-            >
-              <Share className="size-4 text-default-500" />
-              <span className="sr-only">{t("common.share")}</span>
+          <Tooltip delay={0}>
+            <Button variant="ghost" isIconOnly onPress={handleShare}>
+              <Share className="size-4 text-muted" />
             </Button>
+            <Tooltip.Content>{t("common.share")}</Tooltip.Content>
           </Tooltip>
         </div>
-      </NavbarContent>
-    </Navbar>
+      </div>
+    </div>
   );
 }

@@ -1,113 +1,79 @@
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Tab,
-  Tabs,
-} from "@heroui/react";
+import { cn, Drawer, Tabs } from "@heroui/react";
 import { useState } from "react";
 import { settingsModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
 import General from "@/components/Settings/General.jsx";
 import Appearance from "@/components/Settings/Appearance.jsx";
 import Readability from "@/components/Settings/Readability.jsx";
-import { Cog, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/hooks/use-mobile.jsx";
 
 export default function App() {
   const isOpen = useStore(settingsModalOpen);
   const [activeTab, setActiveTab] = useState("general");
   const { t } = useTranslation();
+  const { isMedium } = useIsMobile();
   return (
-    <>
-      <Modal
+    <Drawer>
+      <Drawer.Backdrop
         isOpen={isOpen}
-        radius="md"
-        scrollBehavior="inside"
-        disableAnimation
         onOpenChange={(value) => {
           settingsModalOpen.set(value);
           setActiveTab("general");
         }}
-        classNames={{
-          base: "m-2 standalone:mb-safe-or-2 max-h-[80vh] h-[600px] overflow-hidden bg-content2/90 dark:bg-content1/90 backdrop-blur-lg shadow-custom!",
-          header:
-            "border-b flex flex-col gap-3 p-3 bg-content1/80 dark:bg-transparent",
-          footer: "hidden",
-          body: "modal-body p-0 block!",
-          closeButton: "hidden",
-        }}
       >
-        <ModalContent>
-          {() => (
-            <>
-              <ModalHeader>
-                <div className="flex gap-2 justify-between">
-                  <div className="flex items-center gap-2">
-                    <Cog className="size-4" />
-                    <span className="text-base font-medium">
-                      {t("settings.title")}
-                    </span>
-                  </div>
-                  <Button
-                    size="sm"
-                    radius="full"
-                    variant="light"
-                    isIconOnly
-                    onPress={() => {
-                      settingsModalOpen.set(false);
-                      setActiveTab("general");
-                    }}
-                  >
-                    <X className="size-4" />
-                  </Button>
-                </div>
-                <div>
-                  <Tabs
-                    aria-label="Tabs"
-                    size="mini"
-                    radius="sm"
-                    fullWidth
-                    classNames={{
-                      tabList:
-                        "bg-default-100/90 shadow-custom-inner p-px gap-0 rounded-small overflow-visible",
-                      tab: "py-1 h-7 text-sm",
-                      cursor: "bg-content1 shadow-custom-cursor! rounded-small",
-                    }}
-                    selectedKey={activeTab}
-                    onSelectionChange={(key) => {
-                      setActiveTab(key);
-                      const modalBody = document.querySelector(".modal-body");
-                      if (modalBody) {
-                        modalBody.scrollTop = 0;
-                      }
-                    }}
-                  >
-                    <Tab key="general" title={t("settings.general.title")} />
-                    <Tab
-                      key="appearance"
-                      title={t("settings.appearance.title")}
-                    />
-                    <Tab
-                      key="readability"
-                      title={t("settings.readability.title")}
-                    />
-                  </Tabs>
-                </div>
-              </ModalHeader>
-              <ModalBody>
-                <div className="p-3 overflow-y-auto flex flex-col gap-4">
-                  {activeTab === "general" && <General />}
-                  {activeTab === "appearance" && <Appearance />}
-                  {activeTab === "readability" && <Readability />}
-                </div>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+        <Drawer.Content placement={isMedium ? "bottom" : "right"}>
+          <Drawer.Dialog className={cn("px-0 pb-0", isMedium && "h-4/5")}>
+            {isMedium && <Drawer.Handle />}
+            <Drawer.CloseTrigger />
+            <Drawer.Header className="p-3">
+              <Drawer.Heading className="flex flex-col gap-3">
+                {!isMedium && <div className="h-2"></div>}
+                <Tabs
+                  className="w-full"
+                  selectedKey={activeTab}
+                  onSelectionChange={(key) => {
+                    setActiveTab(key);
+                    const modalBody = document.querySelector(".modal-body");
+                    if (modalBody) {
+                      modalBody.scrollTop = 0;
+                    }
+                  }}
+                >
+                  <Tabs.ListContainer>
+                    <Tabs.List
+                      aria-label="general"
+                      className="bg-default-100/90 backdrop-blur-md shadow-custom-inner p-px gap-0 overflow-visible"
+                    >
+                      <Tabs.Tab id="general">
+                        {t("settings.general.title")}
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab id="appearance">
+                        <Tabs.Separator />
+                        {t("settings.appearance.title")}
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab id="readability">
+                        <Tabs.Separator />
+                        {t("settings.readability.title")}
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                    </Tabs.List>
+                  </Tabs.ListContainer>
+                </Tabs>
+              </Drawer.Heading>
+            </Drawer.Header>
+            <Drawer.Body>
+              <div className="p-3 overflow-y-auto flex flex-col gap-4">
+                {activeTab === "general" && <General />}
+                {activeTab === "appearance" && <Appearance />}
+                {activeTab === "readability" && <Readability />}
+              </div>
+            </Drawer.Body>
+          </Drawer.Dialog>
+        </Drawer.Content>
+      </Drawer.Backdrop>
+    </Drawer>
   );
 }

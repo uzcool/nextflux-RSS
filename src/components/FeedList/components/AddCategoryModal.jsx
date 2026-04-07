@@ -1,4 +1,15 @@
-import { Button, Divider, Input } from "@heroui/react";
+import {
+  Button,
+  Separator,
+  Input,
+  Fieldset,
+  FieldGroup,
+  TextField,
+  Label,
+  FieldError,
+  Spinner,
+  Form,
+} from "@heroui/react";
 import { useState } from "react";
 import { addCategoryModalOpen } from "@/stores/modalStore";
 import { useStore } from "@nanostores/react";
@@ -47,50 +58,36 @@ export default function AddCategoryModal() {
       onOpenChange={onClose}
       title={t("sidebar.addCategory")}
     >
-      <form
-        onSubmit={handleSubmit}
-        className="justify-center items-center flex flex-col gap-4 px-4 pb-4"
-      >
-        <Input
-          isRequired
-          labelPlacement="outside"
-          size="sm"
-          label={t("sidebar.categoryName")}
-          variant="faded"
-          name="title"
-          placeholder={t("sidebar.categoryNamePlaceholder")}
-          errorMessage={t("sidebar.categoryNameRequired")}
-          value={title}
-          onValueChange={setTitle}
-        />
-        <Divider className="my-2" />
-        <div className="flex flex-wrap gap-2 p-3 bg-content2 rounded-lg shadow-custom-inner w-full">
-          {$categories.map((category) => (
-            <CategoryChip key={category.id} category={category} />
-          ))}
-        </div>
-        <div className="flex flex-col md:flex-row-reverse gap-2 w-full">
-          <Button
-            color="primary"
-            type="submit"
-            isLoading={loading}
-            size="sm"
-            fullWidth
-            className="border-primary border shadow-custom-button bg-primary bg-linear-to-b from-white/15 to-transparent text-sm"
-          >
-            {t("common.save")}
-          </Button>
-          <Button
-            fullWidth
-            onPress={onClose}
-            size="sm"
-            variant="flat"
-            className="border text-sm"
-          >
-            {t("common.cancel")}
-          </Button>
-        </div>
-      </form>
+      <Form className="w-full px-4 pb-4" onSubmit={handleSubmit}>
+        <Fieldset>
+          <FieldGroup>
+            <TextField isRequired name="title" variant="secondary">
+              <Label>{t("sidebar.categoryName")}</Label>
+              <Input
+                placeholder={t("sidebar.categoryNamePlaceholder")}
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+              />
+              <FieldError>{t("sidebar.categoryNameRequired")}</FieldError>
+            </TextField>
+          </FieldGroup>
+          <Separator className="my-2" />
+          <div className="flex flex-wrap gap-2 p-3 w-full rounded-2xl bg-default/60 shadow-surface">
+            {$categories.map((category) => (
+              <CategoryChip key={category.id} category={category} />
+            ))}
+          </div>
+          <Fieldset.Actions>
+            <Button variant="tertiary" onPress={onClose} fullWidth>
+              {t("common.cancel")}
+            </Button>
+            <Button type="submit" isPending={loading} fullWidth>
+              {loading && <Spinner color="current" size="sm" />}
+              {t("common.save")}
+            </Button>
+          </Fieldset.Actions>
+        </Fieldset>
+      </Form>
     </CustomModal>
   );
 }

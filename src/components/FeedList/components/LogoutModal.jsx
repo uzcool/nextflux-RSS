@@ -1,4 +1,4 @@
-import AlertDialog from "@/components/ui/AlertDialog.jsx";
+import CustomAlertDialog from "@/components/ui/CustomAlertDialog.jsx";
 import { useTranslation } from "react-i18next";
 import { logoutModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
@@ -15,7 +15,7 @@ export default function LogoutModal() {
     }
   };
   return (
-    <AlertDialog
+    <CustomAlertDialog
       title={t("sidebar.profile.logout")}
       content={t("sidebar.profile.logoutConfirmDescription")}
       isOpen={$logoutModalOpen}

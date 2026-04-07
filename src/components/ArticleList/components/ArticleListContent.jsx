@@ -11,7 +11,7 @@ import {
 import { useStore } from "@nanostores/react";
 import { Virtuoso } from "react-virtuoso";
 import { useIsMobile } from "@/hooks/use-mobile.jsx";
-import { Button, CircularProgress } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { CheckCheck, Loader2 } from "lucide-react";
 import { handleMarkAllRead } from "@/handlers/articleHandlers";
 import { isSyncing } from "@/stores/syncStore.js";
@@ -80,13 +80,7 @@ export default function ArticleListContent({
   return (
     <div className="h-full">
       {$loading ? (
-        <CircularProgress
-          aria-label="Loading..."
-          classNames={{
-            base: "mx-auto p-3 animate-in fade-in",
-            svg: "w-5 h-5",
-          }}
-        />
+        <Loader2 className="size-4 animate-spin mx-auto mt-3 text-accent" />
       ) : (
         <div
           className={cn(
@@ -125,16 +119,9 @@ export default function ArticleListContent({
                 <div className="vlist-footer h-24 pt-2 px-2">
                   <Button
                     size="sm"
-                    variant="flat"
+                    variant="tertiary"
                     isDisabled={$filter === "starred"}
                     fullWidth
-                    startContent={
-                      $isSyncing || $loadingMore ? (
-                        <Loader2 className="size-4 animate-spin" />
-                      ) : (
-                        <CheckCheck className="size-4" />
-                      )
-                    }
                     onPress={() => {
                       if (feedId) {
                         handleMarkAllRead("feed", feedId);
@@ -145,6 +132,11 @@ export default function ArticleListContent({
                       }
                     }}
                   >
+                    {$isSyncing || $loadingMore ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <CheckCheck className="size-4" />
+                    )}
                     {t("articleList.markAllRead")}
                   </Button>
                 </div>

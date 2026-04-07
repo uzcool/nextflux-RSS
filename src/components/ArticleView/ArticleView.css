@@ -30,17 +30,17 @@
 
 /* 文章内容链接样式 */
 .article-content a {
-  @apply border-b-[1px] border-dotted border-primary no-underline transition-colors text-primary
+  @apply border-b-[1px] border-dotted border-accent no-underline transition-colors text-accent
 }
 
 /*表格*/
 .article-content td {
-  @apply text-content2-foreground text-sm
+  @apply text-foreground text-sm
 }
 
 /*code 相关样式 */
 .article-content code:not(pre code) {
-  @apply whitespace-pre-wrap before:content-none after:content-none border font-medium font-mono dark:text-default-500 rounded text-default-600 bg-default-100 dark:bg-default-100/80 px-1.5 py-0.5
+  @apply whitespace-pre-wrap before:content-none after:content-none border font-medium font-mono dark:text-muted rounded text-muted bg-background dark:bg-background/80 px-1.5 py-0.5
 }
 
 .article-content pre code {
@@ -55,7 +55,6 @@
 }
 
 .line-numbers code .line::before {
-  color: hsl(var(--heroui-default-400));
   content: counter(step);
   counter-increment: step;
   display: inline-block;

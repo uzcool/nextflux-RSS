@@ -6,7 +6,7 @@ import { Virtuoso } from "react-virtuoso";
 import { useTranslation } from "react-i18next";
 import { searching } from "@/stores/searchStore.js";
 import { useStore } from "@nanostores/react";
-import { CircularProgress } from "@heroui/react";
+import { ProgressCircle } from "@heroui/react";
 
 export default function SearchResults({
   results,
@@ -74,7 +74,7 @@ export default function SearchResults({
 
   if (!keyword) {
     return (
-      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-default-400">
+      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-muted opacity-60">
         <Inbox className="size-16" />
         {t("search.searchPlaceholder")}
       </div>
@@ -83,15 +83,15 @@ export default function SearchResults({
 
   if ($searching) {
     return (
-      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-default-400">
-        <CircularProgress aria-label="loading" />
+      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-muted opacity-60">
+        <ProgressCircle aria-label="loading" />
       </div>
     );
   }
 
   if (!isComposing && results.length === 0 && !$searching) {
     return (
-      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-default-400">
+      <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-muted opacity-60">
         <Search className="size-16" />
         {t("search.searchResultsPlaceholder")}
       </div>
@@ -125,7 +125,7 @@ export default function SearchResults({
             <FeedIcon feedId={type === "articles" ? item.feedId : item.id} />
             <div className="flex-1 line-clamp-1">{item.title}</div>
           </div>
-          <div className="shrink-0 line-clamp-1 text-xs text-default-400 font-mono">
+          <div className="shrink-0 line-clamp-1 text-xs text-muted opacity-60 font-mono">
             {type === "articles" && formatDate(item.published_at)}
           </div>
         </div>

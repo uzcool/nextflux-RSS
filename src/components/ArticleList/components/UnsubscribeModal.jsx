@@ -3,7 +3,7 @@ import { unsubscribeModalOpen, currentFeedId } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { feeds } from "@/stores/feedsStore";
-import AlertDialog from "@/components/ui/AlertDialog.jsx";
+import CustomAlertDialog from "@/components/ui/CustomAlertDialog.jsx";
 import { useTranslation } from "react-i18next";
 import {
   deleteArticlesByFeedId,
@@ -62,7 +62,7 @@ export default function UnsubscribeModal() {
   };
 
   return (
-    <AlertDialog
+    <CustomAlertDialog
       title={t("articleList.unsubscribe")}
       content={`${t("articleList.unsubscribeDescription")}「${feedTitle}」`}
       isOpen={$unsubscribeModalOpen}

@@ -72,7 +72,7 @@ const FeedItem = ({ feed }) => {
             )}
             <span className="line-clamp-1">{feed.title}</span>
           </span>
-          <span className="text-default-400 text-xs">
+          <span className="text-muted opacity-60 text-xs">
             {$getFeedCount(feed.id) !== 0 && $getFeedCount(feed.id)}
           </span>
         </Link>
@@ -83,7 +83,7 @@ const FeedItem = ({ feed }) => {
         onClose={closeContextMenu}
         position={contextMenu.position}
       >
-        <div className="px-2 py-1.5 text-tiny font-medium text-default-400 line-clamp-1">
+        <div className="px-2 py-1.5 text-xs font-medium text-muted opacity-60 line-clamp-1">
           {feed.title}
         </div>
         <ContextMenuItem
@@ -91,7 +91,7 @@ const FeedItem = ({ feed }) => {
             handleRefresh(feed.id);
             closeContextMenu();
           }}
-          startContent={<RefreshCw className="size-4 text-default-500" />}
+          startContent={<RefreshCw className="size-4 text-muted" />}
         >
           {t("common.refresh")}
         </ContextMenuItem>
@@ -100,7 +100,7 @@ const FeedItem = ({ feed }) => {
             handleMarkAllRead("feed", feed.id);
             closeContextMenu();
           }}
-          startContent={<CircleCheck className="size-4 text-default-500" />}
+          startContent={<CircleCheck className="size-4 text-muted" />}
         >
           {t("common.markAllRead")}
         </ContextMenuItem>
@@ -110,11 +110,11 @@ const FeedItem = ({ feed }) => {
             editFeedModalOpen.set(true);
             closeContextMenu();
           }}
-          startContent={<FilePen className="size-4 text-default-500" />}
+          startContent={<FilePen className="size-4 text-muted" />}
         >
           {t("articleList.editFeed")}
         </ContextMenuItem>
-        <div className="my-2 border-t border-divider" />
+        <div className="my-2 border-t" />
         <ContextMenuItem
           onClick={() => {
             currentFeedId.set(feed.id.toString());

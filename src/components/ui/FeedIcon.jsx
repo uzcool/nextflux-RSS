@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-import { Image } from "@heroui/react";
 import { Rss } from "lucide-react";
 import { settingsState } from "@/stores/settingsStore";
 import { useStore } from "@nanostores/react";
@@ -12,6 +11,7 @@ const FeedIcon = ({ feedId, url = null }) => {
   const [error, setError] = useState(false);
   const [isBlurry, setIsBlurry] = useState(false);
   const [iconData, setIconData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 添加 Google Favicon 相关逻辑
   const getDomain = useMemo(() => {
@@ -50,7 +50,7 @@ const FeedIcon = ({ feedId, url = null }) => {
             return;
           }
         }
-        
+
         // 如果没有 feedId 或获取失败，尝试使用 URL 方式
         if (url) {
           setIconData(faviconUrl);
@@ -86,7 +86,7 @@ const FeedIcon = ({ feedId, url = null }) => {
     return (
       <span
         className={cn(
-          "flex items-center shrink-0 justify-center w-5 h-5 p-0.5 bg-white transition-opacity duration-300 ease-in-out animate-in fade-in-0 shadow-small",
+          "flex items-center shrink-0 justify-center w-5 h-5 p-0.5 bg-white transition-opacity duration-300 ease-in-out animate-in fade-in-0 shadow-sm",
           feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
         )}
       >
@@ -96,19 +96,18 @@ const FeedIcon = ({ feedId, url = null }) => {
   }
 
   return (
-    <Image
+    <img
       alt="Feed icon"
       src={iconData}
-      className="size-5 p-0.5 bg-white shadow-small"
-      classNames={{
-        wrapper: "shrink-0",
-        img: cn(
-          useGrayIcon ? "grayscale" : "",
-          feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
-        ),
-      }}
+      className={cn(
+        "size-5 p-0.5 bg-white shadow-sm",
+        useGrayIcon ? "grayscale" : "",
+        feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
+        isLoading && "opacity-0",
+      )}
       onError={handleError}
       onLoad={(e) => {
+        setIsLoading(false);
         handleLoad(e);
       }}
     />

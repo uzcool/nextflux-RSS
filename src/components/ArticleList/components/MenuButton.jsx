@@ -1,100 +1,90 @@
+import { Button, Dropdown, Label } from "@heroui/react";
 import {
-    Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Divider,
-  } from "@heroui/react";
-  import {
-    EllipsisVertical,
-    FilePen,
-    FolderPen,
-    Trash2,
-    RefreshCw,
-  } from "lucide-react";
-  import { useParams } from "react-router-dom";
-  import {
-    editFeedModalOpen,
-    renameModalOpen,
-    unsubscribeModalOpen,
-    currentFeedId,
-  } from "@/stores/modalStore.js";
-  import { useTranslation } from "react-i18next";
-  import { handleRefresh } from "@/handlers/feedHandlers";
-  
-  export default function MenuButton() {
-    const { feedId, categoryId } = useParams();
-    const { t } = useTranslation();
-  
-    return (
-      <>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button
-              size="sm"
-              radius="full"
-              variant="light"
-              isIconOnly
-              isDisabled={!feedId && !categoryId}
-            >
-              <EllipsisVertical className="size-4 text-default-500" />
-            </Button>
-          </DropdownTrigger>
-          {feedId && (
-            <DropdownMenu aria-label="Feed Actions" variant="flat">
-              <DropdownItem
-                key="refresh"
-                onPress={() => handleRefresh(feedId)}
-                startContent={<RefreshCw className="size-4 text-default-500" />}
-              >
-                {t("articleList.refreshFeed")}
-              </DropdownItem>
-              <DropdownItem
-                key="edit"
-                onPress={() => {
+  EllipsisVertical,
+  FilePen,
+  FolderPen,
+  Trash2,
+  RefreshCw,
+} from "lucide-react";
+import { useParams } from "react-router-dom";
+import {
+  editFeedModalOpen,
+  renameModalOpen,
+  unsubscribeModalOpen,
+  currentFeedId,
+} from "@/stores/modalStore.js";
+import { useTranslation } from "react-i18next";
+import { handleRefresh } from "@/handlers/feedHandlers";
+
+export default function MenuButton() {
+  const { feedId, categoryId } = useParams();
+  const { t } = useTranslation();
+
+  const hasFeedMenu = !!feedId;
+  const hasCategoryMenu = !!categoryId && !feedId;
+  const isDisabled = !feedId && !categoryId;
+
+  return (
+    <Dropdown>
+      <Button size="sm" variant="ghost" isIconOnly isDisabled={isDisabled}>
+        <EllipsisVertical className="size-4 text-muted" />
+      </Button>
+
+      {(hasFeedMenu || hasCategoryMenu) && (
+        <Dropdown.Popover>
+          <Dropdown.Menu
+            aria-label={hasFeedMenu ? "Feed Actions" : "Category Actions"}
+            onAction={(key) => {
+              if (hasFeedMenu) {
+                if (key === "refresh") handleRefresh(feedId);
+                if (key === "edit") {
                   currentFeedId.set(feedId);
                   editFeedModalOpen.set(true);
-                }}
-                startContent={<FilePen className="size-4 text-default-500" />}
-              >
-                {t("articleList.editFeed")}
-              </DropdownItem>
-              <DropdownItem
-            isDisabled
-            classNames={{ base: "py-1.5" }}
-            textValue="divider"
-          >
-            <Divider />
-          </DropdownItem>
-              <DropdownItem
-                key="delete"
-                className="text-danger"
-                color="danger"
-                variant="flat"
-                onPress={() => {
+                }
+                if (key === "unsubscribe") {
                   currentFeedId.set(feedId);
                   unsubscribeModalOpen.set(true);
-                }}
-                startContent={<Trash2 className="size-4" />}
-              >
-                {t("articleList.unsubscribe")}
-              </DropdownItem>
-            </DropdownMenu>
-          )}
-          {categoryId && (
-            <DropdownMenu aria-label="Category Actions" variant="flat">
-              <DropdownItem
-                key="rename"
-                onPress={() => renameModalOpen.set(true)}
-                startContent={<FolderPen className="size-4 text-default-500" />}
-              >
-                {t("articleList.renameCategory.title")}
-              </DropdownItem>
-            </DropdownMenu>
-          )}
-        </Dropdown>
-      </>
-    );
-  }
-  
+                }
+              }
+
+              if (hasCategoryMenu) {
+                if (key === "rename") renameModalOpen.set(true);
+              }
+            }}
+          >
+            {hasFeedMenu && (
+              <>
+                <Dropdown.Item
+                  id="refresh"
+                  textValue="refresh"
+                  className="cursor-pointer"
+                >
+                  <RefreshCw className="size-4 text-muted" />
+                  <Label>{t("articleList.refreshFeed")}</Label>
+                </Dropdown.Item>
+                <Dropdown.Item id="edit" textValue="edit">
+                  <FilePen className="size-4 text-muted" />
+                  <Label>{t("articleList.editFeed")}</Label>
+                </Dropdown.Item>
+
+                <Dropdown.Item id="unsubscribe" textValue="unsubscribe">
+                  <Trash2 className="size-4 text-danger" />
+                  <Label className="text-danger">
+                    {t("articleList.unsubscribe")}
+                  </Label>
+                </Dropdown.Item>
+              </>
+            )}
+
+            {hasCategoryMenu && (
+              <Dropdown.Item id="rename" textValue="rename">
+                <FolderPen className="size-4 text-muted" />
+                <Label>{t("articleList.renameCategory.title")}</Label>
+              </Dropdown.Item>
+            )}
+          </Dropdown.Menu>
+        </Dropdown.Popover>
+      )}
+    </Dropdown>
+  );
+}

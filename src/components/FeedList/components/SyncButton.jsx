@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import { Button } from "@heroui/react";
+import { Button, Spinner } from "@heroui/react";
 import { forceSync, isOnline, isSyncing } from "@/stores/syncStore.js";
 import { RefreshCw } from "lucide-react";
 
@@ -19,13 +19,16 @@ const SyncButton = () => {
     <Button
       onPress={handleForceSync}
       isDisabled={$isSyncing || !$isOnline}
-      isLoading={$isSyncing}
-      size="sm"
-      radius="full"
-      variant="light"
+      isPending={$isSyncing}
+      variant="ghost"
       isIconOnly
+      size="sm"
     >
-      <RefreshCw className="size-4 text-default-500" />
+      {$isSyncing ? (
+        <Spinner color="current" size="sm" />
+      ) : (
+        <RefreshCw className="size-4 text-muted" />
+      )}
     </Button>
   );
 };

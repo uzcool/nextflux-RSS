@@ -1,14 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "@nanostores/react";
-import {
-  Divider,
-  Input,
-  Kbd,
-  Modal,
-  ModalContent,
-  Tab,
-  Tabs,
-} from "@heroui/react";
+import { Separator, InputGroup, Kbd, Modal, Tabs } from "@heroui/react";
 import { Search as SearchIcon } from "lucide-react";
 import {
   feedSearchResults,
@@ -108,115 +100,97 @@ export default function SearchModal() {
   }, [isOpen, searchType]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      hideCloseButton
-      onOpenChange={(open) => searchDialogOpen.set(open)}
-      backdrop="transparent"
-      disableAnimation
-      placement="center"
-      size="2xl"
-      classNames={{
-        base: "m-2 max-h-[80vh] h-[440px] bg-content2/80 backdrop-blur-lg shadow-large",
-      }}
-    >
-      <ModalContent>
-        <div className="flex flex-col">
-          <Input
-            ref={inputRef}
-            autoFocus
-            placeholder={
-              searchType === "articles"
-                ? t("search.searchArticlesPlaceholder")
-                : t("search.searchFeedsPlaceholder")
-            }
-            size="lg"
-            value={keyword}
-            radius="none"
-            classNames={{
-              mainWrapper: "border-b",
-              inputWrapper:
-                "h-14 shadow-none bg-transparent data-[hover=true]:bg-transparent group-data-[focus=true]:bg-transparent group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-transparent group-data-[focus-visible=true]:ring-offset-0 group-data-[focus-visible=true]:ring-offset-transparent",
-            }}
-            startContent={<SearchIcon className="size-6 text-default-400" />}
-            endContent={
-              <Kbd
-                classNames={{
-                  base: "shadow-custom!",
-                  content: "font-mono text-xs text-default-400",
-                }}
-              >
-                ESC
-              </Kbd>
-            }
-            onValueChange={(value) => setKeyword(value)}
-            onCompositionStart={() => setIsComposing(true)}
-            onCompositionEnd={() => setIsComposing(false)}
-          />
-        </div>
-        <SearchResults
-          results={
-            searchType === "articles" ? $searchResults : $feedSearchResults
-          }
-          keyword={keyword}
-          onSelect={handleSelect}
-          type={searchType}
-          isComposing={isComposing}
-        />
-        <div className="p-1.5 border-t flex items-center justify-between">
-          <Tabs
-            selectedKey={searchType}
-            onSelectionChange={(key) => {
-              setSearchType(key);
-              if (inputRef.current) {
-                inputRef.current.focus();
-              }
-            }}
-            radius="md"
-            keyboardActivation="manual"
-            classNames={{
-              tabList: "bg-default/40 backdrop-blur-md gap-0",
-              tab: "h-auto px-2",
-              cursor: "w-full bg-default-400/90 shadow-none dark:bg-primary",
-              tabContent:
-                "text-xs text-default-500 font-semibold group-data-[selected=true]:text-default-50 dark:group-data-[selected=true]:text-foreground",
-            }}
-          >
-            <Tab key="articles" title={t("common.article")} />
-            <Tab key="feeds" title={t("common.feed")} />
-          </Tabs>
-          <div className="flex items-center gap-1 px-1">
-            <Kbd
-              keys="up"
-              classNames={{
-                base: "shadow-custom!",
-                abbr: "text-xs text-default-500",
-              }}
-            />
-            <Kbd
-              keys="down"
-              classNames={{
-                base: "shadow-custom!",
-                abbr: "text-xs text-default-500",
-              }}
-            />
-            <span className="text-xs text-default-500 font-semibold">
-              {t("search.toggleItem")}
-            </span>
-            <Divider orientation="vertical" className="h-5 mx-1" />
-            <Kbd
-              keys="enter"
-              classNames={{
-                base: "shadow-custom!",
-                abbr: "text-xs text-default-500",
-              }}
-            />
-            <span className="text-xs text-default-500 font-semibold">
-              {t("search.open")}
-            </span>
-          </div>
-        </div>
-      </ModalContent>
+    <Modal>
+      <Modal.Backdrop
+        isOpen={isOpen}
+        onOpenChange={(open) => searchDialogOpen.set(open)}
+        variant="transparent"
+      >
+        <Modal.Container scroll="inside" size="lg">
+          <Modal.Dialog className="max-h-[80vh] h-[400px] bg-background/80 border backdrop-blur-lg shadow-large p-0">
+            <Modal.Header className="p-3">
+              <InputGroup>
+                <InputGroup.Prefix>
+                  <SearchIcon className="size-4 text-muted opacity-60" />
+                </InputGroup.Prefix>
+                <InputGroup.Input
+                  ref={inputRef}
+                  autoFocus
+                  placeholder={
+                    searchType === "articles"
+                      ? t("search.searchArticlesPlaceholder")
+                      : t("search.searchFeedsPlaceholder")
+                  }
+                  value={keyword}
+                  onChange={(event) => setKeyword(event.target.value)}
+                  onCompositionStart={() => setIsComposing(true)}
+                  onCompositionEnd={() => setIsComposing(false)}
+                />
+              </InputGroup>
+            </Modal.Header>
+            <Modal.Body className="p-0 m-0">
+              <SearchResults
+                results={
+                  searchType === "articles"
+                    ? $searchResults
+                    : $feedSearchResults
+                }
+                keyword={keyword}
+                onSelect={handleSelect}
+                type={searchType}
+                isComposing={isComposing}
+              />
+            </Modal.Body>
+            <Modal.Footer className="p-0 m-0">
+              <div className="w-full p-1.5 border-t flex items-center justify-between">
+                <Tabs
+                  selectedKey={searchType}
+                  onSelectionChange={(key) => {
+                    setSearchType(key);
+                    if (inputRef.current) {
+                      inputRef.current.focus();
+                    }
+                  }}
+                >
+                  <Tabs.ListContainer>
+                    <Tabs.List
+                      aria-label="searchType"
+                      className="w-fit *:h-6 *:w-fit *:px-3 *:text-sm *:font-normal p-px gap-0"
+                    >
+                      <Tabs.Tab id="articles">
+                        {t("common.article")}
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                      <Tabs.Tab id="feeds">
+                        {t("common.feed")}
+                        <Tabs.Indicator />
+                      </Tabs.Tab>
+                    </Tabs.List>
+                  </Tabs.ListContainer>
+                </Tabs>
+                <div className="flex items-center gap-1 px-1">
+                  <Kbd>
+                    <Kbd.Abbr keyValue="up" />
+                  </Kbd>
+                  <Kbd>
+                    <Kbd.Abbr keyValue="down" />
+                  </Kbd>
+                  <span className="text-xs text-muted font-semibold">
+                    {t("search.toggleItem")}
+                  </span>
+                  <Separator orientation="vertical" className="h-5 mx-1" />
+                  <Kbd>
+                    <Kbd.Abbr keyValue="enter" />
+                  </Kbd>
+                  <span className="text-xs text-muted font-semibold">
+                    {t("search.open")}
+                  </span>
+                </div>
+              </div>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   );
 }

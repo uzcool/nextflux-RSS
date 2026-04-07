@@ -3,29 +3,36 @@ import { initTheme } from "@/stores/themeStore";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { router } from "@/routes/index.jsx";
-import { HeroUIProvider, Spinner } from "@heroui/react";
 import { RouterProvider } from "react-router";
 import SplashScreen from "@/components/SplashScreen";
 import { Toaster } from "sonner";
+import {
+  Info,
+  CircleCheck,
+  TriangleAlert,
+  CircleX,
+  Loader2,
+} from "lucide-react";
 
 // 初始化主题
 initTheme();
 
 createRoot(document.getElementById("root")).render(
-  <HeroUIProvider>
+  <>
     <SplashScreen />
     <Toaster
-      theme="system"
       icons={{
-        loading: (
-          <div className="flex">
-            <Spinner variant="simple" classNames={{ wrapper: "size-4" }} />
-          </div>
-        ),
+        loading: <Loader2 className="size-4! animate-spin! text-accent!" />,
+        success: <CircleCheck className="size-4! text-green-500" />,
+        info: <Info className="size-4! text-blue-500" />,
+        warning: <TriangleAlert className="size-4! text-yellow-500" />,
+        error: <CircleX className="size-4! text-red-500" />,
       }}
       toastOptions={{
         classNames: {
-          toast: "rounded-lg! bg-content2! shadow-custom! p-4!",
+          toast: "rounded-2xl! bg-overlay! shadow-custom! p-4! border-border!",
+          title: "text-foreground!",
+          description: "text-default!",
         },
       }}
     />
@@ -40,5 +47,5 @@ createRoot(document.getElementById("root")).render(
         v7_skipActionErrorRevalidation: true,
       }}
     />
-  </HeroUIProvider>,
+  </>,
 );

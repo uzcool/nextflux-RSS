@@ -1,4 +1,14 @@
-import { Button, Form, Input } from "@heroui/react";
+import {
+  Button,
+  FieldError,
+  FieldGroup,
+  Fieldset,
+  Form,
+  Input,
+  Label,
+  Spinner,
+  TextField,
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 import minifluxAPI from "@/api/miniflux";
 import { renameModalOpen, currentCategoryId } from "@/stores/modalStore.js";
@@ -22,7 +32,9 @@ export default function RenameModal() {
 
   useEffect(() => {
     if (categoryId) {
-      setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title || "");
+      setNewTitle(
+        $categories.find((c) => c.id === parseInt(categoryId))?.title || "",
+      );
     }
   }, [$categories, categoryId]);
 
@@ -30,7 +42,9 @@ export default function RenameModal() {
     renameModalOpen.set(false);
     currentCategoryId.set(null);
     if (categoryId) {
-      setNewTitle($categories.find((c) => c.id === parseInt(categoryId))?.title || "");
+      setNewTitle(
+        $categories.find((c) => c.id === parseInt(categoryId))?.title || "",
+      );
     }
   };
 
@@ -63,44 +77,33 @@ export default function RenameModal() {
       onOpenChange={onClose}
       title={t("articleList.renameCategory.title")}
     >
-      <Form
-        className="w-full justify-center items-center flex flex-col gap-4 px-4 pb-4"
-        validationBehavior="native"
-        onSubmit={(e) => handleRename(e)}
-      >
-        <Input
-          isRequired
-          labelPlacement="outside"
-          size="sm"
-          label={t("articleList.renameCategory.categoryName")}
-          variant="faded"
-          name="title"
-          placeholder={t("articleList.renameCategory.categoryNamePlaceholder")}
-          errorMessage={t("articleList.renameCategory.categoryNameRequired")}
-          value={newTitle}
-          onValueChange={setNewTitle}
-        />
-        <div className="flex flex-col md:flex-row-reverse gap-2 w-full">
-          <Button
-            color="primary"
-            fullWidth
-            type="submit"
-            isLoading={loading}
-            size="sm"
-            className="border-primary border shadow-custom-button bg-primary bg-linear-to-b from-white/15 to-transparent text-sm"
-          >
-            {t("common.save")}
-          </Button>
-          <Button
-            fullWidth
-            onPress={onClose}
-            size="sm"
-            variant="flat"
-            className="border text-sm"
-          >
-            {t("common.cancel")}
-          </Button>
-        </div>
+      <Form className="w-full px-4 pb-4" onSubmit={handleRename}>
+        <Fieldset>
+          <FieldGroup>
+            <TextField isRequired name="title" variant="secondary">
+              <Label>{t("articleList.renameCategory.categoryName")}</Label>
+              <Input
+                placeholder={t(
+                  "articleList.renameCategory.categoryNamePlaceholder",
+                )}
+                value={newTitle}
+                onChange={(event) => setNewTitle(event.target.value)}
+              />
+              <FieldError>
+                {t("articleList.renameCategory.categoryNameRequired")}
+              </FieldError>
+            </TextField>
+          </FieldGroup>
+          <Fieldset.Actions>
+            <Button variant="tertiary" onPress={onClose} fullWidth>
+              {t("common.cancel")}
+            </Button>
+            <Button type="submit" isPending={loading} fullWidth>
+              {loading && <Spinner color="current" size="sm" />}
+              {t("common.save")}
+            </Button>
+          </Fieldset.Actions>
+        </Fieldset>
       </Form>
     </CustomModal>
   );

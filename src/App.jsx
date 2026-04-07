@@ -20,9 +20,31 @@ import EditFeedModal from "@/components/ArticleList/components/EditFeedModal.jsx
 import { checkIntegrations } from "@/stores/basicInfoStore.js";
 import SearchModal from "@/components/Search/SearchModal.jsx";
 import { useZoom } from "@/hooks/useZoom.js";
+import {
+  shortcutsModalOpen,
+  settingsModalOpen,
+  addFeedModalOpen,
+  addCategoryModalOpen,
+  logoutModalOpen,
+  aboutModalOpen,
+  renameModalOpen,
+  unsubscribeModalOpen,
+  editFeedModalOpen,
+  searchDialogOpen,
+} from "@/stores/modalStore.js";
 
 function App() {
   const { syncInterval } = useStore(settingsState);
+  const $isSettingsOpen = useStore(settingsModalOpen);
+  const $isShortcutsOpen = useStore(shortcutsModalOpen);
+  const $isAddFeedOpen = useStore(addFeedModalOpen);
+  const $isAddCategoryOpen = useStore(addCategoryModalOpen);
+  const $isLogoutOpen = useStore(logoutModalOpen);
+  const $isAboutOpen = useStore(aboutModalOpen);
+  const $isRenameOpen = useStore(renameModalOpen);
+  const $isUnsubscribeOpen = useStore(unsubscribeModalOpen);
+  const $isEditFeedOpen = useStore(editFeedModalOpen);
+  const $isSearchDialogOpen = useStore(searchDialogOpen);
   useEffect(() => {
     // 检查认证状态并启动自动同步
     const auth = authState.get();
@@ -43,16 +65,16 @@ function App() {
       <SidebarInset>
         <Outlet />
       </SidebarInset>
-      <Settings />
-      <Shortcuts />
-      <AddFeedModal />
-      <AddCategoryModal />
-      <LogoutModal />
-      <AboutModal />
-      <RenameModal />
-      <UnsubscribeModal />
-      <EditFeedModal />
-      <SearchModal />
+      {$isSettingsOpen && <Settings />}
+      {$isShortcutsOpen && <Shortcuts />}
+      {$isAddFeedOpen && <AddFeedModal />}
+      {$isAddCategoryOpen && <AddCategoryModal />}
+      {$isLogoutOpen && <LogoutModal />}
+      {$isAboutOpen && <AboutModal />}
+      {$isRenameOpen && <RenameModal />}
+      {$isUnsubscribeOpen && <UnsubscribeModal />}
+      {$isEditFeedOpen && <EditFeedModal />}
+      {$isSearchDialogOpen && <SearchModal />}
     </SidebarProvider>
   );
 }

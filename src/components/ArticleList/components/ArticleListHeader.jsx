@@ -13,6 +13,7 @@ import {
   getFeedCount,
 } from "@/stores/feedsStore.js";
 import MenuButton from "./MenuButton";
+
 export default function ArticleListHeader() {
   const { feedId, categoryId } = useParams();
   const $filter = useStore(filter);
@@ -83,7 +84,7 @@ export default function ArticleListHeader() {
           <SidebarTrigger />
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">{getTitleText()}</span>
-            <span className="truncate text-xs text-default-400">
+            <span className="truncate text-xs text-muted opacity-60">
               {$isSyncing ? t("common.syncing") : getFilteredCount()}
             </span>
           </div>

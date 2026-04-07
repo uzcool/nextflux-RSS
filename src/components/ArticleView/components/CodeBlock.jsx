@@ -56,32 +56,28 @@ export default function CodeBlock({ code, language }) {
     >
       <span
         className={cn(
-          "text-xs absolute right-2 top-1 text-default-500 opacity-100 group-hover:opacity-0 transition-opacity",
+          "text-xs absolute right-2 top-1 text-muted opacity-100 group-hover:opacity-0 transition-opacity",
           language === "text" ? "hidden" : "",
         )}
       >
         {language}
       </span>
-      <Tooltip
-        size="sm"
-        closeDelay="0"
-        content={t("common.copy")}
-        classNames={{ content: "shadow-custom!" }}
-      >
+      <Tooltip size="sm" delay={0}>
         <Button
           className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity"
           size="sm"
           isDisabled={isCopied}
-          variant="light"
+          variant="ghost"
           isIconOnly
           onPress={handleCopy}
         >
           {isCopied ? (
-            <Check className="size-4 text-default-500" />
+            <Check className="size-4 text-muted" />
           ) : (
-            <Copy className="size-4 text-default-500" />
+            <Copy className="size-4 text-muted" />
           )}
         </Button>
+        <Tooltip.Content>{t("common.copy")}</Tooltip.Content>
       </Tooltip>
       {isInView && (
         <div

@@ -1,11 +1,4 @@
-import {
-  Button,
-  Divider,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/react";
+import { Button, Dropdown, Label } from "@heroui/react";
 import { CirclePlus, FolderPlus, Rss, Upload } from "lucide-react";
 import { addCategoryModalOpen, addFeedModalOpen } from "@/stores/modalStore";
 import { useSidebar } from "@/components/ui/sidebar.jsx";
@@ -49,50 +42,43 @@ export default function AddFeedButton() {
       />
 
       <Dropdown>
-        <DropdownTrigger>
-          <Button size="sm" radius="full" variant="light" isIconOnly>
-            <CirclePlus className="size-4 text-default-500" />
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Static Actions" variant="flat">
-          <DropdownItem
-            key="newFeed"
-            startContent={<Rss className="size-4 text-default-500" />}
-            onPress={() => {
-              addFeedModalOpen.set(true);
-              isMobile && setOpenMobile(false);
+        <Button size="sm" variant="ghost" isIconOnly>
+          <CirclePlus className="size-4 text-muted" />
+        </Button>
+        <Dropdown.Popover>
+          <Dropdown.Menu
+            onAction={(key) => {
+              if (key === "newFeed") {
+                addFeedModalOpen.set(true);
+                isMobile && setOpenMobile(false);
+              }
+              if (key === "importOPML") {
+                fileInputRef.current?.click();
+                isMobile && setOpenMobile(false);
+              }
+              if (key === "newCategory") {
+                addCategoryModalOpen.set(true);
+                isMobile && setOpenMobile(false);
+              }
             }}
           >
-            {t("sidebar.addFeed")}
-          </DropdownItem>
-          <DropdownItem
-            key="importOPML"
-            startContent={<Upload className="size-4 text-default-500" />}
-            onPress={() => {
-              fileInputRef.current?.click();
-              isMobile && setOpenMobile(false);
-            }}
-          >
-            {t("sidebar.importOPML")}
-          </DropdownItem>
-          <DropdownItem
-            isDisabled
-            classNames={{ base: "py-1.5 opacity-100" }}
-            textValue="divider"
-          >
-            <Divider />
-          </DropdownItem>
-          <DropdownItem
-            key="newCategory"
-            startContent={<FolderPlus className="size-4 text-default-500" />}
-            onPress={() => {
-              addCategoryModalOpen.set(true);
-              isMobile && setOpenMobile(false);
-            }}
-          >
-            {t("sidebar.addCategory")}
-          </DropdownItem>
-        </DropdownMenu>
+            <Dropdown.Item id="newFeed" textValue={t("sidebar.addFeed")}>
+              <Rss className="size-4 text-muted" />
+              <Label>{t("sidebar.addFeed")}</Label>
+            </Dropdown.Item>
+            <Dropdown.Item id="importOPML" textValue={t("sidebar.importOPML")}>
+              <Upload className="size-4 text-muted" />
+              <Label>{t("sidebar.importOPML")}</Label>
+            </Dropdown.Item>
+            <Dropdown.Item
+              id="newCategory"
+              textValue={t("sidebar.addCategory")}
+            >
+              <FolderPlus className="size-4 text-muted" />
+              <Label>{t("sidebar.addCategory")}</Label>
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown.Popover>
       </Dropdown>
     </>
   );

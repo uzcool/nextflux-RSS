@@ -1,5 +1,5 @@
 import { settingsState } from "@/stores/settingsStore";
-import { Divider } from "@heroui/react";
+import { Separator } from "@heroui/react";
 import { useStore } from "@nanostores/react";
 import {
   ItemWrapper,
@@ -75,7 +75,7 @@ export default function Appearance() {
             { value: "square", label: t("settings.appearance.square") },
           ]}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.appearance.grayscale")}
           icon={
@@ -110,7 +110,7 @@ export default function Appearance() {
           settingName="showIndicator"
           settingValue={showIndicator}
         />
-        <Divider />
+        <Separator />
         <SliderItem
           label={t("settings.appearance.titleLines")}
           icon={
@@ -124,7 +124,7 @@ export default function Appearance() {
           min={0}
           step={1}
         />
-        <Divider />
+        <Separator />
         <SliderItem
           label={t("settings.appearance.textPreviewLines")}
           icon={
@@ -138,7 +138,7 @@ export default function Appearance() {
           min={0}
           step={1}
         />
-        <Divider />
+        <Separator />
         <SelItem
           label={t("settings.appearance.imagePreviews")}
           icon={
@@ -154,7 +154,7 @@ export default function Appearance() {
             { value: "large", label: t("settings.appearance.large") },
           ]}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.appearance.showFavicon")}
           icon={
@@ -165,7 +165,7 @@ export default function Appearance() {
           settingName="showFavicon"
           settingValue={showFavicon}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.appearance.showReadingTime")}
           icon={

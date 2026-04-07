@@ -7,7 +7,7 @@ import {
   Eye,
   FolderOpen,
   RefreshCw,
-  CalendarDays
+  CalendarDays,
 } from "lucide-react";
 import { useStore } from "@nanostores/react";
 import {
@@ -15,7 +15,7 @@ import {
   SelItem,
   SwitchItem,
 } from "@/components/ui/settingItem.jsx";
-import { Divider } from "@heroui/react";
+import { Separator } from "@heroui/react";
 import Language from "@/components/Settings/components/Language.jsx";
 import { useTranslation } from "react-i18next";
 import SettingIcon from "@/components/ui/SettingIcon";
@@ -64,7 +64,7 @@ export default function General() {
           settingName="showHiddenFeeds"
           settingValue={showHiddenFeeds}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.general.defaultExpandCategory")}
           icon={
@@ -91,7 +91,7 @@ export default function General() {
             { value: "asc", label: t("settings.general.sortAsc") },
           ]}
         />
-        <Divider />
+        <Separator />
         <SelItem
           label={t("settings.general.sortField")}
           icon={
@@ -102,11 +102,17 @@ export default function General() {
           settingName="sortField"
           settingValue={sortField}
           options={[
-            { value: "published_at", label: t("settings.general.sortByPublishDate") },
-            { value: "created_at", label: t("settings.general.sortByCreateDate") },
+            {
+              value: "published_at",
+              label: t("settings.general.sortByPublishDate"),
+            },
+            {
+              value: "created_at",
+              label: t("settings.general.sortByCreateDate"),
+            },
           ]}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.general.showUnreadByDefault")}
           icon={
@@ -117,7 +123,7 @@ export default function General() {
           settingName="showUnreadByDefault"
           settingValue={showUnreadByDefault}
         />
-        <Divider />
+        <Separator />
         <SwitchItem
           label={t("settings.general.markAsReadOnScroll")}
           icon={

@@ -11,22 +11,21 @@ import {
   filteredArticles,
   imageGalleryActive,
 } from "@/stores/articlesStore.js";
-import { Chip, Divider, ScrollShadow } from "@heroui/react";
+import { Chip, Separator, ScrollShadow, Link } from "@heroui/react";
 import EmptyPlaceholder from "@/components/ArticleList/components/EmptyPlaceholder";
-import { cleanTitle, extractFirstImage, getFontSizeClass } from "@/lib/utils";
+import { cleanTitle, getFontSizeClass } from "@/lib/utils";
 import ArticleImage from "@/components/ArticleView/components/ArticleImage.jsx";
 import parse from "html-react-parser";
 import { settingsState } from "@/stores/settingsStore";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
-import PlayAndPause from "@/components/ArticleView/components/PlayAndPause.jsx";
 import { currentThemeMode, themeState } from "@/stores/themeStore.js";
 import CodeBlock from "@/components/ArticleView/components/CodeBlock.jsx";
 import { useTranslation } from "react-i18next";
-import { ExternalLink } from "lucide-react";
 import { cn, getHostname } from "@/lib/utils.js";
 import FeedIcon from "@/components/ui/FeedIcon.jsx";
 import { getArticleById } from "@/db/storage";
 import Attachments from "@/components/ArticleView/components/Attachments.jsx";
+
 const ArticleView = () => {
   const { t } = useTranslation();
   const { articleId } = useParams();
@@ -114,13 +113,7 @@ const ArticleView = () => {
             />
           ))}
           <div className="flex justify-center">
-            <Chip
-              color="primary"
-              variant="flat"
-              size="sm"
-              classNames={{ base: "cursor-pointer my-2" }}
-              endContent={<ExternalLink className="size-4 text-primary pr-1" />}
-            >
+            <Chip color="accent" variant="soft" className="cursor-pointer my-2">
               <a
                 href={domNode.attribs.href}
                 className="border-none!"
@@ -129,6 +122,7 @@ const ArticleView = () => {
               >
                 {hostname}
               </a>
+              <Link.Icon />
             </Chip>
           </div>
         </>
@@ -138,9 +132,9 @@ const ArticleView = () => {
   };
 
   // 检查是否有音频附件
-  const audioEnclosure = $activeArticle?.enclosures?.find((enclosure) =>
-    enclosure.mime_type?.startsWith("audio/"),
-  );
+  // const audioEnclosure = $activeArticle?.enclosures?.find((enclosure) =>
+  //   enclosure.mime_type?.startsWith("audio/"),
+  // );
 
   const navigate = useNavigate();
 
@@ -150,8 +144,9 @@ const ArticleView = () => {
         <motion.div
           key={articleId ? "content" : "empty"}
           className={cn(
-            "flex-1 p-0 h-screen fixed md:static inset-0 z-20 md:pr-2 md:py-2",
+            "flex-1 p-0 h-screen fixed md:static inset-0 z-20",
             !articleId ? "hidden md:flex md:flex-1" : "",
+            floatingSidebar ? "" : "md:pr-2 md:py-2",
           )}
           initial={
             articleId ? { opacity: 1, x: 40 } : { opacity: 0, x: 0, scale: 0.8 }
@@ -176,13 +171,13 @@ const ArticleView = () => {
               ref={scrollAreaRef}
               isEnabled={false}
               className={cn(
-                "article-scroll-area h-full bg-content2 md:bg-transparent",
+                "article-scroll-area h-full bg-background md:bg-transparent relative",
                 floatingSidebar
                   ? "md:bg-transparent"
-                  : "md:bg-background md:shadow-custom md:rounded-2xl",
+                  : "md:bg-overlay md:shadow-custom md:rounded-2xl",
               )}
             >
-              <ActionButtons parentRef={scrollAreaRef} />
+              <ActionButtons />
 
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
@@ -217,7 +212,7 @@ const ArticleView = () => {
                           navigate(`/feed/${$activeArticle?.feed?.id}`);
                       }}
                       className={cn(
-                        "text-default-500 text-sm flex items-center gap-1 hover:cursor-pointer focus:outline-none",
+                        "text-muted text-sm flex items-center gap-1 hover:cursor-pointer focus:outline-none",
                         titleAlignType === "center" ? "justify-center" : "",
                       )}
                     >
@@ -238,7 +233,7 @@ const ArticleView = () => {
                         {cleanTitle($activeArticle?.title)}
                       </a>
                     </h1>
-                    <div className="text-default-400 text-sm">
+                    <div className="text-muted opacity-60 text-sm">
                       <time
                         dateTime={$activeArticle?.published_at}
                         key={t.language}
@@ -247,13 +242,7 @@ const ArticleView = () => {
                       </time>
                     </div>
                   </header>
-                  <Divider className="my-4" />
-                  {audioEnclosure && (
-                    <PlayAndPause
-                      source={audioEnclosure}
-                      poster={extractFirstImage($activeArticle)}
-                    />
-                  )}
+                  <Separator className="my-4" />
                   <PhotoProvider
                     bannerVisible={true}
                     onVisibleChange={(visible) =>

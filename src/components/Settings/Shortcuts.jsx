@@ -1,17 +1,10 @@
 import { ItemWrapper, KeyboardItem } from "@/components/ui/settingItem.jsx";
-import {
-  Button,
-  Divider,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-} from "@heroui/react";
+import { Separator } from "@heroui/react";
 import { shortcutsModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
-import { Keyboard, X } from "lucide-react";
+import { Keyboard } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { popUpVariants } from "@/lib/motion";
+import CustomModal from "@/components/ui/CustomModal.jsx";
 export default function Shortcuts() {
   const { t } = useTranslation();
   const shortcuts = {
@@ -63,96 +56,63 @@ export default function Shortcuts() {
   const isOpen = useStore(shortcutsModalOpen);
 
   return (
-    <>
-      <Modal
-        isOpen={isOpen}
-        radius="md"
-        scrollBehavior="inside"
-        motionProps={{
-          variants: popUpVariants,
-        }}
-        onOpenChange={(value) => {
-          shortcutsModalOpen.set(value);
-        }}
-        classNames={{
-          base: "m-2 standalone:mb-safe-or-2 max-h-[80vh] h-[612px] overflow-hidden bg-content2 dark:bg-content1 shadow-custom!",
-          header:
-            "border-b flex flex-col gap-3 p-3 bg-content1 dark:bg-transparent",
-          footer: "hidden",
-          body: "modal-body p-0 block!",
-          closeButton: "hidden",
-        }}
-      >
-        <ModalContent>
-          {() => (
-            <>
-              <ModalHeader>
-                <div className="flex gap-2 justify-between">
-                  <div className="flex items-center gap-2">
-                    <Keyboard className="size-4" />
-                    <span className="text-base font-medium">
-                      {t("sidebar.shortcuts.title")}
-                    </span>
-                  </div>
-                  <Button
-                    size="sm"
-                    radius="full"
-                    variant="light"
-                    isIconOnly
-                    onPress={() => {
-                      shortcutsModalOpen.set(false);
-                    }}
-                  >
-                    <X className="size-4" />
-                  </Button>
-                </div>
-              </ModalHeader>
-              <ModalBody>
-                <div className="p-3 overflow-y-auto flex flex-col gap-4">
-                  <ItemWrapper title={t("sidebar.shortcuts.global")}>
-                    {shortcuts.global.map((shortcut, index) => (
-                      <div key={shortcut.desc}>
-                        <KeyboardItem
-                          key={shortcut.desc}
-                          keyStr={shortcut.key}
-                          kbdKey={shortcut.kbdKey}
-                          desc={shortcut.desc}
-                        />
-                        {index !== shortcuts.global.length - 1 && <Divider />}
-                      </div>
-                    ))}
-                  </ItemWrapper>
-                  <ItemWrapper title={t("sidebar.shortcuts.sidebar")}>
-                    {shortcuts.sidebar.map((shortcut, index) => (
-                      <div key={shortcut.desc}>
-                        <KeyboardItem
-                          key={shortcut.desc}
-                          keyStr={shortcut.key}
-                          kbdKey={shortcut.kbdKey}
-                          desc={shortcut.desc}
-                        />
-                        {index !== shortcuts.sidebar.length - 1 && <Divider />}
-                      </div>
-                    ))}
-                  </ItemWrapper>
-                  <ItemWrapper title={t("sidebar.shortcuts.article")}>
-                    {shortcuts.article.map((shortcut, index) => (
-                      <div key={shortcut.desc}>
-                        <KeyboardItem
-                          key={shortcut.desc}
-                          keyStr={shortcut.key}
-                          desc={shortcut.desc}
-                        />
-                        {index !== shortcuts.article.length - 1 && <Divider />}
-                      </div>
-                    ))}
-                  </ItemWrapper>
-                </div>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+    <CustomModal
+      open={isOpen}
+      onOpenChange={(value) => {
+        shortcutsModalOpen.set(value);
+      }}
+      title={
+        <div className="flex items-center gap-2">
+          <Keyboard className="size-4" />
+          <span className="text-base font-medium">
+            {t("sidebar.shortcuts.title")}
+          </span>
+        </div>
+      }
+      fixedHeight
+    >
+      <div className="p-3 overflow-y-auto flex flex-col gap-4">
+        <ItemWrapper title={t("sidebar.shortcuts.global")}>
+          {shortcuts.global.map((shortcut, index) => (
+            <div key={shortcut.desc}>
+              <KeyboardItem
+                key={shortcut.desc}
+                keyStr={shortcut.key}
+                kbdKey={shortcut.kbdKey}
+                desc={shortcut.desc}
+              />
+              {index !== shortcuts.global.length - 1 && <Separator />}
+            </div>
+          ))}
+        </ItemWrapper>
+
+        <ItemWrapper title={t("sidebar.shortcuts.sidebar")}>
+          {shortcuts.sidebar.map((shortcut, index) => (
+            <div key={shortcut.desc}>
+              <KeyboardItem
+                key={shortcut.desc}
+                keyStr={shortcut.key}
+                kbdKey={shortcut.kbdKey}
+                desc={shortcut.desc}
+              />
+              {index !== shortcuts.sidebar.length - 1 && <Separator />}
+            </div>
+          ))}
+        </ItemWrapper>
+
+        <ItemWrapper title={t("sidebar.shortcuts.article")}>
+          {shortcuts.article.map((shortcut, index) => (
+            <div key={shortcut.desc}>
+              <KeyboardItem
+                key={shortcut.desc}
+                keyStr={shortcut.key}
+                desc={shortcut.desc}
+              />
+              {index !== shortcuts.article.length - 1 && <Separator />}
+            </div>
+          ))}
+        </ItemWrapper>
+      </div>
+    </CustomModal>
   );
 }

@@ -1,10 +1,10 @@
 import { PhotoView } from "react-photo-view";
 import { useRef, useState } from "react";
 import { ImageOff } from "lucide-react";
-import { Image } from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils.js";
 import { memo } from "react";
+import { Image } from "@/components/ui/Image.jsx";
 
 function ArticleImage({ imgNode, type = "article" }) {
   const { t } = useTranslation();
@@ -17,11 +17,11 @@ function ArticleImage({ imgNode, type = "article" }) {
     return (
       <div
         className={cn(
-          "h-full min-h-[200px] bg-content2 flex items-center justify-center",
+          "h-full min-h-[200px] bg-background flex items-center justify-center",
           type === "article" ? "max-w-[calc(100%+2.5rem)]! -mx-5" : "",
         )}
       >
-        <div className="flex flex-col items-center gap-2 text-default-500">
+        <div className="flex flex-col items-center gap-2 text-muted">
           <ImageOff className="size-5" />
           <span className="text-sm">{t("articleView.imageError")}</span>
         </div>
@@ -32,25 +32,24 @@ function ArticleImage({ imgNode, type = "article" }) {
   return (
     <PhotoView key={src} src={src}>
       <div>
-        <Image
-          ref={imgRef}
-          disableAnimation
-          classNames={{
-            wrapper: cn(
-              " flex justify-center my-1",
-              type === "article" ? "max-w-[calc(100%+2.5rem)]! -mx-5" : "",
-              type === "enclosure"
-                ? "rounded-lg shadow-custom! mx-auto overflow-hidden"
-                : "",
-            ),
-            img: "h-auto object-cover m-0",
-          }}
-          radius="none"
-          src={src}
-          alt={alt}
-          loading="eager"
-          onError={() => setError(true)}
-        />
+        <div
+          className={cn(
+            "flex justify-center my-1",
+            type === "article" ? "max-w-[calc(100%+2.5rem)]! -mx-5" : "",
+            type === "enclosure"
+              ? "rounded-lg shadow-custom! mx-auto overflow-hidden"
+              : "",
+          )}
+        >
+          <Image
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            loading="eager"
+            className="h-auto object-cover m-0"
+            onError={() => setError(true)}
+          />
+        </div>
       </div>
     </PhotoView>
   );
