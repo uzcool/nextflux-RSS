@@ -1,5 +1,5 @@
 import { useIsMobile } from "@/hooks/use-mobile.jsx";
-import { Drawer, Modal, cn } from "@heroui/react";
+import { Drawer, Modal, cn, Button } from "@heroui/react";
 
 export default function CustomModal({
   open,
@@ -12,6 +12,7 @@ export default function CustomModal({
   if (isMedium) {
     return (
       <Drawer>
+        <Button className="hidden" />
         <Drawer.Backdrop isOpen={open} onOpenChange={onOpenChange}>
           <Drawer.Content>
             <Drawer.Dialog className={cn("px-0 pb-0", fixedHeight && "h-4/5")}>
@@ -29,6 +30,7 @@ export default function CustomModal({
   }
   return (
     <Modal>
+      <Button className="hidden" />
       <Modal.Backdrop isOpen={open} onOpenChange={onOpenChange}>
         <Modal.Container>
           <Modal.Dialog className={cn("p-0", fixedHeight && "h-2/3")}>

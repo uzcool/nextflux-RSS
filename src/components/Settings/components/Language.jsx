@@ -3,7 +3,6 @@ import { ItemWrapper } from "@/components/ui/settingItem.jsx";
 import { ChevronsUpDown, Globe } from "lucide-react";
 import { Button, Dropdown, Label } from "@heroui/react";
 import SettingIcon from "@/components/ui/SettingIcon";
-import { useEffect } from "react";
 
 const languages = [
   { id: "zh-CN", name: "简体中文" },
@@ -14,10 +13,6 @@ const languages = [
 
 export default function Language() {
   const { i18n, t } = useTranslation();
-
-  useEffect(() => {
-    console.log(i18n.language);
-  });
 
   return (
     <ItemWrapper title={t("settings.general.language")}>
@@ -32,13 +27,19 @@ export default function Language() {
         </div>
         <Dropdown>
           <Button variant="tertiary" size="sm">
-            {languages.find((lang) => lang.id === i18n.language)?.name}
+            {languages.find((lang) => lang.id === i18n.language)?.name ||
+              languages[1].name}
             <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />
           </Button>
           <Dropdown.Popover>
             <Dropdown.Menu
               aria-label="language"
-              selectedKeys={new Set([i18n.language])}
+              selectedKeys={
+                new Set([
+                  languages.find((lang) => lang.id === i18n.language)?.id ||
+                    languages[1].id,
+                ])
+              }
               selectionMode="single"
               onSelectionChange={(keys) => {
                 i18n.changeLanguage(keys.currentKey);

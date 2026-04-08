@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "@nanostores/react";
-import { Separator, InputGroup, Kbd, Modal, Tabs } from "@heroui/react";
+import { Separator, InputGroup, Kbd, Modal, Tabs, Button } from "@heroui/react";
 import { Search as SearchIcon } from "lucide-react";
 import {
   feedSearchResults,
@@ -101,6 +101,7 @@ export default function SearchModal() {
 
   return (
     <Modal>
+      <Button className="hidden" />
       <Modal.Backdrop
         isOpen={isOpen}
         onOpenChange={(open) => searchDialogOpen.set(open)}

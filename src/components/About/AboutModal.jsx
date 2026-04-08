@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useStore } from "@nanostores/react";
 import { aboutModalOpen } from "@/stores/modalStore";
 import { NotFancyLogo } from "@/components/About/NotFancyLogo.jsx";
-import { Modal } from "@heroui/react";
+import { Button, Modal } from "@heroui/react";
 import { Heart, Info } from "lucide-react";
 
 export default function AboutModal() {
@@ -11,6 +11,7 @@ export default function AboutModal() {
 
   return (
     <Modal>
+      <Button className="hidden" />
       <Modal.Backdrop
         isOpen={$aboutModalOpen}
         onOpenChange={(value) => aboutModalOpen.set(value)}

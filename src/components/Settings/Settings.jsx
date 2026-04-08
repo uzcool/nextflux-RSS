@@ -1,4 +1,4 @@
-import { cn, Drawer, Tabs } from "@heroui/react";
+import { cn, Button, Drawer, Tabs } from "@heroui/react";
 import { useState } from "react";
 import { settingsModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
@@ -15,6 +15,7 @@ export default function App() {
   const { isMedium } = useIsMobile();
   return (
     <Drawer>
+      <Button className="hidden" />
       <Drawer.Backdrop
         isOpen={isOpen}
         onOpenChange={(value) => {

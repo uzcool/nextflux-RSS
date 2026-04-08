@@ -26,6 +26,7 @@ export default function CustomAlertDialog({
 
   return (
     <AlertDialog>
+      <Button className="hidden" />
       <AlertDialog.Backdrop
         isOpen={isOpen}
         onOpenChange={(open) => !open && onClose()}
