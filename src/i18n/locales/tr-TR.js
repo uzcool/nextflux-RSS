@@ -144,6 +144,7 @@ export default {
     showSummary: "Okuma görünümünü gizle",
     saveToThirdParty: "Üçüncü taraf hizmetlerine kaydet",
     attachments: "Ekler",
+    audioNotSupported: "Tarayıcınız ses oynatmayı desteklemiyor",
   },
   player: {
     "Current time": "Şimdiki zaman",

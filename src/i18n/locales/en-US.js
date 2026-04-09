@@ -144,6 +144,7 @@ export default {
     showSummary: "Hide reader view",
     saveToThirdParty: "Save to third-party services",
     attachments: "Attachments",
+    audioNotSupported: "Your browser does not support audio playback",
   },
   player: {
     "Current time": "Current time",

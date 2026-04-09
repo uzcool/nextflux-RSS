@@ -132,9 +132,9 @@ const ArticleView = () => {
   };
 
   // 检查是否有音频附件
-  // const audioEnclosure = $activeArticle?.enclosures?.find((enclosure) =>
-  //   enclosure.mime_type?.startsWith("audio/"),
-  // );
+  const audioEnclosure = $activeArticle?.enclosures?.find((enclosure) =>
+    enclosure.mime_type?.startsWith("audio/"),
+  );
 
   const navigate = useNavigate();
 
@@ -243,6 +243,15 @@ const ArticleView = () => {
                     </div>
                   </header>
                   <Separator className="my-4" />
+                  {audioEnclosure && (
+                    <audio
+                      controls
+                      className="w-full my-4"
+                      src={audioEnclosure.url}
+                    >
+                      {t("articleView.audioNotSupported")}
+                    </audio>
+                  )}
                   <PhotoProvider
                     bannerVisible={true}
                     onVisibleChange={(visible) =>

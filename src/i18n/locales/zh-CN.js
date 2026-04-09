@@ -143,6 +143,7 @@ export default {
     showSummary: "隐藏阅读模式",
     saveToThirdParty: "保存到第三方服务",
     attachments: "附件",
+    audioNotSupported: "您的浏览器不支持音频播放",
   },
   player: {
     "Current time": "当前时间",

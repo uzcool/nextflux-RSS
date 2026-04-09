@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import "./App.css";
+import "m3-ripple/ripple.css";
 import { useEffect } from "react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar.jsx";
 import FeedListSidebar from "@/components/FeedList/FeedListSidebar.jsx";

@@ -143,6 +143,7 @@ export default {
     showSummary: "Masquer la vue lecteur",
     saveToThirdParty: "Enregistrer dans des services tiers",
     attachments: "Pièces jointes",
+    audioNotSupported: "Votre navigateur ne prend pas en charge la lecture audio",
   },
   player: {
     "Current time": "Temps actuel",

@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { Ripple } from "m3-ripple";
 import { Clock, ArrowUpFromLine, Star, Circle, CircleDot } from "lucide-react";
 import {
   cleanTitle,
@@ -135,6 +136,7 @@ export default function ArticleCard({ article }) {
         onClick={handleClick}
         onContextMenu={handleContextMenu}
       >
+        <Ripple hoverOpacity={0} pressedOpacity={0.05} duration={100} />
         <div
           className={cn(
             "card-content flex flex-col gap-1 transition-opacity",
