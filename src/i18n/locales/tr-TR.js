@@ -252,7 +252,7 @@ export default {
         light: "Aydınlık",
         stone: "Taş",
         dark: "Karanlık",
-        "black-dark": "Simsiyah",
+        "nord-dark": "Nord",
       },
       display: "GÖRÜNÜM",
       interfaceDisplay: "Arayüz görünümü",

@@ -252,7 +252,7 @@ export default {
         light: "Light",
         stone: "Stone",
         dark: "Dark",
-        "black-dark": "Pure black",
+        "nord-dark": "Nord",
       },
       display: "DISPLAY",
       interfaceDisplay: "Interface display",

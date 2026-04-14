@@ -251,7 +251,7 @@ export default {
         light: "Clair",
         stone: "Pierre",
         dark: "Sombre",
-        "black-dark": "Noir pur",
+        "nord-dark": "Nord",
       },
       display: "AFFICHAGE",
       interfaceDisplay: "Affichage de l'interface",

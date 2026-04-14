@@ -105,7 +105,7 @@ export default function ActionButtons() {
   };
 
   return (
-    <div className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-background/70 backdrop-blur-lg border-b border-foreground/10 px-2 sticky top-0 z-50">
+    <div className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-background/70 md:bg-overlay/70 backdrop-blur-lg border-b border-foreground/10 px-2 sticky top-0 z-50">
       <div className="flex items-center">
         <Tooltip
           content={t("common.close")}

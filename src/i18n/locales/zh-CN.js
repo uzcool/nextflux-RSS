@@ -251,7 +251,7 @@ export default {
         light: "浅色",
         stone: "石灰",
         dark: "深色",
-        "black-dark": "纯黑色",
+        "nord-dark": "深蓝",
       },
       display: "显示",
       interfaceDisplay: "界面显示",

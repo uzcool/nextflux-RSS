@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 export default function SettingIcon({ variant = "default", children }) {
   const colorVariants = {
-    default: "bg-muted",
+    default: "bg-gray-500",
     blue: "bg-blue-500",
     purple: "bg-purple-500",
     green: "bg-green-500",
