@@ -15,9 +15,10 @@ export default {
       boxShadow: {
         custom: "var(--shadow-custom)",
         "custom-sm": "var(--shadow-custom-sm)",
-        "custom-button": "var(--shadow-custom-button)",
+        "custom-md": "var(--shadow-custom-md)",
+        "custom-lg": "var(--shadow-custom-lg)",
         "custom-inner": "var(--shadow-custom-inner)",
-        "custom-cursor": "var(--shadow-custom-cursor)",
+        button: "var(--shadow-button)",
       },
       keyframes: {
         "collapsible-down": {

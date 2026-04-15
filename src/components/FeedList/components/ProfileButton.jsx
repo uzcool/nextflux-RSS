@@ -26,11 +26,7 @@ export default function ProfileButton() {
   return (
     <div className="profile-button standalone:pb-safe flex items-center gap-4">
       <Dropdown>
-        <Button
-          size="sm"
-          variant="tertiary"
-          className="h-auto py-2 px-3 w-full"
-        >
+        <Button size="sm" variant="ghost" className="h-auto py-2 px-3 w-full">
           <div className="flex items-center w-full gap-2">
             <CircleUser className="size-4 text-muted" />
             <div className="flex flex-col items-start flex-1 min-w-0">

@@ -7,32 +7,29 @@
   :root {
     --shadow-custom: 0 0 5px 0 rgba(0, 0, 0, 0.02),
       0 2px 10px 0 rgba(0, 0, 0, 0.07), 0 0 1px 0 rgba(0, 0, 0, 0.3);
-    --shadow-custom-sm: 0 4px 7px 0 rgba(0, 0, 0, 0.12);
-    --shadow-custom-button: 0 1px 2px 0 rgba(0, 0, 0, 0.15),
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1);
     --shadow-custom-inner: inset 0 0 2px 0 rgba(0, 0, 0, 0.05),
       inset 0 0 4px 0 rgba(0, 0, 0, 0.05), inset 0 0 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-custom-cursor: 0 3px 6px 0 rgba(0, 0, 0, 0.07), 0 0 0 1px #e1e6ec,
-      inset 0 -5px 1px -1px rgba(0, 0, 0, 0.03);
+    --shadow-custom-md : 0 24px 40px -12px oklch(25.50% 0.077 262.86 / 0.08),
+      0 16px 28px -8px oklch(25.50% 0.077 262.86 / 0.04),
+      0 4px 6px -2px oklch(25.50% 0.077 262.86 / 0.04),
+      0 0 2px 0 oklch(25.50% 0.077 262.86 / 0.04),
+      0 0 0 1px oklch(25.50% 0.077 262.86 / 0.04);
   }
 
   .dark {
     --shadow-custom: 0 0 5px 0 rgba(0, 0, 0, 0.05),
       0 2px 10px 0 rgba(0, 0, 0, 0.2), inset 0 0 1px 0 hsla(0, 0%, 100%, 0.15),
       0 0 1px 0 rgba(255, 255, 255, 0.6);
-    --shadow-custom-sm: 0 4px 7px 0 rgba(0, 0, 0, 0.12);
-    --shadow-custom-button: 0 1px 2px 0 rgba(0, 0, 0, 0.15),
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1);
     --shadow-custom-inner: inset 0 1px 1px 0 rgba(255, 255, 255, 0.02),
       inset 0 -0.5px 1px 0 rgba(255, 255, 255, 0.1),
       inset 1px 1.5px 4px 0 rgba(0, 0, 0, 0.08),
       inset 1px 1.5px 4px 0 rgba(0, 0, 0, 0.1);
-    --shadow-custom-cursor: 0 3px 6px 0 rgba(0, 0, 0, 0.07),
-      0 0 0 1px rgba(0, 0, 0, 0.15),
-      inset 0 -5px 1px -1px rgba(255, 255, 255, 0.01),
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+    --shadow-custom-md: 0 1px 3px #ffffff0f inset,
+      0 .5px .5px #ffffff0f inset,
+      0 16px 56px #02092c3d,
+      0 4px 16px #01092c3d,
+      0 1px 2px #02092c3d,
+      0 0 0 1px #05061b85;
   }
 
   [data-theme="stone"] {
@@ -117,5 +114,11 @@
     --focus: var(--accent);
     --link: var(--accent);
 
+  }
+}
+
+@layer components {
+  .dropdown__popover {
+    @apply shadow-custom-md bg-overlay/90 backdrop-blur-sm;
   }
 }
