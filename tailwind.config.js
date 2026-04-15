@@ -14,11 +14,8 @@ export default {
       },
       boxShadow: {
         custom: "var(--shadow-custom)",
-        "custom-sm": "var(--shadow-custom-sm)",
         "custom-md": "var(--shadow-custom-md)",
-        "custom-lg": "var(--shadow-custom-lg)",
         "custom-inner": "var(--shadow-custom-inner)",
-        button: "var(--shadow-button)",
       },
       keyframes: {
         "collapsible-down": {

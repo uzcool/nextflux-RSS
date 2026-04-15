@@ -26,10 +26,10 @@
       inset 1px 1.5px 4px 0 rgba(0, 0, 0, 0.1);
     --shadow-custom-md: 0 1px 3px #ffffff0f inset,
       0 .5px .5px #ffffff0f inset,
-      0 16px 56px #02092c3d,
-      0 4px 16px #01092c3d,
-      0 1px 2px #02092c3d,
-      0 0 0 1px #05061b85;
+      0 16px 56px #0000003d,
+      0 4px 16px #0000003d,
+      0 1px 2px #0000003d,
+      0 0 0 1px #00000085
   }
 
   [data-theme="stone"] {
