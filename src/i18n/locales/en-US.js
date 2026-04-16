@@ -145,6 +145,9 @@ export default {
     saveToThirdParty: "Save to third-party services",
     attachments: "Attachments",
     audioNotSupported: "Your browser does not support audio playback",
+    aiSummarize: "AI Summary",
+    aiSummary: "AI Summary",
+    aiSummaryGenerating: "Generating summary...",
   },
   player: {
     "Current time": "Current time",
@@ -303,6 +306,17 @@ export default {
       titleAlign: "Alignment",
       titleFontSize: "Size",
       reset: "Reset",
+    },
+    ai: {
+      title: "AI",
+      description: "Currently only supports OpenAI and OpenAI-compatible APIs",
+      openai: "OpenAI Configuration",
+      apiKey: "API Key",
+      apiKeyPlaceholder: "Enter your OpenAI API Key",
+      baseUrl: "Base URL",
+      model: "MODEL",
+      selectModel: "Select model",
+      prompt: "Prompt",
     },
   },
   error: {

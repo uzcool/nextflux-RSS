@@ -145,6 +145,9 @@ export default {
     saveToThirdParty: "Üçüncü taraf hizmetlerine kaydet",
     attachments: "Ekler",
     audioNotSupported: "Tarayıcınız ses oynatmayı desteklemiyor",
+    aiSummarize: "AI Özeti",
+    aiSummary: "AI Özeti",
+    aiSummaryGenerating: "Özet oluşturuluyor...",
   },
   player: {
     "Current time": "Şimdiki zaman",
@@ -303,6 +306,18 @@ export default {
       titleAlign: "Hizalama",
       titleFontSize: "Boyut",
       reset: "Sıfırla",
+    },
+    ai: {
+      title: "AI",
+      description:
+        "Şu anda yalnızca OpenAI ve OpenAI uyumlu API'ler desteklenmektedir",
+      openai: "OpenAI Yapılandırması",
+      apiKey: "API Anahtarı",
+      apiKeyPlaceholder: "OpenAI API anahtarınızı girin",
+      baseUrl: "Temel URL",
+      model: "MODEL",
+      selectModel: "Model seç",
+      prompt: "Prompt",
     },
   },
   error: {
