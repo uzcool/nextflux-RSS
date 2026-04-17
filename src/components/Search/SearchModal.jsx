@@ -108,7 +108,7 @@ export default function SearchModal() {
         variant="transparent"
       >
         <Modal.Container scroll="inside" size="lg">
-          <Modal.Dialog className="max-h-[80vh] h-[400px] bg-background/90 border backdrop-blur-lg shadow-large p-0">
+          <Modal.Dialog className="max-h-[80vh] h-[400px] bg-background/90 backdrop-blur-lg border shadow-2xl p-0">
             <Modal.Header className="p-3 bg-background">
               <InputGroup>
                 <InputGroup.Prefix>

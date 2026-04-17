@@ -263,6 +263,7 @@ export default {
       moreSpace: "More space",
       normal: "Normal",
       LargerText: "Larger text",
+      borderRadius: "Border radius",
       favicons: "FAVICONS",
       shape: "Shape",
       circle: "Circle",

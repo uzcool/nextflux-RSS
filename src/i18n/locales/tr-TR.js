@@ -263,6 +263,7 @@ export default {
       moreSpace: "Daha fazla alan",
       normal: "Normal",
       LargerText: "Daha büyük yazı",
+      borderRadius: "Köşe yuvarlatma",
       favicons: "FAVICONLAR",
       shape: "Şekil",
       circle: "Daire",

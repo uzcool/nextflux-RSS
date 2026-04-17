@@ -22,6 +22,7 @@ import EditFeedModal from "@/components/ArticleList/components/EditFeedModal.jsx
 import { checkIntegrations } from "@/stores/basicInfoStore.js";
 import SearchModal from "@/components/Search/SearchModal.jsx";
 import { useZoom } from "@/hooks/useZoom.js";
+import { useBorderRadius } from "@/hooks/useBorderRadius.js";
 import {
   shortcutsModalOpen,
   settingsModalOpen,
@@ -63,6 +64,7 @@ function App() {
 
   useHotkeys();
   useZoom();
+  useBorderRadius();
   return (
     <SidebarProvider>
       <FeedListSidebar />

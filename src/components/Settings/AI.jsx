@@ -1,6 +1,15 @@
 import { useStore } from "@nanostores/react";
 import { settingsState, updateSettings } from "@/stores/settingsStore.js";
-import { Button, Description, Input, Label, ScrollShadow, Spinner, TextArea, TextField } from "@heroui/react";
+import {
+  Button,
+  Description,
+  Input,
+  Label,
+  ScrollShadow,
+  Spinner,
+  TextArea,
+  TextField,
+} from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -60,12 +69,20 @@ export default function AI() {
       title={
         <div className="flex items-center gap-2">
           <Sparkles className="size-4" />
-          <span className="text-base font-medium">{t("settings.ai.title")}</span>
+          <span className="text-base font-medium">
+            {t("settings.ai.title")}
+          </span>
         </div>
       }
+      footer={
+        <Button fullWidth onPress={handleSave} isPending={saving}>
+          {saving && <Spinner color="current" size="sm" />}
+          {t("common.save")}
+        </Button>
+      }
     >
-      <ScrollShadow size={10} className="w-full overflow-y-auto">
-        <div className="flex flex-col gap-4 px-4 pb-4">
+      <ScrollShadow size={10} className="w-full overflow-y-auto px-4">
+        <div className="flex flex-col gap-4 pb-4">
           <TextField variant="secondary">
             <Label>{t("settings.ai.apiKey")}</Label>
             <Input
@@ -102,14 +119,9 @@ export default function AI() {
             <TextArea
               value={localPrompt}
               onChange={(e) => setLocalPrompt(e.target.value)}
-              rows={6}
+              rows={3}
             />
           </TextField>
-
-          <Button fullWidth onPress={handleSave} isPending={saving}>
-            {saving && <Spinner color="current" size="sm" />}
-            {t("common.save")}
-          </Button>
         </div>
       </ScrollShadow>
     </CustomModal>

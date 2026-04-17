@@ -16,6 +16,7 @@ export default {
         custom: "var(--shadow-custom)",
         "custom-md": "var(--shadow-custom-md)",
         "custom-inner": "var(--shadow-custom-inner)",
+        "custom-btn": "var(--shadow-custom-btn)",
       },
       keyframes: {
         "collapsible-down": {

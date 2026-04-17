@@ -262,6 +262,7 @@ export default {
       moreSpace: "更多空间",
       normal: "正常",
       LargerText: "更大字体",
+      borderRadius: "圆角",
       favicons: "图标",
       shape: "形状",
       circle: "圆形",

@@ -16,7 +16,7 @@ export default function SettingIcon({ variant = "default", children }) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center shrink-0 size-6 rounded-md",
+        "flex items-center justify-center shrink-0 size-6 rounded-[6px]",
         colorVariants[variant],
       )}
     >
