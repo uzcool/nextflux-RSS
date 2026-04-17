@@ -72,6 +72,51 @@
     --link: var(--accent);
   }
 
+  [data-theme="leaf"] {
+    color-scheme: light;
+    /* Primitive Colors */
+    --white: oklch(100% 0 0);
+    --black: oklch(0% 0 0);
+    --snow: oklch(0.9911 0 0);
+    --eclipse: rgb(54, 67, 54);
+    /* Base Colors */
+    --background: rgb(223, 231, 225);
+    --foreground: var(--eclipse);
+    /* Surface: Used for non-overlay components */
+    --surface: rgb(236, 244, 238);
+    --surface-foreground: var(--foreground);
+    /* Overlay: Used for floating/overlay components */
+    --overlay: rgb(236, 244, 238);
+    --overlay-foreground: var(--foreground);
+    --muted: rgb(82, 92, 85);
+    --scrollbar: oklch(80% 0.03 145);
+    --default: rgba(0, 0, 0, 0.05);
+    --default-foreground: var(--eclipse);
+    /* Ocean accent */
+    --accent: rgb(53, 117, 74);
+    --accent-foreground: var(--snow);
+    /* Form Field Defaults */
+    --field-background: rgb(236, 244, 238);
+    --field-foreground: var(--foreground);
+    --field-placeholder: var(--muted);
+    --field-border: transparent;
+    /* Status (kept compatible) */
+    --success: oklch(0.65 0.2 145);
+    --success-foreground: var(--snow);
+    --warning: oklch(0.75 0.18 85);
+    --warning-foreground: var(--eclipse);
+    --danger: oklch(0.55 0.22 25);
+    --danger-foreground: var(--snow);
+    /* Component Colors */
+    --segment: var(--white);
+    --segment-foreground: var(--foreground);
+    /* Misc */
+    --border: rgba(0, 0, 0, 0.05);
+    --separator: rgba(0, 0, 0, 0.07);
+    --focus: var(--accent);
+    --link: var(--accent);
+  }
+
   [data-theme="nord-dark"] {
     color-scheme: dark;
     /* Base Colors */

@@ -256,6 +256,7 @@ export default {
       themes: {
         light: "Clair",
         stone: "Pierre",
+        leaf: "Feuille",
         dark: "Sombre",
         "nord-dark": "Nord",
       },

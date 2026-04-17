@@ -254,6 +254,7 @@ export default {
       themes: {
         light: "Light",
         stone: "Stone",
+        leaf: "Leaf",
         dark: "Dark",
         "nord-dark": "Nord",
       },

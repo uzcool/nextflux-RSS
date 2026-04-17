@@ -253,6 +253,7 @@ export default {
       themes: {
         light: "浅色",
         stone: "石灰",
+        leaf: "叶子",
         dark: "深色",
         "nord-dark": "深蓝",
       },

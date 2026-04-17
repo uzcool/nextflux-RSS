@@ -254,6 +254,7 @@ export default {
       themes: {
         light: "Aydınlık",
         stone: "Taş",
+        leaf: "Yaprak",
         dark: "Karanlık",
         "nord-dark": "Nord",
       },
