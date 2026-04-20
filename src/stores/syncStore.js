@@ -79,6 +79,7 @@ async function syncFeeds() {
         hide_globally: feed.hide_globally,
         categoryId: feed.category.id,
         parsing_error_count: feed.parsing_error_count,
+        scraper_rules: feed.scraper_rules,
         keeplist_rules: feed.keeplist_rules,
         blocklist_rules: feed.blocklist_rules,
         rewrite_rules: feed.rewrite_rules,

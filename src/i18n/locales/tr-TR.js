@@ -64,6 +64,8 @@ export default {
     feedKeeplistRulesPlaceholder: "Lütfen tutma kurallarını girin",
     feedRewriteRules: "Yeniden yazma kuralları",
     feedRewriteRulesPlaceholder: "Lütfen yeniden yazma kurallarını girin",
+    feedScraperRules: "Kazıma kuralları",
+    feedScraperRulesPlaceholder: "Lütfen kazıma kurallarını girin",
     feedType: "Tür",
     feed: "Besleme veya site URL'si",
     youtubeChannel: "Youtube kanalı",

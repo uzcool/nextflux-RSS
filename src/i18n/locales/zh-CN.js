@@ -64,6 +64,8 @@ export default {
     feedKeeplistRulesPlaceholder: "请输入保留规则",
     feedRewriteRules: "重写规则",
     feedRewriteRulesPlaceholder: "请输入重写规则",
+    feedScraperRules: "采集规则",
+    feedScraperRulesPlaceholder: "请输入采集规则",
     feedType: "类型",
     feed: "订阅源或网址",
     youtubeChannel: "Youtube 频道",

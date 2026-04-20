@@ -4,7 +4,7 @@ import Dexie from "dexie";
 const db = new Dexie("minifluxReader");
 
 // 创建表及索引
-db.version(10).stores({
+db.version(11).stores({
   articles:
     "id, feedId, status, starred, created_at, [status+feedId], [starred+feedId]",
   categories: "id, title",

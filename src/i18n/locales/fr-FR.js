@@ -65,6 +65,8 @@ export default {
     feedKeeplistRulesPlaceholder: "Veuillez entrer les règles de conservation",
     feedRewriteRules: "Règles de réécriture",
     feedRewriteRulesPlaceholder: "Veuillez entrer les règles de réécriture",
+    feedScraperRules: "Règles de scraping",
+    feedScraperRulesPlaceholder: "Veuillez entrer les règles de scraping",
     feedType: "Type",
     feed: "URL du flux ou du site",
     youtubeChannel: "Chaîne YouTube",

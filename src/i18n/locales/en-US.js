@@ -64,6 +64,8 @@ export default {
     feedKeeplistRulesPlaceholder: "Please enter keep rules",
     feedRewriteRules: "Rewrite rules",
     feedRewriteRulesPlaceholder: "Please enter rewrite rules",
+    feedScraperRules: "Scraper rules",
+    feedScraperRulesPlaceholder: "Please enter scraper rules",
     feedType: "Type",
     feed: "Feed or Site URL",
     youtubeChannel: "Youtube channel",

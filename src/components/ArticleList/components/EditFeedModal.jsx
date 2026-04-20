@@ -23,9 +23,14 @@ import { editFeedModalOpen, currentFeedId } from "@/stores/modalStore";
 import { useParams } from "react-router-dom";
 import minifluxAPI from "@/api/miniflux";
 import { forceSync } from "@/stores/syncStore";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CustomModal from "@/components/ui/CustomModal.jsx";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
 
 export default function EditFeedModal() {
   const { t } = useTranslation();
@@ -39,11 +44,13 @@ export default function EditFeedModal() {
   const [loading, setLoading] = useState(false);
   const [feedUrl, setFeedUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     category_id: "",
     hide_globally: false,
     crawler: false,
+    scraper_rules: "",
     keeplist_rules: "",
     blocklist_rules: "",
     rewrite_rules: "",
@@ -58,6 +65,7 @@ export default function EditFeedModal() {
           category_id: feed.categoryId,
           hide_globally: feed.hide_globally,
           crawler: feed.crawler,
+          scraper_rules: feed.scraper_rules,
           keeplist_rules: feed.keeplist_rules,
           blocklist_rules: feed.blocklist_rules,
           rewrite_rules: feed.rewrite_rules,
@@ -78,6 +86,7 @@ export default function EditFeedModal() {
           category_id: feed.categoryId,
           hide_globally: feed.hide_globally,
           crawler: feed.crawler,
+          scraper_rules: feed.scraper_rules,
           keeplist_rules: feed.keeplist_rules,
           blocklist_rules: feed.blocklist_rules,
           rewrite_rules: feed.rewrite_rules,
@@ -197,110 +206,156 @@ export default function EditFeedModal() {
                   </InputGroup.Suffix>
                 </InputGroup>
               </TextField>
-              <TextField name="keeplist_rules" variant="secondary">
-                <Label>
-                  {
-                    <Link
-                      className="no-underline hover:underline"
-                      href="https://miniflux.app/docs/rules.html#feed-filtering-rules"
-                      target="_blank"
+              <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
+                <CollapsibleTrigger asChild>
+                  <Button
+                    variant="outline"
+                    fullWidth
+                    className="flex justify-between rounded-field px-3 text-muted"
+                  >
+                    {t("feed.advancedOptions")}
+                    <ChevronDown
+                      className={`size-4 transition-transform ${advancedOpen ? "rotate-180" : ""}`}
+                    />
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="overflow-visible">
+                  <div className="flex flex-col gap-4 pt-2">
+                    <TextField name="scraper_rules" variant="secondary">
+                      <Label>
+                        {
+                          <Link
+                            className="no-underline hover:underline"
+                            href="https://miniflux.app/docs/rules.html#scraper-rules"
+                            target="_blank"
+                          >
+                            {t("feed.feedScraperRules")}
+                            <Link.Icon />
+                          </Link>
+                        }
+                      </Label>
+                      <Input
+                        placeholder={t("feed.feedScraperRulesPlaceholder")}
+                        value={formData.scraper_rules}
+                        onChange={(event) =>
+                          setFormData({
+                            ...formData,
+                            scraper_rules: event.target.value,
+                          })
+                        }
+                      />
+                    </TextField>
+                    <TextField name="keeplist_rules" variant="secondary">
+                      <Label>
+                        {
+                          <Link
+                            className="no-underline hover:underline"
+                            href="https://miniflux.app/docs/rules.html#feed-filtering-rules"
+                            target="_blank"
+                          >
+                            {t("feed.feedKeeplistRules")}
+                            <Link.Icon />
+                          </Link>
+                        }
+                      </Label>
+                      <Input
+                        placeholder={t("feed.feedKeeplistRulesPlaceholder")}
+                        value={formData.keeplist_rules}
+                        onChange={(event) =>
+                          setFormData({
+                            ...formData,
+                            keeplist_rules: event.target.value,
+                          })
+                        }
+                      />
+                    </TextField>
+                    <TextField name="blocklist_rules" variant="secondary">
+                      <Label>
+                        {
+                          <Link
+                            className="no-underline hover:underline"
+                            href="https://miniflux.app/docs/rules.html#feed-filtering-rules"
+                            target="_blank"
+                          >
+                            {t("feed.feedBlocklistRules")}
+                            <Link.Icon />
+                          </Link>
+                        }
+                      </Label>
+                      <Input
+                        placeholder={t("feed.feedBlocklistRulesPlaceholder")}
+                        value={formData.blocklist_rules}
+                        onChange={(event) =>
+                          setFormData({
+                            ...formData,
+                            blocklist_rules: event.target.value,
+                          })
+                        }
+                      />
+                    </TextField>
+                    <TextField name="rewrite_rules" variant="secondary">
+                      <Label>
+                        {
+                          <Link
+                            className="no-underline hover:underline"
+                            href="https://miniflux.app/docs/rules.html#rewrite-rules"
+                            target="_blank"
+                          >
+                            {t("feed.feedRewriteRules")}
+                            <Link.Icon />
+                          </Link>
+                        }
+                      </Label>
+                      <TextArea
+                        placeholder={t("feed.feedRewriteRulesPlaceholder")}
+                        value={formData.rewrite_rules}
+                        onChange={(event) =>
+                          setFormData({
+                            ...formData,
+                            rewrite_rules: event.target.value,
+                          })
+                        }
+                      />
+                    </TextField>
+                    <Checkbox
+                      value="crawler"
+                      variant="secondary"
+                      isSelected={formData.crawler}
+                      onChange={(value) =>
+                        setFormData({ ...formData, crawler: value })
+                      }
                     >
-                      {t("feed.feedKeeplistRules")}
-                      <Link.Icon />
-                    </Link>
-                  }
-                </Label>
-                <Input
-                  placeholder={t("feed.feedKeeplistRulesPlaceholder")}
-                  value={formData.keeplist_rules}
-                  onChange={(event) =>
-                    setFormData({
-                      ...formData,
-                      keeplist_rules: event.target.value,
-                    })
-                  }
-                />
-              </TextField>
-              <TextField name="blocklist_rules" variant="secondary">
-                <Label>
-                  {
-                    <Link
-                      className="no-underline hover:underline"
-                      href="https://miniflux.app/docs/rules.html#feed-filtering-rules"
-                      target="_blank"
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                      <Checkbox.Content>
+                        <Label>{t("feed.feedCrawler")}</Label>
+                        <Description>
+                          {t("feed.feedCrawlerDescription")}
+                        </Description>
+                      </Checkbox.Content>
+                    </Checkbox>
+                    <Checkbox
+                      value="hide_globally"
+                      variant="secondary"
+                      isSelected={formData.hide_globally}
+                      onChange={(value) =>
+                        setFormData({ ...formData, hide_globally: value })
+                      }
                     >
-                      {t("feed.feedBlocklistRules")}
-                      <Link.Icon />
-                    </Link>
-                  }
-                </Label>
-                <Input
-                  placeholder={t("feed.feedBlocklistRulesPlaceholder")}
-                  value={formData.blocklist_rules}
-                  onChange={(event) =>
-                    setFormData({
-                      ...formData,
-                      blocklist_rules: event.target.value,
-                    })
-                  }
-                />
-              </TextField>
-              <TextField name="rewrite_rules" variant="secondary">
-                <Label>
-                  {
-                    <Link
-                      className="no-underline hover:underline"
-                      href="https://miniflux.app/docs/rules.html#rewrite-rules"
-                      target="_blank"
-                    >
-                      {t("feed.feedRewriteRules")}
-                      <Link.Icon />
-                    </Link>
-                  }
-                </Label>
-                <TextArea
-                  placeholder={t("feed.feedRewriteRulesPlaceholder")}
-                  value={formData.rewrite_rules}
-                  onChange={(event) =>
-                    setFormData({
-                      ...formData,
-                      rewrite_rules: event.target.value,
-                    })
-                  }
-                />
-              </TextField>
-              <Checkbox
-                value="crawler"
-                variant="secondary"
-                isSelected={formData.crawler}
-                onChange={(value) =>
-                  setFormData({ ...formData, crawler: value })
-                }
-              >
-                <Checkbox.Control>
-                  <Checkbox.Indicator />
-                </Checkbox.Control>
-                <Checkbox.Content>
-                  <Label>{t("feed.feedCrawler")}</Label>
-                  <Description>{t("feed.feedCrawlerDescription")}</Description>
-                </Checkbox.Content>
-              </Checkbox>
-              <Checkbox
-                value="hide_globally"
-                variant="secondary"
-                isSelected={formData.hide_globally}
-                onChange={(value) =>
-                  setFormData({ ...formData, hide_globally: value })
-                }
-              >
-                <Checkbox.Control>
-                  <Checkbox.Indicator />
-                </Checkbox.Control>
-                <Checkbox.Content>
-                  <Label>{t("feed.feedHide")}</Label>
-                  <Description>{t("feed.feedHideDescription")}</Description>
-                </Checkbox.Content>
-              </Checkbox>
+                      <Checkbox.Control>
+                        <Checkbox.Indicator />
+                      </Checkbox.Control>
+                      <Checkbox.Content>
+                        <Label>{t("feed.feedHide")}</Label>
+                        <Description>
+                          {t("feed.feedHideDescription")}
+                        </Description>
+                      </Checkbox.Content>
+                    </Checkbox>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </FieldGroup>
           </Fieldset>
         </Form>

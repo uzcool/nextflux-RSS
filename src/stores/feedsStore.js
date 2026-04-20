@@ -70,16 +70,18 @@ export const feedsByCategory = computed(
         acc[categoryId].feeds.push(feed);
         return acc;
       }, {}),
-    ).map(([id, category]) => ({
-      id,
-      title: category.name,
-      isActive: false,
-      feeds: category.feeds.map((feed) => ({
-        ...feed,
-        unreadCount: $unreadCounts[feed.id] || 0,
-        starredCount: $starredCounts[feed.id] || 0,
-      })),
-    }));
+    )
+      .map(([id, category]) => ({
+        id,
+        title: category.name,
+        isActive: false,
+        feeds: category.feeds.map((feed) => ({
+          ...feed,
+          unreadCount: $unreadCounts[feed.id] || 0,
+          starredCount: $starredCounts[feed.id] || 0,
+        })),
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title));
   },
 );
 
