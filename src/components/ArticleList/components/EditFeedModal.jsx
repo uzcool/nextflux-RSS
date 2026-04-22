@@ -191,6 +191,7 @@ export default function EditFeedModal() {
                       isIconOnly
                       isDisabled={isCopied}
                       variant="ghost"
+                      className="rounded-field"
                       onPress={() => {
                         navigator.clipboard.writeText(feedUrl);
                         setIsCopied(true);

@@ -172,9 +172,12 @@
   }
   .button--tertiary,
   .close-button {
-    @apply rounded-full dark:shadow-custom-btn;
+    @apply dark:shadow-custom-btn;
   }
   .button--icon-only {
+    @apply rounded-full;
+  }
+  .close-button {
     @apply rounded-full;
   }
 }

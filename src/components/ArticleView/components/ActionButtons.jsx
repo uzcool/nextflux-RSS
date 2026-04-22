@@ -163,7 +163,7 @@ export default function ActionButtons() {
           <CloseButton onPress={handleClose} className="mx-2" />
           <Tooltip.Content>{t("common.close")}</Tooltip.Content>
         </Tooltip>
-        <div className="mr-auto flex gap-1">
+        <div className="gap-1 hidden md:flex">
           <Tooltip delay={0}>
             <Button
               onPress={handlePrevious}
@@ -187,7 +187,7 @@ export default function ActionButtons() {
             <Tooltip.Content>{t("common.next")}</Tooltip.Content>
           </Tooltip>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 ml-auto">
           <Tooltip delay={0}>
             <Button
               onPress={() => handleMarkStatus($activeArticle)}
