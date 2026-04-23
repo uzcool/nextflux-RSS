@@ -46,9 +46,9 @@ export const SliderItem = ({
         >
           <div className="text-sm text-foreground line-clamp-1">{label}</div>
           <Slider.Output />
-          <Slider.Track>
+          <Slider.Track className="h-1.5 mt-0.5">
             <Slider.Fill />
-            <Slider.Thumb />
+            <Slider.Thumb className="bg-transparent" />
           </Slider.Track>
         </Slider>
       </div>

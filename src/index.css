@@ -75,7 +75,6 @@
     --border: rgb(197, 195, 190);
     --separator: rgb(220, 217, 213);
     --focus: var(--accent);
-    --link: var(--accent);
   }
 
   [data-theme="leaf"] {
@@ -120,7 +119,6 @@
     --border: rgba(0, 0, 0, 0.05);
     --separator: rgba(0, 0, 0, 0.07);
     --focus: var(--accent);
-    --link: var(--accent);
   }
 
   [data-theme="nord-dark"] {
@@ -158,26 +156,27 @@
     --border: rgb(54.001, 60, 74);
     --separator: rgb(59.001, 65.999, 82.001);
     --focus: var(--accent);
-    --link: var(--accent);
   }
 }
 
 @layer components {
   .dropdown__popover {
-    @apply shadow-custom-md bg-overlay/90 backdrop-blur-sm;
+    @apply min-w-40 shadow-custom-md bg-overlay/90 backdrop-blur-sm;
   }
   .button--primary,
   .button--danger {
     @apply shadow-custom-btn relative before:content-[''] before:absolute before:inset-0 before:rounded-[inherit] before:pointer-events-none before:opacity-5 before:bg-gradient-to-b before:from-white before:to-white/50;
   }
-  .button--tertiary,
+  .button--primary {
+    @apply border border-accent;
+  }
+  .button--danger {
+    @apply border border-danger;
+  }
   .close-button {
-    @apply dark:shadow-custom-btn;
+    @apply rounded-full dark:shadow-custom-btn;
   }
   .button--icon-only {
-    @apply rounded-full;
-  }
-  .close-button {
     @apply rounded-full;
   }
 }

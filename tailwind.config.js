@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import animate from "tailwindcss-animate";
 import typography from "@tailwindcss/typography";
 import safe from "tailwindcss-safe-area";
 
@@ -48,5 +47,5 @@ export default {
   },
 
   darkMode: ["selector", '[class$="dark"]'],
-  plugins: [animate, typography, safe],
+  plugins: [typography, safe],
 };

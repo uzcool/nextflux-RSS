@@ -47,7 +47,7 @@ export default function ActionButtons() {
   const fetchLoading = useStore(loadingOriginContent);
   const [saveLoading, setSaveLoading] = useState(false);
   const $hasIntegrations = useStore(hasIntegrations);
-  const { aiApiKey } = useStore(settingsState);
+  const { aiApiKey, floatingSidebar } = useStore(settingsState);
   const $aiSummaries = useStore(aiSummaries);
   const currentSummaryState = $aiSummaries[$activeArticle?.id];
 
@@ -154,7 +154,14 @@ export default function ActionButtons() {
   };
 
   return (
-    <div className="action-buttons py-2 standalone:pt-safe-or-2.5 bg-background/70 md:bg-overlay/70 backdrop-blur-lg border-b border-foreground/10 px-2 sticky top-0 z-50">
+    <div
+      className={cn(
+        "action-buttons py-2 standalone:pt-safe-or-2.5 backdrop-blur-lg border-b border-foreground/10 px-2 sticky top-0 z-50",
+        floatingSidebar
+          ? "bg-background/70"
+          : "bg-background/70 md:bg-overlay/70",
+      )}
+    >
       <div className="flex items-center">
         <Tooltip
           content={t("common.close")}
