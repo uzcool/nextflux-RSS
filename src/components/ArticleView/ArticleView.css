@@ -84,6 +84,10 @@ figcaption {
 }
 
 /*代码主题跟随系统当前使用主题*/
+.shiki {
+  @apply shadow-custom
+}
+
 html[class$="dark"] .shiki,
 html[class$="dark"] .shiki span,
 div.force-dark-code-theme .shiki,

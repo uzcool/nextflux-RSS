@@ -48,6 +48,7 @@ export default function AddFeedModal() {
   const [results, setResults] = useState([]); // 搜索结果
   const [searchType, setSearchType] = useState("feed"); // 搜索类型
   const [searchQuery, setSearchQuery] = useState(""); // 搜索关键字
+  const [isComposing, setIsComposing] = useState(false); // 是否正在使用输入法输入中文
   const [searching, setSearching] = useState(false); // 调用搜索接口加载状态
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const navigate = useNavigate();
@@ -323,6 +324,14 @@ export default function AddFeedModal() {
                   onChange={(event) => {
                     setSearchQuery(event.target.value);
                     setResults([]);
+                  }}
+                  onCompositionStart={() => setIsComposing(true)}
+                  onCompositionEnd={() => setIsComposing(false)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && !isComposing) {
+                      event.preventDefault();
+                      handleSearch();
+                    }
                   }}
                 />
               </TextField>

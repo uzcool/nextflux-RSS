@@ -156,7 +156,7 @@ export default function ActionButtons() {
   return (
     <div
       className={cn(
-        "action-buttons py-2 standalone:pt-safe-or-2.5 backdrop-blur-lg border-b border-foreground/10 px-2 sticky top-0 z-50",
+        "action-buttons py-2 standalone:pt-safe-or-2.5 backdrop-blur-sm border-b border-foreground/10 px-2 sticky top-0 z-50",
         floatingSidebar
           ? "bg-background/70"
           : "bg-background/70 md:bg-overlay/70",

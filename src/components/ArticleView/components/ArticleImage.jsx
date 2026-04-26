@@ -37,7 +37,7 @@ function ArticleImage({ imgNode, type = "article" }) {
             "flex justify-center my-1",
             type === "article" ? "max-w-[calc(100%+2.5rem)]! -mx-5" : "",
             type === "enclosure"
-              ? "rounded-lg shadow-custom! mx-auto overflow-hidden"
+              ? "rounded-lg shadow-custom! mx-auto overflow-hidden w-fit"
               : "",
           )}
         >
