@@ -15,7 +15,11 @@ export const authState = persistentAtom("auth", defaultValue, {
   encode: JSON.stringify,
   decode: (str) => {
     const storedValue = JSON.parse(str);
-    return { ...defaultValue, ...storedValue };
+    return {
+      ...defaultValue,
+      ...storedValue,
+      serverUrl: normalizeServerUrl(storedValue.serverUrl),
+    };
   },
 });
 
