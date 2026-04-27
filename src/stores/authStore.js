@@ -18,7 +18,9 @@ export const authState = persistentAtom("auth", defaultValue, {
     return {
       ...defaultValue,
       ...storedValue,
-      serverUrl: normalizeServerUrl(storedValue.serverUrl),
+      serverUrl: storedValue.serverUrl
+        ? normalizeServerUrl(storedValue.serverUrl)
+        : defaultValue.serverUrl,
     };
   },
 });
