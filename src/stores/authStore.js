@@ -1,4 +1,5 @@
 import { persistentAtom } from "@nanostores/persistent";
+import { normalizeServerUrl } from "@/lib/url";
 import { stopAutoSync } from "./syncStore";
 
 const defaultValue = {
@@ -21,6 +22,7 @@ export const authState = persistentAtom("auth", defaultValue, {
 // 登录方法
 export async function login(serverUrl, username, password, token) {
   try {
+    const normalizedServerUrl = normalizeServerUrl(serverUrl);
     let headers = {};
     if (token) {
       headers["X-Auth-Token"] = token;
@@ -28,7 +30,7 @@ export async function login(serverUrl, username, password, token) {
       headers["Authorization"] = "Basic " + btoa(`${username}:${password}`);
     }
 
-    const response = await fetch(`${serverUrl}/v1/me`, {
+    const response = await fetch(`${normalizedServerUrl}/v1/me`, {
       headers,
     });
 
@@ -43,7 +45,7 @@ export async function login(serverUrl, username, password, token) {
 
     // 保存认证信息
     authState.set({
-      serverUrl,
+      serverUrl: normalizedServerUrl,
       username: user.username,
       password: token ? "" : password,
       token: token || "",

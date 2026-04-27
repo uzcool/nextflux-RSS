@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authState, logout } from "@/stores/authStore";
+import { normalizeServerUrl } from "@/lib/url";
 import { toast } from "sonner";
 
 // 创建 axios 实例
@@ -7,7 +8,7 @@ const createApiClient = () => {
   const auth = authState.get();
 
   const client = axios.create({
-    baseURL: auth?.serverUrl || "",
+    baseURL: auth?.serverUrl ? normalizeServerUrl(auth.serverUrl) : "",
     headers:
       auth?.authType === "token"
         ? {
@@ -45,7 +46,9 @@ let apiClient = createApiClient();
 
 // 监听认证状态变化
 authState.listen((newAuth) => {
-  apiClient.defaults.baseURL = newAuth?.serverUrl || "";
+  apiClient.defaults.baseURL = newAuth?.serverUrl
+    ? normalizeServerUrl(newAuth.serverUrl)
+    : "";
   if (newAuth?.authType === "token") {
     apiClient.defaults.headers["X-Auth-Token"] = newAuth.token;
     delete apiClient.defaults.headers["Authorization"];
