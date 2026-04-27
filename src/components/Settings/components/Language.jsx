@@ -26,7 +26,7 @@ export default function Language() {
           </div>
         </div>
         <Dropdown>
-          <Button variant="tertiary" size="sm">
+          <Button variant="tertiary" size="sm" className="text-muted">
             {languages.find((lang) => lang.id === i18n.language)?.name ||
               languages[1].name}
             <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />

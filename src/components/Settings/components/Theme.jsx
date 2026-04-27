@@ -51,7 +51,7 @@ export default function Theme() {
           </div>
         </div>
         <Dropdown>
-          <Button size="sm" variant="tertiary">
+          <Button size="sm" variant="tertiary" className="text-muted">
             {mode.find((item) => item.id === themeMode)?.name}
             <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />
           </Button>
@@ -86,7 +86,7 @@ export default function Theme() {
           </div>
         </div>
         <Dropdown>
-          <Button size="sm" variant="tertiary">
+          <Button size="sm" variant="tertiary" className="text-muted">
             {t(
               `settings.appearance.themes.${themes.light.find((item) => item.id === lightTheme)?.id}`,
             )}
@@ -136,7 +136,7 @@ export default function Theme() {
           </div>
         </div>
         <Dropdown>
-          <Button size="sm" variant="tertiary">
+          <Button size="sm" variant="tertiary" className="text-muted">
             {t(
               `settings.appearance.themes.${themes.dark.find((item) => item.id === darkTheme)?.id}`,
             )}

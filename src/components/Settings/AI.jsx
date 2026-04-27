@@ -1,25 +1,13 @@
 import { useStore } from "@nanostores/react";
 import { settingsState, updateSettings } from "@/stores/settingsStore.js";
-import {
-  Button,
-  Description,
-  Input,
-  Label,
-  ScrollShadow,
-  Spinner,
-  TextArea,
-  TextField,
-} from "@heroui/react";
+import { Button, Description, Input, Label, Separator, Spinner, TextArea, TextField } from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { toast } from "sonner";
-import { aiModalOpen } from "@/stores/modalStore.js";
-import CustomModal from "@/components/ui/CustomModal.jsx";
-import { Sparkles } from "lucide-react";
+import { ItemWrapper } from "@/components/ui/settingItem.jsx";
 
 export default function AI() {
   const { t } = useTranslation();
-  const isOpen = useStore(aiModalOpen);
   const { aiApiKey, aiBaseUrl, aiModel, aiPrompt } = useStore(settingsState);
   const [localApiKey, setLocalApiKey] = useState(aiApiKey);
   const [localBaseUrl, setLocalBaseUrl] = useState(aiBaseUrl);
@@ -54,7 +42,6 @@ export default function AI() {
         aiPrompt: localPrompt,
       });
       toast.success(t("common.success"));
-      aiModalOpen.set(false);
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -63,26 +50,9 @@ export default function AI() {
   };
 
   return (
-    <CustomModal
-      open={isOpen}
-      onOpenChange={(value) => aiModalOpen.set(value)}
-      title={
-        <div className="flex items-center gap-2">
-          <Sparkles className="size-4" />
-          <span className="text-base font-medium">
-            {t("settings.ai.title")}
-          </span>
-        </div>
-      }
-      footer={
-        <Button fullWidth onPress={handleSave} isPending={saving}>
-          {saving && <Spinner color="current" size="sm" />}
-          {t("common.save")}
-        </Button>
-      }
-    >
-      <ScrollShadow size={10} className="w-full overflow-y-auto px-4">
-        <div className="flex flex-col gap-4 pb-4">
+    <div className="flex flex-col gap-4">
+      <ItemWrapper title="OpenAI">
+        <div className="bg-default/60 dark:bg-default/30 p-2.5">
           <TextField variant="secondary">
             <Label>{t("settings.ai.apiKey")}</Label>
             <Input
@@ -92,7 +62,9 @@ export default function AI() {
               placeholder={t("settings.ai.apiKeyPlaceholder")}
             />
           </TextField>
-
+        </div>
+        <Separator />
+        <div className="bg-default/60 dark:bg-default/30 p-2.5">
           <TextField variant="secondary">
             <Label>{t("settings.ai.baseUrl")}</Label>
             <Input
@@ -103,7 +75,9 @@ export default function AI() {
             />
             <Description>{t("settings.ai.description")}</Description>
           </TextField>
-
+        </div>
+        <Separator />
+        <div className="bg-default/60 dark:bg-default/30 p-2.5">
           <TextField variant="secondary">
             <Label>{t("settings.ai.model")}</Label>
             <Input
@@ -113,7 +87,9 @@ export default function AI() {
               placeholder="gpt-4o-mini"
             />
           </TextField>
-
+        </div>
+        <Separator />
+        <div className="bg-default/60 dark:bg-default/30 p-2.5">
           <TextField variant="secondary">
             <Label>{t("settings.ai.prompt")}</Label>
             <TextArea
@@ -123,7 +99,11 @@ export default function AI() {
             />
           </TextField>
         </div>
-      </ScrollShadow>
-    </CustomModal>
+      </ItemWrapper>
+      <Button fullWidth onPress={handleSave} isPending={saving}>
+        {saving && <Spinner color="current" size="sm" />}
+        {t("common.save")}
+      </Button>
+    </div>
   );
 }

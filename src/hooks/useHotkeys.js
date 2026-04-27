@@ -15,7 +15,6 @@ import { forceSync } from "@/stores/syncStore";
 import {
   searchDialogOpen,
   addFeedModalOpen,
-  shortcutsModalOpen,
 } from "@/stores/modalStore.js";
 import { useSidebarNavigation } from "@/hooks/useSidebarNavigation";
 
@@ -42,12 +41,6 @@ export function useHotkeys() {
         e.target.tagName === "TEXTAREA" ||
         e.target.isContentEditable
       ) {
-        return;
-      }
-
-      if (e.key === "?" && e.shiftKey) {
-        e.preventDefault();
-        shortcutsModalOpen.set(!shortcutsModalOpen.get());
         return;
       }
 

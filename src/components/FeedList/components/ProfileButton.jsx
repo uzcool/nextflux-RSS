@@ -2,19 +2,13 @@ import { Button, Dropdown, Label, Link } from "@heroui/react";
 import {
   ChevronsUpDown,
   Cog,
-  Info,
-  Keyboard,
   LogOut,
   CircleUser,
-  Sparkles,
 } from "lucide-react";
 import { authState } from "@/stores/authStore.js";
 import { settingsModalOpen } from "@/stores/modalStore.js";
 import {
-  aboutModalOpen,
   logoutModalOpen,
-  shortcutsModalOpen,
-  aiModalOpen,
 } from "@/stores/modalStore.js";
 import { useSidebar } from "@/components/ui/sidebar.jsx";
 import { useTranslation } from "react-i18next";
@@ -41,20 +35,8 @@ export default function ProfileButton() {
           <Dropdown.Menu
             aria-label="Profile Actions"
             onAction={(key) => {
-              if (key === "about") {
-                aboutModalOpen.set(true);
-                isMobile && setOpenMobile(false);
-              }
               if (key === "settings") {
                 settingsModalOpen.set(true);
-                isMobile && setOpenMobile(false);
-              }
-              if (key === "shortcuts") {
-                shortcutsModalOpen.set(true);
-                isMobile && setOpenMobile(false);
-              }
-              if (key === "ai") {
-                aiModalOpen.set(true);
                 isMobile && setOpenMobile(false);
               }
               if (key === "open_miniflux") {
@@ -66,21 +48,9 @@ export default function ProfileButton() {
               }
             }}
           >
-            <Dropdown.Item id="about" textValue="about">
-              <Info className="size-4 text-muted" />
-              <Label>{t("sidebar.profile.about")}</Label>
-            </Dropdown.Item>
             <Dropdown.Item id="settings" textValue="settings">
               <Cog className="size-4 text-muted" />
               <Label>{t("sidebar.profile.settings")}</Label>
-            </Dropdown.Item>
-            <Dropdown.Item id="ai" textValue="ai">
-              <Sparkles className="size-4 text-muted" />
-              <Label>{t("settings.ai.title")}</Label>
-            </Dropdown.Item>
-            <Dropdown.Item id="shortcuts" textValue="shortcuts">
-              <Keyboard className="size-4 text-muted" />
-              <Label>{t("sidebar.shortcuts.title")}</Label>
             </Dropdown.Item>
             <Dropdown.Item id="open_miniflux" textValue="open_miniflux">
               <svg

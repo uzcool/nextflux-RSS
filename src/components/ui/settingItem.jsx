@@ -45,7 +45,7 @@ export const SliderItem = ({
           step={step}
         >
           <div className="text-sm text-foreground line-clamp-1">{label}</div>
-          <Slider.Output />
+          <Slider.Output className="text-muted" />
           <Slider.Track className="h-1.5 mt-0.5">
             <Slider.Fill />
             <Slider.Thumb className="bg-transparent" />
@@ -92,7 +92,7 @@ export function SelItem({ label, icon, settingName, settingValue, options }) {
         <div className="text-sm text-foreground line-clamp-1">{label}</div>
       </div>
       <Dropdown>
-        <Button variant="tertiary" size="sm">
+        <Button variant="tertiary" size="sm" className="text-muted">
           {options.find((opt) => opt.value === settingValue.toString())
             ?.label || settingValue}
           <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />

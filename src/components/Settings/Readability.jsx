@@ -190,7 +190,7 @@ export default function Readability() {
           settingValue={forceDarkCodeTheme}
         />
       </ItemWrapper>
-      <Button fullWidth variant="danger" onPress={resetSettings}>
+      <Button fullWidth variant="danger" onPress={resetSettings} className="shrink-0">
         {t("settings.readability.reset")}
       </Button>
     </>
