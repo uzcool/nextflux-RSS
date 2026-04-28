@@ -3,6 +3,9 @@
 A modern RSS reader client for [Miniflux](https://github.com/miniflux/v2) built with React + Vite.
 
 ![preview](images/preview.png)
+![dark](images/dark.png)
+![settings](images/settings.png)
+![edit](images/edit.png)
 
 ## ✨ Features
 
@@ -71,7 +74,7 @@ The app requires a Miniflux server to function. You'll need to provide:
 
 The app is primarily designed for desktop use. While it works on mobile devices, a native RSS reader app will provide a much better experience on the go.
 
-> 💡 **Tip**: For a better native experience on mobile, consider using dedicated RSS reader apps like [Reeder](https://reederapp.com/), [NetNewsWire](https://netnewswire.com/), or [Capy Reader](https://capyreader.com/) that directly connect to your Miniflux server.
+> 💡 **Tip**: For a better native experience on mobile, consider using dedicated RSS reader apps like [Reeder](https://reederapp.com/), [Unread](https://www.goldenhillsoftware.com/unread/) or [Capy Reader](https://capyreader.com/).
 
 ## 🤝 Contributing
 
