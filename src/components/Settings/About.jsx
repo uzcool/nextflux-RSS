@@ -6,7 +6,7 @@ export default function About() {
   const { t } = useTranslation();
 
   return (
-    <div className="overflow-y-auto flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <NotFancyLogo since={2025} />
 
       {/* Made with love section */}

@@ -120,6 +120,7 @@ export default function ArticleListContent({
                   <Button
                     size="sm"
                     variant="tertiary"
+                    className="text-muted"
                     isDisabled={$filter === "starred"}
                     fullWidth
                     onPress={() => {

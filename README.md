@@ -16,8 +16,6 @@ A modern RSS reader client for [Miniflux](https://github.com/miniflux/v2) built 
 - 🎯 Rich reading experience
     - Custom font settings
     - Image gallery with touch gestures support
-    - Podcast player with speed control and background playback support
-    - Video player with beautiful UI
     - Save article to 3rd party services
 - ⌨️ Keyboard shortcuts
 - 📊 Feed management
@@ -26,82 +24,6 @@ A modern RSS reader client for [Miniflux](https://github.com/miniflux/v2) built 
     - Feed hiding
     - Feed discovery and search
     - Advanced options for feed management
-
-## 📸 Screenshot Galleries
-
-<table>
-    <tr>
-        <td>Podcast
-        </td>
-        <td>YouTube
-        </td>
-    </tr>
-    <tr>
-        <td><img src=images/podcast.png width=600/></td>
-        <td><img src=images/youtube.png width=600/></td>
-    </tr>
-    <tr>
-        <td>Code Highlight
-        </td>
-        <td>Image Gallery
-        </td>
-    </tr>
-    <tr>
-        <td><img src=images/code.png width=600/></td>
-        <td><img src=images/images.png width=600/></td>
-    </tr>
-     <tr>
-        <td>Feed Discovery
-        </td>
-        <td>Settings
-        </td>
-    </tr>
-    <tr>
-        <td><img src=images/feed.png width=600/></td>
-        <td><img src=images/settings.png width=600/></td>
-    </tr>
-    <tr>
-        <td>Stone theme
-        </td>
-        <td>Responsive
-        </td>
-    </tr>
-    <tr>
-        <td><img src=images/stone.png width=600/></td>
-        <td><img src=images/responsive.png width=600/></td>
-    </tr>
-    <tr>
-        <td>Search
-        </td>
-        <td>Dark Mode
-        </td>
-    </tr>
-    <tr>
-        <td><img src=images/search.png width=600/></td>
-        <td><img src=images/dark.png width=600/></td>
-    </tr>
-    <tr>
-        <td>Advanced Options
-        </td>
-        <td>Windows
-        </td>
-    </tr>
-    <tr>
-        <td><img src=images/edit.png width=600/></td>
-        <td><img src=images/windows.png width=600/></td>
-    </tr>
-</table>
-
-## 🛠️ Tech Stack
-
-- React 18
-- Vite
-- TailwindCSS
-- HeroUI (Previously NextUI)
-- i18next
-- IndexedDB
-- Nanostores
-- DayJS
 
 ## 🚀 Deployment
 
@@ -147,8 +69,9 @@ The app requires a Miniflux server to function. You'll need to provide:
 
 ## 📱 Mobile Support
 
-The app is fully responsive and works well on mobile devices. It can also be installed as a PWA for a native app-like
-experience.
+The app is primarily designed for desktop use. While it works on mobile devices, a native RSS reader app will provide a much better experience on the go.
+
+> 💡 **Tip**: For a better native experience on mobile, consider using dedicated RSS reader apps like [Reeder](https://reederapp.com/), [NetNewsWire](https://netnewswire.com/), or [Capy Reader](https://capyreader.com/) that directly connect to your Miniflux server.
 
 ## 🤝 Contributing
 
@@ -174,10 +97,6 @@ Nope, sorry folks. For now, I’m all in on the Miniflux API—gotta pick my bat
 
 Reeder is a fantastic RSS reader. Since my design skills are about as good as a potato's, I took some "inspiration" from
 its UI style, slapped it on, and called it a day.
-
-### 4. Any plans to add AI features like article summarization and translation?
-
-There are so many chrome extensions that can do this. I'm not sure if I want to build this into the app. Tell me what you think by opening an issue.
 
 ## 🌍 Translation
 
