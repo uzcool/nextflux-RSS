@@ -1,6 +1,5 @@
 import { cn, Button, Modal, Drawer, ScrollShadow } from "@heroui/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { settingsModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
 import General from "@/components/Settings/General.jsx";
@@ -85,6 +84,11 @@ function ContentArea({ activeTab, showTitle = false }) {
   const currentMenuItem = menuItems.find((item) => item.id === activeTab);
 
   const renderContent = () => {
+    // 没有选中任何 tab 时不渲染内容
+    if (!activeTab) {
+      return null;
+    }
+
     switch (activeTab) {
       case "general":
         return <General />;
@@ -140,6 +144,9 @@ function MobileSettings() {
     }
   };
 
+  // 计算当前显示的页面
+  const currentPage = activeTab === null ? "menu" : "content";
+
   return (
     <Drawer>
       <Button className="hidden" />
@@ -170,29 +177,14 @@ function MobileSettings() {
               </h3>
             </Drawer.Header>
             <Drawer.Body className="m-0 p-0 overflow-hidden">
-              <AnimatePresence initial={false} mode="wait">
-                {activeTab === null ? (
-                  <motion.div
-                    key="menu"
-                    initial={{ opacity: 0, x: "-100%" }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ type: "spring", bounce: 0, duration: 0.25 }}
-                    className="h-full"
-                  >
-                    <MenuList onSelect={handleSelectMenu} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="content"
-                    initial={{ opacity: 0, x: "100%" }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ type: "spring", bounce: 0, duration: 0.25 }}
-                    className="h-full"
-                  >
-                    <ContentArea activeTab={activeTab} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div className="t-settings-slide h-full" data-active={currentPage}>
+                <div className="t-page" data-page-id="menu">
+                  <MenuList onSelect={handleSelectMenu} />
+                </div>
+                <div className="t-page" data-page-id="content">
+                  <ContentArea activeTab={activeTab} />
+                </div>
+              </div>
             </Drawer.Body>
           </Drawer.Dialog>
         </Drawer.Content>
