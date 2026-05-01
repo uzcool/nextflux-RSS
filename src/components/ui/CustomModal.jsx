@@ -16,10 +16,10 @@ export default function CustomModal({
         <Button className="hidden" />
         <Drawer.Backdrop isOpen={open} onOpenChange={onOpenChange}>
           <Drawer.Content>
-            <Drawer.Dialog className={cn("px-0 pb-0", fixedHeight && "h-4/5")}>
-              <Drawer.Handle />
+            <Drawer.Dialog className={cn("p-0", fixedHeight && "h-4/5")}>
+              <Drawer.Handle className="p-1" />
               <Drawer.CloseTrigger />
-              <Drawer.Header className="p-3">
+              <Drawer.Header className="px-4 pt-1 pb-4">
                 <Drawer.Heading>{title}</Drawer.Heading>
               </Drawer.Header>
               <Drawer.Body className="m-0 p-0">{children}</Drawer.Body>
@@ -41,7 +41,7 @@ export default function CustomModal({
         <Modal.Container>
           <Modal.Dialog className={cn("p-0", fixedHeight && "h-2/3")}>
             <Modal.Header>
-              <Modal.Heading className="p-3">{title}</Modal.Heading>
+              <Modal.Heading className="p-4">{title}</Modal.Heading>
             </Modal.Header>
             <Modal.Body className="m-0 p-0">{children}</Modal.Body>
             {footer && (

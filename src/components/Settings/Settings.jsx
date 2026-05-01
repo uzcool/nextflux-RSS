@@ -145,10 +145,10 @@ function MobileSettings() {
       <Button className="hidden" />
       <Drawer.Backdrop isOpen={isOpen} onOpenChange={handleClose}>
         <Drawer.Content>
-          <Drawer.Dialog className="h-[85vh] px-0 pb-0">
-            <Drawer.Handle />
+          <Drawer.Dialog className="h-[85vh] p-0">
+            <Drawer.Handle className="p-1" />
             <Drawer.CloseTrigger />
-            <Drawer.Header className="p-3 flex flex-row items-center gap-2">
+            <Drawer.Header className="px-4 py-1 flex flex-row items-center gap-2">
               {activeTab !== null && (
                 <Button
                   isIconOnly
@@ -157,7 +157,7 @@ function MobileSettings() {
                   onPress={handleBack}
                   className="size-6"
                 >
-                  <ArrowLeft className="size-4" />
+                  <ArrowLeft className="size-4 text-muted" />
                 </Button>
               )}
               <h3 className="text-base font-medium">

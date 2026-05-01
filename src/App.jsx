@@ -20,27 +20,9 @@ import { checkIntegrations } from "@/stores/basicInfoStore.js";
 import SearchModal from "@/components/Search/SearchModal.jsx";
 import { useZoom } from "@/hooks/useZoom.js";
 import { useBorderRadius } from "@/hooks/useBorderRadius.js";
-import {
-  settingsModalOpen,
-  addFeedModalOpen,
-  addCategoryModalOpen,
-  logoutModalOpen,
-  renameModalOpen,
-  unsubscribeModalOpen,
-  editFeedModalOpen,
-  searchDialogOpen,
-} from "@/stores/modalStore.js";
 
 function App() {
   const { syncInterval } = useStore(settingsState);
-  const $isSettingsOpen = useStore(settingsModalOpen);
-  const $isAddFeedOpen = useStore(addFeedModalOpen);
-  const $isAddCategoryOpen = useStore(addCategoryModalOpen);
-  const $isLogoutOpen = useStore(logoutModalOpen);
-  const $isRenameOpen = useStore(renameModalOpen);
-  const $isUnsubscribeOpen = useStore(unsubscribeModalOpen);
-  const $isEditFeedOpen = useStore(editFeedModalOpen);
-  const $isSearchDialogOpen = useStore(searchDialogOpen);
   useEffect(() => {
     // 检查认证状态并启动自动同步
     const auth = authState.get();
@@ -62,14 +44,14 @@ function App() {
       <SidebarInset>
         <Outlet />
       </SidebarInset>
-      {$isSettingsOpen && <SettingsModal />}
-      {$isAddFeedOpen && <AddFeedModal />}
-      {$isAddCategoryOpen && <AddCategoryModal />}
-      {$isLogoutOpen && <LogoutModal />}
-      {$isRenameOpen && <RenameModal />}
-      {$isUnsubscribeOpen && <UnsubscribeModal />}
-      {$isEditFeedOpen && <EditFeedModal />}
-      {$isSearchDialogOpen && <SearchModal />}
+      <SettingsModal />
+      <AddFeedModal />
+      <AddCategoryModal />
+      <LogoutModal />
+      <RenameModal />
+      <UnsubscribeModal />
+      <EditFeedModal />
+      <SearchModal />
     </SidebarProvider>
   );
 }
