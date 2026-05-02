@@ -86,7 +86,7 @@ const FeedIcon = ({ feedId, url = null }) => {
     return (
       <span
         className={cn(
-          "flex items-center shrink-0 justify-center w-5 h-5 p-0.5 bg-white transition-opacity duration-300 ease-in-out animate-in fade-in-0 shadow-sm",
+          "flex items-center shrink-0 justify-center w-5 h-5 p-0.5 bg-white transition-opacity duration-300 ease-in-out animate-in fade-in shadow-custom",
           feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
         )}
       >
@@ -100,7 +100,7 @@ const FeedIcon = ({ feedId, url = null }) => {
       alt="Feed icon"
       src={iconData}
       className={cn(
-        "size-5 p-0.5 bg-white shadow-sm",
+        "size-5 p-0.5 bg-white shadow-custom transition-opacity duration-300 ease-in-out animate-in fade-in",
         useGrayIcon ? "grayscale" : "",
         feedIconShape === "circle" ? "rounded-full" : "rounded-sm",
         isLoading && "opacity-0",

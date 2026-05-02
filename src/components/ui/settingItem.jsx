@@ -32,7 +32,7 @@ export const SliderItem = ({
   step,
 }) => {
   return (
-    <div className={`grid gap-2 ${bgColor} p-2.5`}>
+    <div className={`grid gap-2 ${bgColor} px-2.5 py-2`}>
       <div className="flex items-center gap-2">
         {icon}
         <Slider
@@ -72,6 +72,7 @@ export const SwitchItem = ({
         <div className="text-sm text-foreground line-clamp-1">{label}</div>
       </div>
       <Switch
+        size="lg"
         isSelected={settingValue}
         isDisabled={disabled}
         onChange={(value) => updateSettings({ [settingName]: value })}
@@ -86,13 +87,15 @@ export const SwitchItem = ({
 
 export function SelItem({ label, icon, settingName, settingValue, options }) {
   return (
-    <div className={`flex justify-between items-center gap-2 ${bgColor} p-2.5`}>
+    <div
+      className={`flex justify-between items-center gap-2 ${bgColor} px-2.5 py-2`}
+    >
       <div className="flex items-center gap-2">
         {icon}
         <div className="text-sm text-foreground line-clamp-1">{label}</div>
       </div>
       <Dropdown>
-        <Button variant="tertiary" size="sm" className="text-muted">
+        <Button variant="tertiary" size="sm" className="text-muted h-8">
           {options.find((opt) => opt.value === settingValue.toString())
             ?.label || settingValue}
           <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />

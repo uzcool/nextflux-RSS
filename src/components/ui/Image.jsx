@@ -26,7 +26,7 @@ export const Image = ({
       alt={alt}
       className={cn(
         isLoading && "opacity-0",
-        "transition-opacity duration-300",
+        "transition-opacity duration-300 animate-in fade-in",
         className,
       )}
       onLoad={() => {

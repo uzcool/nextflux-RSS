@@ -16,7 +16,7 @@ export default function Language() {
 
   return (
     <ItemWrapper title={t("settings.general.language")}>
-      <div className="flex justify-between items-center gap-2 bg-default/60 dark:bg-default/30 p-2.5">
+      <div className="flex justify-between items-center gap-2 bg-default/60 dark:bg-default/30 px-2.5 py-2">
         <div className="flex items-center gap-2">
           <SettingIcon variant="blue">
             <Globe />
@@ -26,7 +26,7 @@ export default function Language() {
           </div>
         </div>
         <Dropdown>
-          <Button variant="tertiary" size="sm" className="text-muted">
+          <Button variant="tertiary" size="sm" className="text-muted h-8">
             {languages.find((lang) => lang.id === i18n.language)?.name ||
               languages[1].name}
             <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />

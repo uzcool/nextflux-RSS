@@ -40,7 +40,7 @@ export default function Theme() {
   return (
     <ItemWrapper title={t("settings.appearance.theme")}>
       <div
-        className={`flex justify-between items-center gap-2 ${bgColor} p-2.5`}
+        className={`flex justify-between items-center gap-2 ${bgColor} px-2.5 py-2`}
       >
         <div className="flex items-center gap-2">
           <SettingIcon variant="blue">
@@ -51,7 +51,7 @@ export default function Theme() {
           </div>
         </div>
         <Dropdown>
-          <Button size="sm" variant="tertiary" className="text-muted">
+          <Button size="sm" variant="tertiary" className="text-muted h-8">
             {mode.find((item) => item.id === themeMode)?.name}
             <ChevronsUpDown className="size-4 shrink-0 text-muted opacity-60" />
           </Button>
@@ -75,7 +75,7 @@ export default function Theme() {
       </div>
       <Separator />
       <div
-        className={`flex justify-between items-center gap-2 ${bgColor} p-2.5`}
+        className={`flex justify-between items-center gap-2 ${bgColor} px-2.5 py-2`}
       >
         <div className="flex items-center gap-2">
           <SettingIcon variant="amber">
@@ -86,7 +86,7 @@ export default function Theme() {
           </div>
         </div>
         <Dropdown>
-          <Button size="sm" variant="tertiary" className="text-muted">
+          <Button size="sm" variant="tertiary" className="text-muted h-8">
             {t(
               `settings.appearance.themes.${themes.light.find((item) => item.id === lightTheme)?.id}`,
             )}
@@ -125,7 +125,7 @@ export default function Theme() {
       </div>
       <Separator />
       <div
-        className={`flex justify-between items-center gap-2 ${bgColor} p-2.5`}
+        className={`flex justify-between items-center gap-2 ${bgColor} px-2.5 py-2`}
       >
         <div className="flex items-center gap-2">
           <SettingIcon variant="purple">
@@ -136,7 +136,7 @@ export default function Theme() {
           </div>
         </div>
         <Dropdown>
-          <Button size="sm" variant="tertiary" className="text-muted">
+          <Button size="sm" variant="tertiary" className="text-muted h-8">
             {t(
               `settings.appearance.themes.${themes.dark.find((item) => item.id === darkTheme)?.id}`,
             )}
