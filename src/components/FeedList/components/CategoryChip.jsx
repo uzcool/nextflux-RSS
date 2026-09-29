@@ -8,6 +8,7 @@ import minifluxAPI from "@/api/miniflux.js";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { deleteCategory } from "@/db/storage";
+import { reportError } from "@/lib/errors.js";
 
 export default function CategoryChip({ category }) {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ export default function CategoryChip({ category }) {
       categories.set($categories.filter((c) => c.id !== categoryId));
       toast.success(t("common.success"));
     } catch (error) {
-      console.error("删除分类失败:", error);
+      reportError(error, "category.delete");
     } finally {
       setLoading(false);
     }

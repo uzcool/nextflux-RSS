@@ -6,14 +6,21 @@ import {
   getUnreadCount,
   getStarredCount,
 } from "../db/storage";
-import { filter } from "@/stores/articlesStore.js";
+import { filter } from "@/stores/articleFilterStore.js";
+import { starredCounts, unreadCounts } from "@/stores/feedCountersStore.js";
 import { settingsState } from "@/stores/settingsStore.js";
+import { reportError } from "@/lib/errors.js";
+
+export {
+  starredCounts,
+  totalStarredCount,
+  totalUnreadCount,
+  unreadCounts,
+} from "@/stores/feedCountersStore.js";
 
 export const feeds = atom([]);
 export const categories = atom([]);
 export const error = atom(null);
-export const unreadCounts = atom({});
-export const starredCounts = atom({});
 
 export const categoryExpandedState = persistentAtom(
   "categoryExpanded",
@@ -124,14 +131,6 @@ export const getFeedCount = computed(
   },
 );
 
-export const totalUnreadCount = computed([unreadCounts], ($unreadCounts) => {
-  return Object.values($unreadCounts).reduce((sum, count) => sum + count, 0);
-});
-
-export const totalStarredCount = computed([starredCounts], ($starredCounts) => {
-  return Object.values($starredCounts).reduce((sum, count) => sum + count, 0);
-});
-
 export async function loadFeeds() {
   try {
     const storedFeeds = await getFeeds();
@@ -152,7 +151,6 @@ export async function loadFeeds() {
     unreadCounts.set(unreadCount);
     starredCounts.set(starredCount);
   } catch (err) {
-    error.set("加载订阅源失败");
-    console.error(err);
+    error.set(reportError(err, "feeds.load", "加载订阅源失败"));
   }
 }

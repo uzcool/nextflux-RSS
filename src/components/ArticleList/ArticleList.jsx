@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { useStore } from "@nanostores/react";
 import {
   filter,
@@ -15,10 +15,14 @@ import ArticleListHeader from "./components/ArticleListHeader";
 import ArticleListContent from "./components/ArticleListContent";
 import ArticleListFooter from "./components/ArticleListFooter";
 import { settingsState } from "@/stores/settingsStore.js";
-import ArticleView from "@/components/ArticleView/ArticleView.jsx";
 import Indicator from "@/components/ArticleList/components/Indicator.jsx";
 import { cn } from "@heroui/react";
 import { useIsMobile } from "@/hooks/use-mobile.jsx";
+import { reportError } from "@/lib/errors.js";
+
+const ArticleView = lazy(
+  () => import("@/components/ArticleView/ArticleView.jsx"),
+);
 
 const ArticleList = () => {
   const { feedId, categoryId, articleId } = useParams();
@@ -70,8 +74,8 @@ const ArticleList = () => {
         hasMore.set(res.isMore);
         currentPage.set(1);
         loading.set(false);
-      } catch {
-        console.error("加载文章失败");
+      } catch (error) {
+        reportError(error, "articles.listLoad");
         loading.set(false);
       }
     };
@@ -95,13 +99,13 @@ const ArticleList = () => {
     if (!feedId && !categoryId && showUnreadByDefault) {
       filter.set("unread");
     }
-  }, []);
+  }, [categoryId, feedId, showUnreadByDefault]);
 
   return (
     <div className="main-content flex">
       <div
         className={cn(
-          "w-full relative max-w-screen md:w-84 md:max-w-[30%] md:min-w-[18rem] h-dvh flex flex-col",
+          "motion-sensitive w-full relative max-w-screen md:w-84 md:max-w-[30%] md:min-w-[18rem] h-dvh flex flex-col",
           floatingSidebar ? "md:border-r" : "",
           // iOS 风格动画：移动端查看文章详情时，列表向左移动
           isArticleDetailOpen && "article-list-shifted",
@@ -118,7 +122,9 @@ const ArticleList = () => {
         />
         <ArticleListFooter />
       </div>
-      <ArticleView />
+      <Suspense fallback={null}>
+        <ArticleView />
+      </Suspense>
     </div>
   );
 };

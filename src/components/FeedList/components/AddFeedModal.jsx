@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Search, Rss, Loader2, ChevronDown } from "lucide-react";
 import GlassYellow from "@/assets/glass-yellow.svg";
+import { reportError } from "@/lib/errors.js";
 import {
   SiYoutube,
   SiReddit,
@@ -208,10 +209,9 @@ export default function AddFeedModal() {
       await forceSync(); // 重新加载订阅源列表以更新UI
       onClose();
       // 导航到新增的订阅源
-      console.log(response);
       navigate(`/feed/${response.feed_id}`);
     } catch (error) {
-      console.error("添加订阅源失败:", error);
+      reportError(error, "feed.create");
     } finally {
       setLoading(false);
     }

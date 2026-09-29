@@ -17,8 +17,8 @@ import { handleMarkAllRead } from "@/handlers/articleHandlers";
 import { isSyncing } from "@/stores/syncStore.js";
 import { useTranslation } from "react-i18next";
 import { loadArticles } from "@/stores/articlesStore";
-import { settingsState } from "@/stores/settingsStore.js";
 import { cn } from "@/lib/utils.js";
+import { useReducedMotion } from "@/hooks/useReducedMotion.js";
 
 const ArticleItem = memo(({ article, isLast }) => (
   <div className="mx-2">
@@ -45,7 +45,7 @@ export default function ArticleListContent({
   const $currentPage = useStore(currentPage);
   const $loading = useStore(loading);
   const $loadingMore = useStore(loadingMore);
-  const { reduceMotion } = useStore(settingsState);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (isMedium) {
@@ -54,10 +54,10 @@ export default function ArticleListContent({
     if (index >= 0) {
       virtuosoRef.current?.scrollIntoView({
         index: index,
-        behavior: "smooth",
+        behavior: reduceMotion ? "auto" : "smooth",
       });
     }
-  }, [isMedium, index]);
+  }, [isMedium, index, reduceMotion, virtuosoRef]);
 
   const handleEndReached = async () => {
     if (!$hasMore || $loadingMore) return;
@@ -84,7 +84,7 @@ export default function ArticleListContent({
       ) : (
         <div
           className={cn(
-            "article-list-content flex-1 h-full",
+            "motion-sensitive article-list-content flex-1 h-full",
             reduceMotion
               ? ""
               : " animate-in duration-400 fade-in slide-in-from-bottom-12 ease-in-out",

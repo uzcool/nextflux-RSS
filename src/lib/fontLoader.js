@@ -1,3 +1,5 @@
+import { reportError } from "@/lib/errors.js";
+
 /**
  * Font Loader - 按需加载字体
  * 参考 shadcn/ui 的字体系统设计
@@ -242,8 +244,9 @@ export function loadFont(fontFamily) {
 
       styleLink.onerror = () => {
         loadingFonts.delete(fontFamily);
-        console.error(`Failed to load font: ${config.name}`);
-        reject(new Error(`Failed to load font: ${config.name}`));
+        const error = new Error(`Failed to load font: ${config.name}`);
+        reportError(error, `font.load.${config.name}`);
+        reject(error);
       };
 
       document.head.appendChild(styleLink);
@@ -253,8 +256,9 @@ export function loadFont(fontFamily) {
 
     preloadLink.onerror = () => {
       loadingFonts.delete(fontFamily);
-      console.error(`Failed to preload font: ${config.name}`);
-      reject(new Error(`Failed to preload font: ${config.name}`));
+      const error = new Error(`Failed to preload font: ${config.name}`);
+      reportError(error, `font.preload.${config.name}`);
+      reject(error);
     };
 
     document.head.appendChild(preloadLink);

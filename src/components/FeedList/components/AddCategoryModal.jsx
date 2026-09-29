@@ -20,6 +20,7 @@ import CategoryChip from "./CategoryChip.jsx";
 import { useTranslation } from "react-i18next";
 import CustomModal from "@/components/ui/CustomModal.jsx";
 import { addCategory } from "@/db/storage";
+import { reportError } from "@/lib/errors.js";
 
 export default function AddCategoryModal() {
   const { t } = useTranslation();
@@ -46,7 +47,7 @@ export default function AddCategoryModal() {
       onClose();
       toast.success(t("common.success"));
     } catch (error) {
-      console.error("添加分类失败:", error);
+      reportError(error, "category.create");
     } finally {
       setLoading(false);
     }

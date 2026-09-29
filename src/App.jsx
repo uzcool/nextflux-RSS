@@ -21,6 +21,7 @@ import SearchModal from "@/components/Search/SearchModal.jsx";
 import { useZoom } from "@/hooks/useZoom.js";
 import { useBorderRadius } from "@/hooks/useBorderRadius.js";
 import { useFontLoader } from "@/hooks/useFontLoader.js";
+import { useApplyReducedMotionPreference } from "@/hooks/useReducedMotion.js";
 
 function App() {
   const { syncInterval } = useStore(settingsState);
@@ -40,6 +41,7 @@ function App() {
   useZoom();
   useBorderRadius();
   useFontLoader(); // 按需加载字体
+  useApplyReducedMotionPreference();
   return (
     <SidebarProvider>
       <FeedListSidebar />

@@ -5,6 +5,7 @@ import { useStore } from "@nanostores/react";
 import { cn } from "@/lib/utils";
 import { getFeedIcon, setFeedIcon } from "@/db/storage";
 import minifluxAPI from "@/api/miniflux";
+import { reportError } from "@/lib/errors.js";
 
 const FeedIcon = ({ feedId, url = null }) => {
   const { feedIconShape, useGrayIcon } = useStore(settingsState);
@@ -59,7 +60,7 @@ const FeedIcon = ({ feedId, url = null }) => {
 
         setError(true);
       } catch (err) {
-        console.error("加载订阅源图标失败:", err);
+        reportError(err, "feedIcon.load");
         setError(true);
       }
     };

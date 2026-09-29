@@ -1,7 +1,7 @@
 import { useStore } from "@nanostores/react";
 import { filter } from "@/stores/articlesStore.js";
 import { totalStarredCount, totalUnreadCount } from "@/stores/feedsStore.js";
-import { CircleDot, Infinity, Star } from "lucide-react";
+import { CircleDot, Infinity as InfinityIcon, Star } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -38,7 +38,7 @@ const ArticlesGroup = () => {
         };
       default:
         return {
-          icon: <Infinity />,
+          icon: <InfinityIcon />,
           text: t("articleList.all"),
           count: $totalUnreadCount,
         };

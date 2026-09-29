@@ -1,6 +1,6 @@
 import { persistentAtom } from "@nanostores/persistent";
 import { normalizeServerUrl } from "@/lib/url";
-import { stopAutoSync } from "./syncStore";
+import { reportError } from "@/lib/errors.js";
 
 const defaultValue = {
   serverUrl: "",
@@ -41,7 +41,6 @@ export async function login(serverUrl, username, password, token) {
     });
 
     if (!response.ok) {
-      console.log(response);
       throw new Error(
         response.statusText || `HTTP error! status: ${response.status}`,
       );
@@ -61,8 +60,7 @@ export async function login(serverUrl, username, password, token) {
 
     return user;
   } catch (error) {
-    console.error("登录失败:", error);
-    throw error;
+    throw reportError(error, "auth.login");
   }
 }
 
@@ -70,7 +68,7 @@ export async function login(serverUrl, username, password, token) {
 export async function logout() {
   try {
     // 停止自动同步
-    stopAutoSync();
+    window.dispatchEvent(new Event("nextflux:logout"));
 
     // 重置所有状态
     authState.set(defaultValue);
@@ -90,7 +88,6 @@ export async function logout() {
       }),
     ]);
   } catch (error) {
-    console.error("登出失败:", error);
-    // 可以选择是否抛出错误
+    reportError(error, "auth.logout");
   }
 }

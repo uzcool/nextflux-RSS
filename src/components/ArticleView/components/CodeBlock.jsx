@@ -1,4 +1,3 @@
-import { codeToHtml } from "shiki";
 import { useEffect, useRef, useState } from "react";
 import { Button, Tooltip } from "@heroui/react";
 import { Check, Copy } from "lucide-react";
@@ -8,6 +7,8 @@ import { cn } from "@/lib/utils.js";
 import { themeState } from "@/stores/themeStore.js";
 import { useTranslation } from "react-i18next";
 import { useInView } from "framer-motion";
+import { highlightCode } from "@/lib/codeHighlighter.js";
+import { reportError } from "@/lib/errors.js";
 
 export default function CodeBlock({ code, language }) {
   const { t } = useTranslation();
@@ -19,20 +20,25 @@ export default function CodeBlock({ code, language }) {
   const isInView = useInView(codeRef, { once: true });
 
   useEffect(() => {
+    let cancelled = false;
+
     async function highlight() {
-      const highlighted = await codeToHtml(code, {
-        lang: language || "text",
-        themes: {
-          light: "catppuccin-latte",
-          dark: "github-dark",
-        },
-      });
-      setHtml(highlighted);
+      try {
+        const highlighted = await highlightCode(code, language);
+        if (!cancelled) setHtml(highlighted);
+      } catch (error) {
+        reportError(error, "code.highlight");
+        if (!cancelled) setHtml("");
+      }
     }
 
     if (isInView) {
       highlight();
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, [code, language, isInView]);
 
   const handleCopy = async () => {
@@ -41,7 +47,7 @@ export default function CodeBlock({ code, language }) {
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 3000);
     } catch (err) {
-      console.error("复制失败:", err);
+      reportError(err, "code.copy");
     }
   };
 
@@ -79,11 +85,16 @@ export default function CodeBlock({ code, language }) {
         </Button>
         <Tooltip.Content>{t("common.copy")}</Tooltip.Content>
       </Tooltip>
-      {isInView && (
+      {isInView && html && (
         <div
           className="animate-in fade-in duration-300"
           dangerouslySetInnerHTML={{ __html: html }}
         />
+      )}
+      {isInView && !html && (
+        <pre className="overflow-x-auto">
+          <code>{code}</code>
+        </pre>
       )}
     </div>
   );

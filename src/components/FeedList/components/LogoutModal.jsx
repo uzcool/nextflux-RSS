@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { logoutModalOpen } from "@/stores/modalStore.js";
 import { useStore } from "@nanostores/react";
 import { logout } from "@/stores/authStore.js";
+import { reportError } from "@/lib/errors.js";
 
 export default function LogoutModal() {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ export default function LogoutModal() {
     try {
       await logout();
     } catch (error) {
-      console.error("退出登录失败:", error);
+      reportError(error, "auth.logoutModal");
     }
   };
   return (

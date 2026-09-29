@@ -18,6 +18,7 @@ import { categories } from "@/stores/feedsStore";
 import { useTranslation } from "react-i18next";
 import CustomModal from "@/components/ui/CustomModal.jsx";
 import { updateCategory } from "@/db/storage";
+import { reportError } from "@/lib/errors.js";
 
 export default function RenameModal() {
   const { t } = useTranslation();
@@ -64,7 +65,7 @@ export default function RenameModal() {
       );
       onClose();
     } catch (error) {
-      console.error("重命名分类失败:", error);
+      reportError(error, "category.rename");
     } finally {
       setLoading(false);
       setNewTitle(""); // 重置输入框

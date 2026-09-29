@@ -14,6 +14,7 @@ import SearchResults from "./SearchResults";
 import { useNavigate } from "react-router-dom";
 import { settingsState } from "@/stores/settingsStore";
 import { useTranslation } from "react-i18next";
+import { reportError } from "@/lib/errors.js";
 import { filter } from "@/stores/articlesStore.js";
 import { handleMarkStatus } from "@/handlers/articleHandlers";
 import { debounce } from "lodash";
@@ -58,8 +59,8 @@ export default function SearchModal() {
             ? searchResults.set(res)
             : feedSearchResults.set(res);
           searching.set(false);
-        } catch {
-          console.error("搜索失败");
+        } catch (error) {
+          reportError(error, "search.modal");
           searching.set(false);
         }
       },

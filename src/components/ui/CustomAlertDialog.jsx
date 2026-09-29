@@ -1,5 +1,6 @@
 import { Button, AlertDialog, Spinner } from "@heroui/react";
 import { useState } from "react";
+import { reportError } from "@/lib/errors.js";
 
 export default function CustomAlertDialog({
   title,
@@ -18,7 +19,7 @@ export default function CustomAlertDialog({
       await onConfirm();
       onClose();
     } catch (error) {
-      console.error("确认操作失败:", error);
+      reportError(error, "dialog.confirm");
     } finally {
       setLoading(false);
     }

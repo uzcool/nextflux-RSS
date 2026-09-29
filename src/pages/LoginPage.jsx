@@ -78,7 +78,6 @@ export default function LoginPage() {
             );
             navigate("/");
         } catch (err) {
-            console.log(err.message);
             toast.error(err.message);
         } finally {
             setLoading(false);

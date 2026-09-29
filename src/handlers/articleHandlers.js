@@ -8,13 +8,14 @@ import {
   loadingOriginContent,
 } from "../stores/articlesStore.js";
 import minifluxAPI from "@/api/miniflux";
+import { reportError } from "@/lib/errors.js";
 
 // 处理文章状态更新
 export const handleMarkStatus = async (article) => {
   try {
     await updateArticleStatus(article);
   } catch (err) {
-    console.error("更新文章状态失败:", err);
+    reportError(err, "article.updateStatus");
   }
 };
 
@@ -23,7 +24,7 @@ export const handleToggleStar = async (article) => {
   try {
     await updateArticleStarred(article);
   } catch (err) {
-    console.error("更新文章星标状态失败:", err);
+    reportError(err, "article.updateStarred");
   }
 };
 
@@ -41,7 +42,7 @@ export const handleMarkAllRead = async (type, id) => {
         await markAllAsRead();
     }
   } catch (err) {
-    console.error("标记已读失败:", err);
+    reportError(err, "article.markAllRead");
   }
 };
 
@@ -50,7 +51,7 @@ export const handleMarkAboveAsRead = async (articleId) => {
   try {
     await markAboveAsRead(articleId);
   } catch (err) {
-    console.error("标记上方为已读失败:", err);
+    reportError(err, "article.markAboveRead");
   }
 };
 
@@ -59,7 +60,7 @@ export const handleMarkBelowAsRead = async (articleId) => {
   try {
     await markBelowAsRead(articleId);
   } catch (err) {
-    console.error("标记下方为已读失败:", err);
+    reportError(err, "article.markBelowRead");
   }
 };
 
@@ -79,7 +80,7 @@ export const handleToggleContent = async (article) => {
       shownOriginal: showOriginal,
     });
   } catch (error) {
-    console.error("切换内容失败:", error);
+    reportError(error, "article.toggleContent");
   } finally {
     loadingOriginContent.set(false);
   }

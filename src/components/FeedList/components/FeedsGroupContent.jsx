@@ -54,7 +54,7 @@ const FeedsGroupContent = ({ category }) => {
         feedItem?.scrollIntoView({ behavior: "instant", block: "nearest" });
       }
     }
-  }, [feedId, category.id]);
+  }, [feedId, category.id, category.feeds]);
 
   const handleContextMenu = (e) => {
     e.preventDefault();

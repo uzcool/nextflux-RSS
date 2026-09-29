@@ -26,6 +26,7 @@ import { forceSync } from "@/stores/syncStore";
 import { Check, Copy, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CustomModal from "@/components/ui/CustomModal.jsx";
+import { reportError } from "@/lib/errors.js";
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -104,7 +105,7 @@ export default function EditFeedModal() {
       await forceSync(); // 重新加载订阅源列表以更新UI
       onClose();
     } catch (error) {
-      console.error("更新订阅源失败:", error);
+      reportError(error, "feed.update");
     } finally {
       setLoading(false);
     }

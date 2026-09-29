@@ -2,6 +2,7 @@ import { useStore } from "@nanostores/react";
 import { Button, Spinner } from "@heroui/react";
 import { forceSync, isOnline, isSyncing } from "@/stores/syncStore.js";
 import { RefreshCw } from "lucide-react";
+import { reportError } from "@/lib/errors.js";
 
 const SyncButton = () => {
   const $isOnline = useStore(isOnline);
@@ -11,7 +12,7 @@ const SyncButton = () => {
     try {
       await forceSync();
     } catch (err) {
-      console.error("强制同步失败:", err);
+      reportError(err, "sync.force");
     }
   };
 

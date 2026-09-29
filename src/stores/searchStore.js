@@ -2,6 +2,7 @@ import { atom } from "nanostores";
 import { feeds } from "@/stores/feedsStore";
 import { settingsState } from "@/stores/settingsStore";
 import { searchArticles } from "@/db/storage";
+import { reportError } from "@/lib/errors.js";
 
 export const searchResults = atom([]);
 export const feedSearchResults = atom([]);
@@ -12,7 +13,7 @@ export async function search(keyword) {
   try {
     return await searchArticles(keyword, settingsState.get().showHiddenFeeds, settingsState.get().sortField);
   } catch (error) {
-    console.error("搜索失败:", error);
+    reportError(error, "search.articles");
   }
 }
 
@@ -29,6 +30,6 @@ export async function searchFeeds(keyword) {
       return searchText.includes(keyword.toLowerCase());
     });
   } catch (error) {
-    console.error("搜索失败:", error);
+    reportError(error, "search.feeds");
   }
 }

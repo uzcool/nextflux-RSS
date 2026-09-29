@@ -13,4 +13,25 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 750,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-ui": ["@heroui/react", "lucide-react"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-data": ["axios", "dexie", "nanostores"],
+          "vendor-i18n": ["i18next", "react-i18next"],
+          "vendor-app": [
+            "dayjs",
+            "lodash",
+            "m3-ripple",
+            "react-virtuoso",
+            "sonner",
+          ],
+        },
+      },
+    },
+  },
 });

@@ -7,6 +7,7 @@ import minifluxAPI from "@/api/miniflux";
 import { toast } from "sonner";
 import { forceSync } from "@/stores/syncStore";
 import { useTranslation } from "react-i18next";
+import { reportError } from "@/lib/errors.js";
 
 export default function AddFeedButton() {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ export default function AddFeedButton() {
       await minifluxAPI.refreshAllFeeds(); // 触发所有订阅源的刷新
       toast.success(t("common.success"));
     } catch (error) {
-      console.error("OPML导入失败:", error);
+      reportError(error, "feed.importOpml");
       toast.error(t("common.error"));
     } finally {
       // 清空文件输入框,以便重复选择同一文件

@@ -1,5 +1,6 @@
 import { atom } from "nanostores";
 import minifluxAPI from "@/api/miniflux";
+import { reportError } from "@/lib/errors.js";
 
 export const hasIntegrations = atom(false);
 
@@ -9,7 +10,7 @@ export async function checkIntegrations() {
     const result = await minifluxAPI.checkIntegrations();
     hasIntegrations.set(result);
   } catch (error) {
-    console.error("检查第三方集成状态失败:", error);
+    reportError(error, "integrations.check");
     hasIntegrations.set(false);
   }
-} 
+}

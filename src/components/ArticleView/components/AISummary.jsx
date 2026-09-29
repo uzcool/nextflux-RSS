@@ -34,7 +34,7 @@ export default function AISummary({ articleId }) {
     if (state?.loading && state?.summary === "") {
       setDisplayedText("");
     }
-  }, [state?.loading]);
+  }, [state?.loading, state?.summary]);
 
   // 逐字追赶定时器，只随 articleId 重建
   useEffect(() => {

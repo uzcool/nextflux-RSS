@@ -11,6 +11,7 @@ import {
   deleteFeedIcon,
 } from "@/db/storage";
 import { starredCounts, unreadCounts } from "@/stores/feedsStore";
+import { reportError } from "@/lib/errors.js";
 
 export default function UnsubscribeModal() {
   const { t } = useTranslation();
@@ -57,7 +58,7 @@ export default function UnsubscribeModal() {
       // onClose(); // 关闭模态框并清除 feedId
       navigate("/"); // 取消订阅后返回首页
     } catch (error) {
-      console.error("取消订阅失败:", error);
+      reportError(error, "feed.unsubscribe");
     }
   };
 
