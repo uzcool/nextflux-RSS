@@ -4,14 +4,16 @@ import { handleMarkAllRead } from "@/handlers/articleHandlers";
 import { CircleCheck } from "lucide-react";
 import { isSyncing } from "@/stores/syncStore.js";
 import { useStore } from "@nanostores/react";
-import { filter } from "@/stores/articlesStore.js";
+import { filter, markingAllAsRead } from "@/stores/articlesStore.js";
 import { useTranslation } from "react-i18next";
 
 export default function MarkAllReadButton() {
   const { t } = useTranslation();
   const { feedId, categoryId } = useParams();
   const $isSyncing = useStore(isSyncing);
+  const $markingAllAsRead = useStore(markingAllAsRead);
   const $filter = useStore(filter);
+  const isPending = $isSyncing || $markingAllAsRead;
   return (
     <Dropdown>
       <Button
@@ -19,10 +21,10 @@ export default function MarkAllReadButton() {
         radius="full"
         variant="ghost"
         isIconOnly
-        isDisabled={$filter === "starred"}
-        isPending={$isSyncing}
+        isDisabled={$filter === "starred" || $markingAllAsRead}
+        isPending={isPending}
       >
-        {$isSyncing ? (
+        {isPending ? (
           <Spinner color="current" size="sm" />
         ) : (
           <CircleCheck className="size-4 text-muted" />

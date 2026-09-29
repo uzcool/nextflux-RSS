@@ -89,6 +89,21 @@ async function addArticles(articles) {
   return db.articles.bulkPut(articles);
 }
 
+// 将指定订阅源中的所有本地未读文章标记为已读。
+async function markUnreadArticlesAsRead(feedIds) {
+  const targetFeedIds = new Set(feedIds.map(Number));
+
+  if (targetFeedIds.size === 0) {
+    return 0;
+  }
+
+  return db.articles
+    .where("status")
+    .equals("unread")
+    .and((article) => targetFeedIds.has(article.feedId))
+    .modify({ status: "read" });
+}
+
 // 删除指定源的全部文章
 async function deleteArticlesByFeedId(feedId) {
   return db.articles.where("feedId").equals(feedId).delete();
@@ -248,6 +263,7 @@ export {
   setLastSyncTime,
   getLastSyncTime,
   addArticles,
+  markUnreadArticlesAsRead,
   deleteArticlesByFeedId,
   getUnreadCount,
   getStarredCount,

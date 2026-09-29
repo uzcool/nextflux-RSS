@@ -145,27 +145,33 @@ export const getNewEntries = async (lastSyncTime) => {
   }
 };
 
-// 标记全部已读
-export const markAllAsRead = async (type, id = null) => {
-  try {
-    let endpoint = "/v1/entries";
+// Miniflux 的用户级/分类级接口会包含全局隐藏的订阅源，因此需要按可见 feed 标记。
+export const markFeedsAsRead = async (feedIds) => {
+  const uniqueFeedIds = [...new Set(feedIds.map(Number))];
+  const batchSize = 10;
+  const succeededFeedIds = [];
+  const failedFeedIds = [];
 
-    // 如果是用户级别的标记已读，先获取用户信息
-    if (type === "all") {
-      const response = await apiClient.get("/v1/me");
-      const userId = response.data.id;
-      endpoint = `/v1/users/${userId}/mark-all-as-read`;
-    } else if (type === "feed" && id) {
-      endpoint = `/v1/feeds/${id}/mark-all-as-read`;
-    } else if (type === "category" && id) {
-      endpoint = `/v1/categories/${id}/mark-all-as-read`;
-    }
+  for (let index = 0; index < uniqueFeedIds.length; index += batchSize) {
+    const batch = uniqueFeedIds.slice(index, index + batchSize);
+    const results = await Promise.allSettled(
+      batch.map((feedId) =>
+        apiClient.put(`/v1/feeds/${feedId}/mark-all-as-read`),
+      ),
+    );
 
-    await apiClient.put(endpoint);
-  } catch (error) {
-    console.error("标记全部已读失败:", error);
-    throw error;
+    results.forEach((result, resultIndex) => {
+      const feedId = batch[resultIndex];
+
+      if (result.status === "fulfilled") {
+        succeededFeedIds.push(feedId);
+      } else {
+        failedFeedIds.push(feedId);
+      }
+    });
   }
+
+  return { succeededFeedIds, failedFeedIds };
 };
 
 // 获取所有星标文章
@@ -393,7 +399,7 @@ const minifluxApi = {
   updateEntryStarred,
   getChangedEntries,
   getNewEntries,
-  markAllAsRead,
+  markFeedsAsRead,
   getAllStarredEntries,
   fetchEntryContent,
   deleteFeed,
