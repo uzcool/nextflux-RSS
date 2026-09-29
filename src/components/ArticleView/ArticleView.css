@@ -43,8 +43,12 @@
   @apply whitespace-pre-wrap before:content-none after:content-none border font-medium font-mono dark:text-muted rounded text-muted bg-background dark:bg-background/80 px-1.5 py-0.5
 }
 
+.article-content pre {
+  @apply overflow-x-auto;
+}
+
 .article-content pre code {
-  @apply whitespace-pre md:whitespace-pre-wrap;
+  @apply whitespace-pre;
 }
 
 
@@ -60,7 +64,13 @@
   display: inline-block;
   margin-right: 1.5rem;
   text-align: right;
-  width: 1rem;
+  width: 3ch;
+  min-width: 3ch;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
 }
 
 .article-content blockquote > p {
@@ -129,4 +139,3 @@ div.force-dark-code-theme .shiki span {
 .PhotoView-Slider__ArrowLeft svg, .PhotoView-Slider__ArrowRight svg {
   @apply bg-black/50 rounded-full p-2 size-4;
 }
-
